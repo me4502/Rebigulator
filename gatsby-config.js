@@ -3,10 +3,35 @@ module.exports = {
     title: `Rebigulator`,
     description: `A Frinkiac-Powered Simpsons trivia game.`,
     author: `@the_me4502`,
+    siteUrl: "https://rebigulator.org"
   },
   plugins: [
     `gatsby-plugin-typescript`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [
+          'UA-39440889-5'
+        ],
+        // Puts tracking script in the head instead of the body
+        pluginConfig: {
+          head: true,
+        }
+      },
+    },
+    {
+      resolve: `gatsby-plugin-react-helmet-canonical-urls`,
+      options: {
+        siteUrl: `https://rebigulator.org`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-robots-txt`,
+      policy: [{ userAgent: '*', allow: '/', disallow: '/cdn-cgi/' }]
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
