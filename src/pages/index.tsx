@@ -1,17 +1,27 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { useState, useEffect } from 'react';
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import { getRandom } from '../frinkiac/frinkiacAccess';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const IndexPage: React.FC = () => {
+  const [episodeData, setEpisodeData] = useState<string>(undefined);
 
-export default IndexPage
+  useEffect(() => {
+    getRandom()
+      .then(data => {
+        setEpisodeData(JSON.stringify(data));
+      })
+      .catch(e => console.log(e));
+  }, []);
+
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>Coming Soon</h1>
+      {episodeData}
+    </Layout>
+  );
+};
+
+export default IndexPage;
