@@ -13,6 +13,7 @@
     "gatsby-plugin-sharp": "^2.3.5",
     "gatsby-source-filesystem": "^2.1.40",
     "gatsby-transformer-sharp": "^2.3.7",
+    "netlify-lambda": "^1.6.3",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -22,12 +23,15 @@
   "devDependencies": {
     "@types/react": "^16.9.17",
     "@types/react-helmet": "^5.0.14",
+    "@types/styled-components": "^4.4.1",
+    "concurrently": "^5.0.2",
     "gatsby-plugin-google-gtag": "^1.1.19",
     "gatsby-plugin-react-helmet-canonical-urls": "^1.4.0",
     "gatsby-plugin-robots-txt": "^1.5.0",
     "gatsby-plugin-sitemap": "^2.2.24",
     "gatsby-plugin-styled-components": "^3.1.16",
     "gatsby-plugin-typescript": "^2.1.23",
+    "http-proxy-middleware": "^0.20.0",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -35,8 +39,10 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
+    "build": "gatsby build && yarn build:lambda",
+    "build:lambda": "netlify-lambda build lambda",
+    "develop": "concurrently \"gatsby develop\" \"yarn develop:lambda\"",
+    "develop:lambda": "netlify-lambda serve lambda",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",

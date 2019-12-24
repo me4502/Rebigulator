@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
-import { Link } from 'gatsby';
 import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
 const FooterWrapper = styled.footer`

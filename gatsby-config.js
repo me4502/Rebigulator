@@ -1,9 +1,22 @@
+const proxy = require('http-proxy-middleware');
+
 module.exports = {
+  developMiddleware: app => {
+    app.use(
+      '/.netlify/functions/',
+      proxy({
+        target: 'http://localhost:9000',
+        pathRewrite: {
+          '/.netlify/functions/': '',
+        },
+      })
+    );
+  },
   siteMetadata: {
     title: `Rebigulator`,
     description: `A Frinkiac-Powered Simpsons trivia game.`,
     author: `@the_me4502`,
-    siteUrl: "https://rebigulator.org"
+    siteUrl: 'https://rebigulator.org',
   },
   plugins: [
     `gatsby-plugin-typescript`,
@@ -13,13 +26,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
-        trackingIds: [
-          'UA-39440889-5'
-        ],
+        trackingIds: ['UA-39440889-5'],
         // Puts tracking script in the head instead of the body
         pluginConfig: {
           head: true,
-        }
+        },
       },
     },
     {
@@ -30,7 +41,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-robots-txt`,
-      policy: [{ userAgent: '*', allow: '/', disallow: '/cdn-cgi/' }]
+      policy: [{ userAgent: '*', allow: '/', disallow: '/cdn-cgi/' }],
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -57,4 +68,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};
