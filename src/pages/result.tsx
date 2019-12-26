@@ -3,6 +3,7 @@ import React from 'react';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { navigate } from 'gatsby';
+import { Container } from '../components/Container';
 
 const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
   let score = 0;
@@ -18,7 +19,9 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
   return (
     <Layout>
       <SEO title="Your Score | The Rebigulator" />
-      <h1>You Scored {score}!</h1>
+      <Container>
+        <h1 style={{ textAlign: 'center' }}>You Scored {score}!</h1>
+      </Container>
     </Layout>
   );
 };
