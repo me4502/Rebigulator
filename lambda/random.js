@@ -9,5 +9,8 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       body: JSON.stringify(data),
     }))
-    .catch(error => ({ statusCode: 422, body: String(error) }));
+    .catch(error => ({
+      statusCode: 422,
+      body: JSON.stringify({ error: String(error) }),
+    }));
 };
