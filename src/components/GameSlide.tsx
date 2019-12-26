@@ -73,22 +73,15 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   const loadOptions = async (input: string) =>
     episodes.filter(ep => filter(ep, input));
 
-  const Selector = useMemo(
-    () => () => {
-      if (!episodes.find(ep => ep.value === data.Episode.Title)) {
-        episodes.push({
-          label: data.Episode.Title,
-          value: data.Episode.Title,
-          data: undefined,
-        });
-      }
-
-      return (
-        <AsyncSelect loadOptions={loadOptions} onChange={checkForCorrect} />
-      );
-    },
-    [data.Episode.Title]
-  );
+  useEffect(() => {
+    if (!episodes.find(ep => ep.value === data.Episode.Title)) {
+      episodes.push({
+        label: data.Episode.Title,
+        value: data.Episode.Title,
+        data: undefined,
+      });
+    }
+  }, [data.Episode.Title]);
 
   return (
     <>
@@ -98,7 +91,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </LinesBox>
-      <Selector />
+      <AsyncSelect loadOptions={loadOptions} onChange={checkForCorrect} />
       {secondsLeft > 10 && !showImage && (
         <button onClick={onShowImage}>Show Image Hint</button>
       )}
