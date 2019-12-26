@@ -5,7 +5,7 @@ import SEO from '../components/seo';
 
 const IndexPage: React.FC = () => (
   <Layout>
-    <SEO title="Home" />
+    <SEO title="The Rebigulator" />
     <h1>Coming Soon</h1>
   </Layout>
 );
