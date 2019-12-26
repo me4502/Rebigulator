@@ -52,7 +52,7 @@ const GameHandler: React.FC = () => {
 const GamePage: React.FC = () => {
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Play | The Rebigulator" />
       <GameHandler />
     </Layout>
   );
