@@ -13,16 +13,21 @@ const FooterWrapper = styled.footer`
 const ContainerFlex = styled(Container)`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   margin-top: 10px;
 
   @media (min-width: 768px) {
-    flex-direction: row-reverse;
+    flex-direction: row;
   }
 `;
 
 const Footer: React.FC = () => (
   <FooterWrapper>
     <ContainerFlex>
+      <p>
+        Powered by{' '}
+        <OutboundLink href="https://frinkiac.com/">Frinkiac</OutboundLink>{' '}
+      </p>
       <p>
         Made by{' '}
         <OutboundLink href="https://matthewmiller.dev/">Me4502</OutboundLink>

@@ -1,7 +1,7 @@
 import { Episode, Frame, Subtitle } from './types';
 import { NETLIFY_PREFIX } from '../util/routes';
 
-interface RandomResponse {
+export interface RandomResponse {
   Episode: Episode;
   Frame: Frame;
   Subtitles: Subtitle[];
