@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Container } from './Container';
 
 const Nav = styled.nav`
-  position: relative;
   min-height: 50px;
   margin: 0;
   background: #1587cf;
@@ -21,6 +20,7 @@ const HeaderLink = styled(Link)`
   height: 50px;
   float: left;
   font-family: 'akbarplain';
+  box-sizing: border-box;
 `;
 
 const Header: React.FC = () => (
