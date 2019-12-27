@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { ValueType, OptionTypeBase, createFilter } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-const episodes = require('../util/episodes.json').map(ep => ({
-  value: ep,
-  label: ep,
-})) as { value: string; label: string; data: undefined }[];
+const episodes = require('../util/episodes.json') as {
+  value: string;
+  label: string;
+  data: undefined;
+}[];
 
 interface GameSlideProps {
   onQuestionFinish: (points: number) => void;
@@ -22,6 +23,28 @@ const TIME_PER_SLIDE = 60;
 
 const LinesBox = styled.div`
   font-family: 'akbarplain';
+`;
+
+const GameBoard = styled.div`
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+`;
+
+const HintImg = styled.img`
+  max-width: 100%;
+  margin-top: 1rem;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  button {
+    margin: 0 0.5rem;
+  }
 `;
 
 const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
@@ -57,15 +80,11 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   };
 
   const onSkip = () => {
-    onQuestionFinish(-10);
+    onQuestionFinish(0);
   };
 
   const checkForCorrect = (value: ValueType<OptionTypeBase>) => {
-    const val = value['value'];
-    if (!val) {
-      return;
-    }
-    if (val.toLowerCase() === data.Episode.Title.toLowerCase()) {
+    if (value['value'] === data.Episode.Key) {
       onQuestionFinish(secondsLeft);
     }
   };
@@ -73,35 +92,29 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   const loadOptions = async (input: string) =>
     episodes.filter(ep => filter(ep, input));
 
-  useEffect(() => {
-    if (!episodes.find(ep => ep.value === data.Episode.Title)) {
-      episodes.push({
-        label: data.Episode.Title,
-        value: data.Episode.Title,
-        data: undefined,
-      });
-    }
-  }, [data.Episode.Title]);
-
   return (
-    <>
-      <p>Time left: {secondsLeft}</p>
+    <GameBoard>
+      <p>{secondsLeft}</p>
       <LinesBox>
         {data.Subtitles.map(sub => (
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </LinesBox>
       <AsyncSelect loadOptions={loadOptions} onChange={checkForCorrect} />
-      {secondsLeft > 10 && !showImage && (
-        <button onClick={onShowImage}>Show Image Hint</button>
-      )}
-      <button onClick={onSkip}>Skip (10 second penalty)</button>
+      <ButtonBox>
+        {secondsLeft > 10 && !showImage && (
+          <button onClick={onShowImage}>
+            Show Image Hint (10 second penalty)
+          </button>
+        )}
+        <button onClick={onSkip}>Skip</button>
+      </ButtonBox>
       {showImage && (
-        <img
+        <HintImg
           src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
         />
       )}
-    </>
+    </GameBoard>
   );
 };
 
