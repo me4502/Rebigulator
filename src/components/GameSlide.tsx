@@ -3,6 +3,7 @@ import { getRandom, RandomResponse } from '../frinkiac/frinkiacAccess';
 import styled from 'styled-components';
 import { ValueType, OptionTypeBase, createFilter } from 'react-select';
 import AsyncSelect from 'react-select/async';
+import LoadingSpinner from './LoadingSpinner';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -118,6 +119,12 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   );
 };
 
+const LoadingBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
 export const GameSlide: React.FC<GameSlideProps> = ({
   onQuestionFinish,
   handicap,
@@ -127,7 +134,7 @@ export const GameSlide: React.FC<GameSlideProps> = ({
   useEffect(() => {
     getRandom()
       .then(data => {
-        setData(data);
+        // setData(data);
       })
       .catch(e => console.log(e));
   }, []);
@@ -141,6 +148,11 @@ export const GameSlide: React.FC<GameSlideProps> = ({
       />
     );
   } else {
-    return <p>Loading!</p>;
+    return (
+      <LoadingBox>
+        <p>Loading your questions...</p>
+        <LoadingSpinner />
+      </LoadingBox>
+    );
   }
 };
