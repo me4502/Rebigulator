@@ -134,7 +134,7 @@ export const GameSlide: React.FC<GameSlideProps> = ({
   useEffect(() => {
     getRandom()
       .then(data => {
-        // setData(data);
+        setData(data);
       })
       .catch(e => console.log(e));
   }, []);
