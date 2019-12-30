@@ -5,9 +5,9 @@ import { OutboundLink } from 'gatsby-plugin-google-gtag';
 
 const FooterWrapper = styled.footer`
   justify-content: center;
-  border-top: 1px solid #e7e7e7;
+  border-top: 1px solid #FCFCFC;
   padding: 10px 25px 40px;
-  margin: 200px 0 0;
+  margin: 150px 0 0;
 `;
 
 const ContainerFlex = styled(Container)`

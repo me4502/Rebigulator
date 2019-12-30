@@ -101,7 +101,11 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </LinesBox>
-      <AsyncSelect loadOptions={loadOptions} onChange={checkForCorrect} placeholder={'Enter an episode name...'}/>
+      <AsyncSelect
+        loadOptions={loadOptions}
+        onChange={checkForCorrect}
+        placeholder={'Enter an episode name...'}
+      />
       <ButtonBox>
         {secondsLeft > 10 && !showImage && (
           <button onClick={onShowImage}>
