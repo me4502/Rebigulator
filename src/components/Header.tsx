@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Container } from './Container';
 
 const Nav = styled.nav`
+  width: 100%;
   min-height: 50px;
   margin: 0;
   background: #1587cf;
