@@ -33,7 +33,7 @@ const ChallengePage: React.FC<{ location: Location }> = ({ location }) => {
 
   return (
     <Layout>
-      <SEO title={`Bet you can't beat ${score}! | The Rebigulator`} />
+      <SEO title={`The Rebigulator | Simpsons Trivia Game`} />
       <Container>
         <CentreDiv>
           <h1>Think you can beat {score}?</h1>
