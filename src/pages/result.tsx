@@ -60,9 +60,9 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
   }
 
   const scoreMessage = scoreCutoffs.find(cutoff => cutoff[0] < score);
-  const shareUrl = `https://rebigulator.org/challenge/?${btoa(
-    JSON.stringify({ score })
-  )}`;
+  const shareUrl = `https://rebigulator.org/challenge/?${
+    typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
+  }`;
 
   const shareDescription = `Try to beat my score of ${score} on the Rebigulator!`;
 
@@ -78,7 +78,7 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl} >
+            <TwitterShareButton url={shareUrl}>
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
             <TelegramShareButton url={shareUrl}>
