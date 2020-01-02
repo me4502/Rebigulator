@@ -64,6 +64,7 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
     typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
   }`;
 
+  const shareTitle = `Bet you can't beat ${score} | The Rebigulator`;
   const shareDescription = `Try to beat my score of ${score} on the Rebigulator!`;
 
   return (
@@ -78,19 +79,23 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl}>
+            <TwitterShareButton url={shareUrl} title={shareTitle}>
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
-            <TelegramShareButton url={shareUrl}>
+            <TelegramShareButton url={shareUrl} title={shareTitle}>
               <TelegramIcon size={32} round={true} />
             </TelegramShareButton>
-            <WhatsappShareButton url={shareUrl}>
+            <WhatsappShareButton url={shareUrl} title={shareTitle}>
               <WhatsappIcon size={32} round={true} />
             </WhatsappShareButton>
-            <RedditShareButton url={shareUrl}>
+            <RedditShareButton url={shareUrl} title={shareTitle}>
               <RedditIcon size={32} round={true} />
             </RedditShareButton>
-            <TumblrShareButton url={shareUrl} caption={shareDescription}>
+            <TumblrShareButton
+              url={shareUrl}
+              caption={shareDescription}
+              title={shareTitle}
+            >
               <TumblrIcon size={32} round={true} />
             </TumblrShareButton>
           </ShareBox>
