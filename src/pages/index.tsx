@@ -19,7 +19,7 @@ const CentreDiv = styled.div`
 
 const IndexPage: React.FC = () => (
   <Layout>
-    <SEO title="The Rebigulator" />
+    <SEO title="The Rebigulator | Simpsons Trivia Game" />
     <Container>
       <BannerImage src="/brand.svg" alt="The Rebigulator" />
       <CentreDiv>
