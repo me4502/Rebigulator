@@ -16,7 +16,11 @@ const ChallengePage: React.FC<{ location: Location }> = ({ location }) => {
   if (typeof window !== 'undefined') {
     if (location.search) {
       try {
-        score = JSON.parse(atob(location.search)).score;
+        if (typeof atob !== 'undefined') {
+          score = JSON.parse(atob(location.search)).score;
+        } else {
+          score = 0;
+        }
       } catch (e) {
         console.log('Invalid score URL given.');
       }
