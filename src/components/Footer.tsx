@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
-import { OutboundLink } from 'gatsby-plugin-google-gtag';
+import { MainOutboundLink } from './MainLink';
 
 const FooterWrapper = styled.footer`
   justify-content: center;
@@ -26,11 +26,11 @@ const Footer: React.FC = () => (
     <ContainerFlex>
       <p>
         Powered by{' '}
-        <OutboundLink href="https://frinkiac.com/">Frinkiac</OutboundLink>{' '}
+        <MainOutboundLink href="https://frinkiac.com/">Frinkiac</MainOutboundLink>{' '}
       </p>
       <p>
         Made by{' '}
-        <OutboundLink href="https://matthewmiller.dev/">Me4502</OutboundLink>
+        <MainOutboundLink href="https://matthewmiller.dev/">Me4502</MainOutboundLink>
       </p>
     </ContainerFlex>
   </FooterWrapper>
