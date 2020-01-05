@@ -43,11 +43,12 @@ const ShareBox = styled.div`
 `;
 
 const scoreCutoffs = [
-  [0, 'Better luck next time!'],
-  [50, `You're getting there!`],
-  [100, 'Decent effort!'],
-  [200, 'Wow! Good job!'],
   [300, `Incredible! You're a Simpsons export!`],
+  [200, 'Wow! Good job!'],
+  [100, 'Decent effort!'],
+  [50, `You're getting there!`],
+  [0, 'Better luck next time!'],
+  [-100, ''],
 ] as [number, string][];
 
 const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
