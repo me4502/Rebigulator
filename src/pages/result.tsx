@@ -18,7 +18,11 @@ import {
   RedditIcon,
   TumblrIcon,
   TumblrShareButton,
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon,
 } from 'react-share';
+import { MainLink } from '../components/MainLink';
+import { QuestionResult } from '../util/types';
 
 const CentreDiv = styled.div`
   text-align: center;
@@ -48,10 +52,14 @@ const scoreCutoffs = [
 
 const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
   let score = -1;
+  const results: QuestionResult[] = [];
 
   if (typeof window !== 'undefined') {
     if (location['state'] && !isNaN(location['state']['score'])) {
       score = location['state']['score'];
+      if (location['state']['results']) {
+        results.push(...location['state']['results']);
+      }
     }
     if (score < 0) {
       navigate('/');
@@ -59,7 +67,7 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
     }
   }
 
-  const scoreMessage = scoreCutoffs.find(cutoff => cutoff[0] < score);
+  const scoreMessage = scoreCutoffs.find(cutoff => cutoff[0] <= score)[1];
   const shareUrl = `https://rebigulator.org/challenge/?${
     typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
   }`;
@@ -74,11 +82,29 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
         <CentreDiv>
           <h1>{scoreMessage}</h1>
           <h2>You scored {score}</h2>
+          {results.length > 0 && (
+            <div>
+              {results.map((res, i) => (
+                <div>
+                  <p>
+                    {i + 1}) {res.episodeTitle} - {res.points} Points
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          <MainLink to="/game/">Want to try again?</MainLink>
           <h3>Share your score!</h3>
           <ShareBox>
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
+            <FacebookMessengerShareButton
+              url={shareUrl}
+              appId={`609865043173658`}
+            >
+              <FacebookMessengerIcon size={32} round={true} />
+            </FacebookMessengerShareButton>
             <TwitterShareButton url={shareUrl} title={shareTitle}>
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
