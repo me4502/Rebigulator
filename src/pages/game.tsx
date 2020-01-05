@@ -6,6 +6,8 @@ import { GameSlide } from '../components/GameSlide';
 import { navigate } from 'gatsby';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
+import { Episode } from '../frinkiac/types';
+import { QuestionResult } from '../util/types';
 
 const QUESTION_COUNT = 10;
 
@@ -18,10 +20,11 @@ const ScoreBox = styled.div`
 
 const GameHandler: React.FC = () => {
   const [score, setScore] = useState<number>(0);
+  const [results, setResults] = useState<QuestionResult[]>([]);
   const [handicap, setHandicap] = useState<number>(0);
   const [questionNumber, setQuestionNumber] = useState<number>(0);
 
-  const onQuestionFinish = (points: number) => {
+  const onQuestionFinish = (points: number, episode: Episode) => {
     if (points > 0) {
       setScore(score + points);
     }
@@ -32,6 +35,8 @@ const GameHandler: React.FC = () => {
     } else {
       setHandicap(-points);
     }
+    results.push({ episodeTitle: episode.Title, points });
+    setResults(results);
     const newQuestion = questionNumber + 1;
     if (newQuestion < QUESTION_COUNT) {
       setQuestionNumber(newQuestion);
@@ -39,6 +44,7 @@ const GameHandler: React.FC = () => {
       navigate('/result/', {
         state: {
           score,
+          results,
         },
       });
     }
@@ -48,7 +54,9 @@ const GameHandler: React.FC = () => {
     () => () => (
       <Container>
         <ScoreBox>
-          <span>Score: {score}  &#x2E31;  Round: {questionNumber + 1}</span>
+          <span>
+            Score: {score} &#x2E31; Round: {questionNumber + 1}
+          </span>
         </ScoreBox>
         <GameSlide onQuestionFinish={onQuestionFinish} handicap={handicap} />
       </Container>

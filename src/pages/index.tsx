@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { MainLink } from '../components/MainLink';
 
 const BannerImage = styled.img`
   max-width: 600px;
@@ -26,7 +26,7 @@ const IndexPage: React.FC = () => (
         <h1>The Rebigulator [BETA] is a quote-based Simpsons Trivia Game</h1>
         <h2>Guess the episode title from a quote, and an optional image</h2>
 
-        <Link to="/game/">Get Started Now!</Link>
+        <MainLink to="/game/">Get Started Now!</MainLink>
       </CentreDiv>
     </Container>
   </Layout>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ValueType, OptionTypeBase, createFilter } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import LoadingSpinner from './LoadingSpinner';
+import { Episode } from '../frinkiac/types';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -12,7 +13,7 @@ const episodes = require('../util/episodes.json') as {
 }[];
 
 interface GameSlideProps {
-  onQuestionFinish: (points: number) => void;
+  onQuestionFinish: (points: number, episode: Episode) => void;
   handicap: number;
 }
 
@@ -24,6 +25,11 @@ const TIME_PER_SLIDE = 60;
 
 const LinesBox = styled.div`
   font-family: 'akbarplain';
+  border: 1px solid #ffce1a;
+  background: #e8eef2;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
 `;
 
 const GameBoard = styled.div`
@@ -48,6 +54,12 @@ const ButtonBox = styled.div`
   }
 `;
 
+const SecondsCounter = styled.p`
+  font-size: 18pt;
+  margin: 0.5rem 0;
+  font-family: 'akbarplain';
+`;
+
 const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   onQuestionFinish,
   data,
@@ -65,7 +77,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
     const timeout = setTimeout(() => {
       const timeRemaining = secondsLeft - 1;
       if (timeRemaining < 0) {
-        onQuestionFinish(0);
+        onQuestionFinish(0, data.Episode);
         return;
       }
       setSecondsLeft(timeRemaining);
@@ -81,12 +93,12 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   };
 
   const onSkip = () => {
-    onQuestionFinish(0);
+    onQuestionFinish(0, data.Episode);
   };
 
   const checkForCorrect = (value: ValueType<OptionTypeBase>) => {
     if (value['value'] === data.Episode.Key) {
-      onQuestionFinish(secondsLeft);
+      onQuestionFinish(secondsLeft, data.Episode);
     }
   };
 
@@ -95,7 +107,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
 
   return (
     <GameBoard>
-      <p>{secondsLeft}</p>
+      <SecondsCounter>{secondsLeft}</SecondsCounter>
       <LinesBox>
         {data.Subtitles.map(sub => (
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
