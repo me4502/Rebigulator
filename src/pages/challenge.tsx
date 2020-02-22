@@ -18,7 +18,7 @@ const ChallengePage: React.FC<{ location: Location }> = ({ location }) => {
     if (location.search) {
       try {
         if (typeof atob !== 'undefined') {
-          score = JSON.parse(atob(location.search)).score;
+          score = JSON.parse(atob(location.search.substring(1))).score;
         } else {
           score = 0;
         }
