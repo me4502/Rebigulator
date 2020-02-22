@@ -8,6 +8,10 @@ import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { Episode } from '../frinkiac/types';
 import { QuestionResult } from '../util/types';
+  import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 const QUESTION_COUNT = 10;
 
@@ -50,6 +54,13 @@ const GameHandler: React.FC = () => {
     }
   };
 
+  const onFail = (message: string) => {
+    toast(message, {
+      autoClose: 2500,
+      type: 'error'
+    });
+  };
+
   const Slide = useMemo(
     () => () => (
       <Container>
@@ -58,7 +69,11 @@ const GameHandler: React.FC = () => {
             Score: {score} &#x2E31; Round: {questionNumber + 1}
           </span>
         </ScoreBox>
-        <GameSlide onQuestionFinish={onQuestionFinish} handicap={handicap} />
+        <GameSlide
+          onQuestionFinish={onQuestionFinish}
+          handicap={handicap}
+          onFail={onFail}
+        />
       </Container>
     ),
     [questionNumber]
