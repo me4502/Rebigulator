@@ -14,6 +14,7 @@ const episodes = require('../util/episodes.json') as {
 
 interface GameSlideProps {
   onQuestionFinish: (points: number, episode: Episode) => void;
+  onFail: (message: string) => void;
   handicap: number;
 }
 
@@ -62,6 +63,7 @@ const SecondsCounter = styled.p`
 
 const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   onQuestionFinish,
+  onFail,
   data,
   handicap,
 }) => {
@@ -99,6 +101,8 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   const checkForCorrect = (value: ValueType<OptionTypeBase>) => {
     if (value['value'] === data.Episode.Key) {
       onQuestionFinish(secondsLeft, data.Episode);
+    } else {
+      onFail('Wrong! Try again...');
     }
   };
 
@@ -144,6 +148,7 @@ const LoadingBox = styled.div`
 export const GameSlide: React.FC<GameSlideProps> = ({
   onQuestionFinish,
   handicap,
+  onFail,
 }) => {
   const [data, setData] = useState<RandomResponse>(undefined);
 
@@ -159,6 +164,7 @@ export const GameSlide: React.FC<GameSlideProps> = ({
     return (
       <GameSlideLogic
         onQuestionFinish={onQuestionFinish}
+        onFail={onFail}
         data={data}
         handicap={handicap}
       />
