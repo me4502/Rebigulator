@@ -5,6 +5,7 @@ import { ValueType, OptionTypeBase, createFilter } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import LoadingSpinner from './LoadingSpinner';
 import { Episode } from '../frinkiac/types';
+import { MainButton } from './MainLink';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -31,6 +32,8 @@ const LinesBox = styled.div`
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 6px;
+  font-size: 14pt;
+  font-weight: 600;
 `;
 
 const GameBoard = styled.div`
@@ -50,7 +53,7 @@ const ButtonBox = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
 
-  button {
+  * {
     margin: 0 0.5rem;
   }
 `;
@@ -117,19 +120,19 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </LinesBox>
+      <ButtonBox>
+        {secondsLeft > 10 && !showImage && (
+          <MainButton onClick={onShowImage}>
+            Show Image Hint (10 second penalty)
+          </MainButton>
+        )}
+        <MainButton onClick={onSkip}>Skip</MainButton>
+      </ButtonBox>
       <AsyncSelect
         loadOptions={loadOptions}
         onChange={checkForCorrect}
         placeholder={'Enter an episode name...'}
       />
-      <ButtonBox>
-        {secondsLeft > 10 && !showImage && (
-          <button onClick={onShowImage}>
-            Show Image Hint (10 second penalty)
-          </button>
-        )}
-        <button onClick={onSkip}>Skip</button>
-      </ButtonBox>
       {showImage && (
         <HintImg
           src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
