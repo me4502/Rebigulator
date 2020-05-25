@@ -21,11 +21,15 @@ import {
   FacebookMessengerShareButton,
   FacebookMessengerIcon,
 } from 'react-share';
-import { MainLink } from '../components/MainLink';
+import { MainButtonLink } from '../components/MainLink';
 import { QuestionResult } from '../util/types';
 
 const CentreDiv = styled.div`
   text-align: center;
+`;
+
+const ResultsDiv = styled.div`
+  margin-bottom: 2rem;
 `;
 
 const ShareBox = styled.div`
@@ -83,19 +87,21 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
         <CentreDiv>
           <h1>{scoreMessage}</h1>
           <h2>You scored {score}</h2>
-          {results.length > 0 && (
-            <div>
-              {results.map((res, i) => (
-                <div>
-                  <p>
-                    {i + 1}) {res.episodeTitle} - {res.points} Points
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-          <MainLink to="/game/">Want to try again?</MainLink>
-          <h3>Share your score!</h3>
+          <ResultsDiv>
+            {results.length > 0 && (
+              <div>
+                {results.map((res, i) => (
+                  <div>
+                    <p>
+                      {i + 1}) {res.episodeTitle} - {res.points} Points
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </ResultsDiv>
+          <MainButtonLink to="/game/">Want to try again?</MainButtonLink>
+          <h3 style={{ marginTop: '2rem'}}>Share your score!</h3>
           <ShareBox>
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
               <FacebookIcon size={32} round={true} />
