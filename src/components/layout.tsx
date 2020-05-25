@@ -10,7 +10,7 @@ import React from 'react';
 import Header from './Header';
 import './normalize.css';
 import './layout.css';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import Footer from './Footer';
 
 const Layout: React.FC = ({ children }) => {
