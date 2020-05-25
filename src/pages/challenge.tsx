@@ -5,7 +5,7 @@ import SEO from '../components/seo';
 import { navigate } from 'gatsby';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
-import { MainLink } from '../components/MainLink';
+import { MainButtonLink } from '../components/MainLink';
 
 const CentreDiv = styled.div`
   text-align: center;
@@ -38,7 +38,7 @@ const ChallengePage: React.FC<{ location: Location }> = ({ location }) => {
       <Container>
         <CentreDiv>
           <h1>Think you can beat {score}?</h1>
-          <h2><MainLink to="/">Get started here</MainLink></h2>
+          <h2><MainButtonLink to="/">Get started here</MainButtonLink></h2>
         </CentreDiv>
       </Container>
     </Layout>
