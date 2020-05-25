@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
-import { OutboundLink } from 'gatsby-plugin-google-gtag';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 const MainLinkStyle = css`
   color: #1587cf;

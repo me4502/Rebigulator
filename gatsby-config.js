@@ -1,10 +1,10 @@
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = {
-  developMiddleware: app => {
+  developMiddleware: (app) => {
     app.use(
       '/.netlify/functions/',
-      proxy({
+      createProxyMiddleware({
         target: 'http://localhost:9000',
         pathRewrite: {
           '/.netlify/functions/': '',
@@ -24,13 +24,11 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-plugin-google-gtag`,
+      resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingIds: ['UA-39440889-5'],
+        trackingId: 'UA-39440889-5',
         // Puts tracking script in the head instead of the body
-        pluginConfig: {
-          head: true,
-        },
+        head: true,
       },
     },
     {
@@ -52,6 +50,9 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
