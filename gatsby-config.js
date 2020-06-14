@@ -19,7 +19,6 @@ module.exports = {
     siteUrl: 'https://rebigulator.org',
   },
   plugins: [
-    `gatsby-plugin-typescript`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,

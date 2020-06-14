@@ -21,7 +21,7 @@ const IndexPage: React.FC = () => (
   <Layout>
     <SEO title="The Rebigulator | Simpsons Trivia Game" />
     <Container>
-      <BannerImage src="/brand.svg" alt="The Rebigulator" />
+      <BannerImage src="/brand.svg" alt="The Rebigulator" loading={'eager'} />
       <CentreDiv>
         <h1>The Rebigulator is a quote-based Simpsons Trivia Game</h1>
         <h2 style={{ marginBottom: '3rem' }}>
