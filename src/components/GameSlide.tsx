@@ -157,6 +157,10 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   };
 
   const checkForCorrect = (value: string) => {
+    if (secondsLeft <= 0) {
+      // Don't accept negative values.
+      return;
+    }
     if (value === data.Episode.Title) {
       onQuestionFinish(secondsLeft, data.Episode);
     } else {
