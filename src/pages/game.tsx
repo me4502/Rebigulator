@@ -3,13 +3,14 @@ import React, { useState, useMemo } from 'react';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { GameSlide } from '../components/GameSlide';
-import { navigate } from 'gatsby';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { Episode } from '../frinkiac/types';
 import { QuestionResult } from '../util/types';
-  import { toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
+import pako from 'pako';
 
 toast.configure();
 
@@ -28,6 +29,8 @@ const GameHandler: React.FC = () => {
   const [handicap, setHandicap] = useState<number>(0);
   const [questionNumber, setQuestionNumber] = useState<number>(0);
 
+  const router = useRouter();
+
   const onQuestionFinish = (points: number, episode: Episode) => {
     if (points > 0) {
       setScore(score + points);
@@ -39,17 +42,14 @@ const GameHandler: React.FC = () => {
     } else {
       setHandicap(-points);
     }
-    results.push({ episodeTitle: episode.Title, points });
+    results.push({ e: episode.EpisodeNumber, s: points });
     setResults(results);
     const newQuestion = questionNumber + 1;
     if (newQuestion < QUESTION_COUNT) {
       setQuestionNumber(newQuestion);
     } else {
-      navigate('/result/', {
-        state: {
-          score,
-          results,
-        },
+      router.push({
+        pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
       });
     }
   };
@@ -57,7 +57,7 @@ const GameHandler: React.FC = () => {
   const onFail = (message: string) => {
     toast(message, {
       autoClose: 2500,
-      type: 'error'
+      type: 'error',
     });
   };
 

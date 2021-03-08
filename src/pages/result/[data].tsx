@@ -1,9 +1,8 @@
 import React from 'react';
 
-import Layout from '../components/layout';
-import SEO from '../components/seo';
-import { navigate } from 'gatsby';
-import { Container } from '../components/Container';
+import Layout from '../../components/layout';
+import SEO from '../../components/seo';
+import { Container } from '../../components/Container';
 import styled from 'styled-components';
 import {
   FacebookShareButton,
@@ -21,8 +20,16 @@ import {
   FacebookMessengerShareButton,
   FacebookMessengerIcon,
 } from 'react-share';
-import { MainButtonLink } from '../components/MainLink';
-import { QuestionResult } from '../util/types';
+import { MainButtonLink } from '../../components/MainLink';
+import { QuestionResult } from '../../util/types';
+import Link from 'next/link';
+import { GetStaticPaths, GetStaticProps } from 'next';
+
+const episodes = require('../../util/episodes.json') as {
+  value: string;
+  label: string;
+  data: undefined;
+}[];
 
 const CentreDiv = styled.div`
   text-align: center;
@@ -55,24 +62,15 @@ const scoreCutoffs = [
   [-100, ''],
 ] as [number, string][];
 
-const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
-  let score = -1;
-  const results: QuestionResult[] = [];
+interface ResultPageProps {
+  data: { results: QuestionResult[]; score: number };
+}
 
-  if (typeof window !== 'undefined') {
-    if (location['state'] && !isNaN(location['state']['score'])) {
-      score = location['state']['score'];
-      if (location['state']['results']) {
-        results.push(...location['state']['results']);
-      }
-    }
-    if (score < 0) {
-      navigate('/');
-      return <></>;
-    }
-  }
+const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
+  const score = data.score;
+  const results = data.results;
 
-  const scoreMessage = scoreCutoffs.find(cutoff => cutoff[0] <= score)[1];
+  const scoreMessage = scoreCutoffs.find((cutoff) => cutoff[0] <= score)[1];
   const shareUrl = `https://rebigulator.org/challenge/?${
     typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
   }`;
@@ -93,15 +91,17 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
                 {results.map((res, i) => (
                   <div>
                     <p>
-                      {i + 1}) {res.episodeTitle} - {res.points} Points
+                      {i + 1}) {episodes[res.e].label} - {res.s} Points
                     </p>
                   </div>
                 ))}
               </div>
             )}
           </ResultsDiv>
-          <MainButtonLink to="/game/">Want to try again?</MainButtonLink>
-          <h3 style={{ marginTop: '2rem'}}>Share your score!</h3>
+          <Link href="/game/">
+            <MainButtonLink>Want to try again?</MainButtonLink>
+          </Link>
+          <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
           <ShareBox>
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
               <FacebookIcon size={32} round={true} />
@@ -136,6 +136,53 @@ const ResultPage: React.FC<{ location: Location }> = ({ location }) => {
       </Container>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
+  params,
+}) => {
+  const { data } = params!;
+
+  console.log(data);
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  let parsedData = undefined;
+
+  try {
+    parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
+  } catch (ignored) {
+    console.log(ignored);
+    return {
+      notFound: true,
+    };
+  }
+
+  console.log(parsedData);
+
+  if (!parsedData) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      data: parsedData,
+    },
+    revalidate: 3600,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
 };
 
 export default ResultPage;

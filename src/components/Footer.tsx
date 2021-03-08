@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
-import { MainOutboundLink } from './MainLink';
+import { MainLink } from './MainLink';
 
 const FooterWrapper = styled.footer`
   justify-content: center;
@@ -26,11 +26,11 @@ const Footer: React.FC = () => (
     <ContainerFlex>
       <p>
         Powered by{' '}
-        <MainOutboundLink href="https://frinkiac.com/">Frinkiac</MainOutboundLink>{' '}
+        <MainLink href="https://frinkiac.com/">Frinkiac</MainLink>{' '}
       </p>
       <p>
         Made by{' '}
-        <MainOutboundLink href="https://matthewmiller.dev/">Me4502</MainOutboundLink>
+        <MainLink href="https://matthewmiller.dev/">Me4502</MainLink>
       </p>
     </ContainerFlex>
   </FooterWrapper>

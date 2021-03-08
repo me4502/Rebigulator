@@ -1,7 +1,7 @@
-import { Link } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
+import Link from 'next/link';
 
 const Nav = styled.nav`
   width: 100%;
@@ -12,7 +12,7 @@ const Nav = styled.nav`
   border-radius: 0;
 `;
 
-const HeaderLink = styled(Link)`
+const HeaderLink = styled.a`
   color: #ffce1a;
   font-size: 30px;
   line-height: 23px;
@@ -28,7 +28,9 @@ const Header: React.FC = () => (
   <Nav>
     <Container>
       <div>
-        <HeaderLink to="/">Rebigulator</HeaderLink>
+        <Link href="/" passHref>
+          <HeaderLink>Rebigulator</HeaderLink>
+        </Link>
       </div>
     </Container>
   </Nav>

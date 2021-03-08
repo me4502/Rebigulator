@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Link } from 'gatsby';
-import { OutboundLink } from 'gatsby-plugin-google-analytics';
+import Link from 'next/link'
 
 const MainLinkStyle = css`
   color: #1587cf;
@@ -11,11 +10,7 @@ const MainLinkStyle = css`
   }
 `;
 
-export const MainLink = styled(Link)`
-  ${MainLinkStyle}
-`;
-
-export const MainOutboundLink = styled(OutboundLink)`
+export const MainLink = styled.a`
   ${MainLinkStyle}
 `;
 
@@ -47,6 +42,6 @@ export const MainButton = styled.div`
   ${MainButtonStyle}
 `;
 
-export const MainButtonLink = styled(Link)`
+export const MainButtonLink = styled.button`
   ${MainButtonStyle}
 `;

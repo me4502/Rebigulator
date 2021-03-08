@@ -1,5 +1,4 @@
 import { Episode, Frame, Subtitle } from './types';
-import { NETLIFY_PREFIX } from '../util/routes';
 
 export interface RandomResponse {
   Episode: Episode;
@@ -9,7 +8,7 @@ export interface RandomResponse {
 
 export async function getRandom(): Promise<RandomResponse> {
   const data = (await (
-    await fetch(NETLIFY_PREFIX + 'functions/random', {
+    await fetch('/api/get-episode', {
       method: 'GET',
     })
   ).json()) as RandomResponse;
