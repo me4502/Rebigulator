@@ -1,4 +1,4 @@
 export interface QuestionResult {
-    e: number;
+    e: string;
     s: number;
 };

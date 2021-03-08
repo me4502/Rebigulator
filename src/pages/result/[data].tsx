@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Layout from '../../components/layout';
 import SEO from '../../components/seo';
 import { Container } from '../../components/Container';
@@ -25,11 +24,12 @@ import { QuestionResult } from '../../util/types';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
-const episodes = require('../../util/episodes.json') as {
-  value: string;
-  label: string;
-  data: undefined;
-}[];
+const episodes = new Map(
+  (require('../../util/episodes.json') as {
+    value: string;
+    label: string;
+  }[]).map(({ value, label }) => [value, label])
+);
 
 const CentreDiv = styled.div`
   text-align: center;
@@ -71,7 +71,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
   const results = data.results;
 
   const scoreMessage = scoreCutoffs.find((cutoff) => cutoff[0] <= score)[1];
-  const shareUrl = `https://rebigulator.org/challenge/?${
+  const shareUrl = `https://rebigulator.org/challenge/${
     typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
   }`;
 
@@ -89,9 +89,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
             {results.length > 0 && (
               <div>
                 {results.map((res, i) => (
-                  <div>
+                  <div key={`result-${i}`}>
                     <p>
-                      {i + 1}) {episodes[res.e].label} - {res.s} Points
+                      {i + 1}) {episodes.get(res.e)} - {res.s} Points
                     </p>
                   </div>
                 ))}
@@ -143,8 +143,6 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
 }) => {
   const { data } = params!;
 
-  console.log(data);
-
   if (!data) {
     return {
       notFound: true,
@@ -156,13 +154,10 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
   try {
     parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
   } catch (ignored) {
-    console.log(ignored);
     return {
       notFound: true,
     };
   }
-
-  console.log(parsedData);
 
   if (!parsedData) {
     return {
