@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "author": "Matthew Miller <@the_me4502>",
   "dependencies": {
+    "@svgr/webpack": "^5.5.0",
     "got": "^11.8.2",
     "next": "^10.0.8",
     "react": "^17.0.1",

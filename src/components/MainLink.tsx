@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
 const MainLinkStyle = css`
-  color: #1587cf;
+  color: var(--theme-primary);
   text-decoration: none;
 
   :hover {
-    text-shadow: 0px 0px 1px #1587cf;
+    text-shadow: 0px 0px 1px var(--theme-primary);
   }
 `;
 
@@ -15,7 +15,7 @@ export const MainLink = styled.a`
 
 const MainButtonStyle = css`
   border-radius: 2px;
-  background-color: #1587cf;
+  background-color: var(--theme-primary);
   color: #fff;
   transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   padding: 0.6rem;
@@ -30,9 +30,9 @@ const MainButtonStyle = css`
   :active,
   :focus,
   &.active {
-    background-color: #1587cf;
+    background-color: var(--theme-primary);
     color: #fff;
-    box-shadow: 0 3px 5px 0px #1587cf66;
+    box-shadow: 0 3px 5px 0px var(--theme-primary);
   }
 `;
 

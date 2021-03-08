@@ -9,5 +9,6 @@
 
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #D1DEE5;
+  background-color: var(--theme-background);
+  color: var(--theme-text);
 }

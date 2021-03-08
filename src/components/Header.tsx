@@ -7,13 +7,13 @@ const Nav = styled.nav`
   width: 100%;
   min-height: 50px;
   margin: 0;
-  background: #1587cf;
+  background: var(--theme-primary);
   border: 0;
   border-radius: 0;
 `;
 
 const HeaderLink = styled.a`
-  color: #ffce1a;
+  color: var(--theme-secondary);
   font-size: 30px;
   line-height: 23px;
   text-decoration: none;
