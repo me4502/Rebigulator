@@ -58,7 +58,7 @@ export const SEO: React.FC<SEOPropTypes> = ({
   title,
   keywords = [],
   type = 'website',
-  image,
+  image = { url: `https://rebigulator.org/logo.png`, width: 512, height: 512 },
 }) => {
   const metaDescription = description || 'A Frinkiac-Powered Simpsons trivia game.';
 
