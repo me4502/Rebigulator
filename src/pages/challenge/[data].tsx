@@ -20,15 +20,20 @@ interface ChallengePageProps {
 
 const ChallengePage: React.FC<ChallengePageProps> = ({ data }) => (
   <Layout>
-    <SEO title={`The Rebigulator | Simpsons Trivia Game`} />
+    <SEO
+      title={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game`}
+      description={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game powered by Frinkiac`}
+    />
     <Container>
       <CentreDiv>
-        <h1>Think you can beat a score of {data.score}?</h1>
-        <h2>
-          <Link href="/">
-            <MainButtonLink>Get started here</MainButtonLink>
-          </Link>
+        <h1>The Rebigulator is a fast-paced quote-based Simpsons Trivia Game</h1>
+        <h2 style={{ marginBottom: '3rem' }}>
+          Guess the episode title from a quote, with an image hint
         </h2>
+        <h2>You've been challenged! Think you can beat a score of {data.score}?</h2>
+        <Link href="/game/">
+          <MainButtonLink>Let's do it!</MainButtonLink>
+        </Link>
       </CentreDiv>
     </Container>
   </Layout>
