@@ -101,7 +101,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
     onQuestionFinish(0, data.Episode);
   };
 
-  const checkForCorrect = (value: ValueType<OptionTypeBase>) => {
+  const checkForCorrect = (value: ValueType<OptionTypeBase, false>) => {
     if (value['value'] === data.Episode.Key) {
       onQuestionFinish(secondsLeft, data.Episode);
     } else {
