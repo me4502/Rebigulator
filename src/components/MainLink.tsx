@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 const MainLinkStyle = css`
   color: var(--theme-primary);
   text-decoration: none;
+  font-weight: bold;
 
   :hover {
     text-shadow: 0px 0px 1px var(--theme-primary);
@@ -17,7 +18,7 @@ const MainButtonStyle = css`
   border-radius: 2px;
   background-color: var(--theme-primary);
   color: #fff;
-  transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out;
   padding: 0.6rem;
   cursor: pointer;
   border: none;
@@ -30,9 +31,7 @@ const MainButtonStyle = css`
   :active,
   :focus,
   &.active {
-    background-color: var(--theme-primary);
-    color: #fff;
-    box-shadow: 0 3px 5px 0px var(--theme-primary);
+    box-shadow: 0 0 5px 2px var(--theme-tertiary) inset;
   }
 `;
 

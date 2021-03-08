@@ -18,7 +18,7 @@ const BannerImage = styled(BrandSvg)`
     fill: var(--theme-text);
   }
 
-  path.brand_svg__cls-11 {
+  path.brand_svg__cls-1 {
     fill: var(--theme-primary);
   }
 `;
