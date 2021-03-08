@@ -26,8 +26,8 @@ const TIME_PER_SLIDE = 60;
 
 const LinesBox = styled.div`
   font-family: 'akbarplain';
-  border: 1px solid var(--theme-secondary);
-  background: var(--theme-tertiary);
+  border: 1px solid var(--theme-tertiary);
+  background: var(--theme-background);
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 5px;

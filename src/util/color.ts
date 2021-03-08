@@ -7,18 +7,18 @@ export interface Theme {
 }
 
 export const LIGHT_THEME: Theme = {
-  background: '#D1DEE5',
-  primary: '#1587cf',
-  secondary: '#ffce1a',
-  tertiary: '#e8eef2',
+  background: '#FFFFFF',
+  primary: '#70D1FE',
+  secondary: '#FED90F',
+  tertiary: '#424F46',
   text: '#000',
 };
 
 export const DARK_THEME: Theme = {
   ...LIGHT_THEME,
-//   primary: '#1587cf',
-//   secondary: '#ffce1a',
-//   tertiary: '#17110d',
-//   background: '#121212',
-//   text: '#ddd'
+  background: '#121212',
+  primary: '#1587cf',
+  secondary: '#ffce1a',
+  tertiary: '#bdb0b9',
+  text: '#ddd',
 };
