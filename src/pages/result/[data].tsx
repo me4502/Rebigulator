@@ -54,10 +54,10 @@ const ShareBox = styled.div`
 `;
 
 const scoreCutoffs = [
-  [300, `Incredible! You're a Simpsons export!`],
-  [200, 'Wow! Good job!'],
-  [100, 'Decent effort!'],
-  [50, `You're getting there!`],
+  [400, `Incredible! You're a Simpsons expert!`],
+  [250, 'Wow! Good job!'],
+  [150, 'Decent effort!'],
+  [75, `You're getting there!`],
   [0, 'Better luck next time!'],
   [-100, ''],
 ] as [number, string][];

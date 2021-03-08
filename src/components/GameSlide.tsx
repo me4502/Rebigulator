@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getRandom, RandomResponse } from '../frinkiac/frinkiacAccess';
 import styled from 'styled-components';
-import { ValueType, OptionTypeBase, createFilter } from 'react-select';
-import AsyncSelect from 'react-select/async';
 import LoadingSpinner from './LoadingSpinner';
 import { Episode } from '../frinkiac/types';
 import { MainButton } from './MainLink';
@@ -64,6 +62,66 @@ const SecondsCounter = styled.p`
   font-family: 'akbarplain';
 `;
 
+const MultiChoiceGrid = styled.div`
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  grid-gap: 4px;
+
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+function getRandomEpisode(ignore: string): string {
+  let episode = undefined;
+  do {
+    episode = episodes[Math.floor(Math.random() * episodes.length)].label;
+  } while (episode === ignore);
+  return episode;
+}
+
+interface MultiChoiceBoxProps {
+  choices: string[];
+  onClick: (value: string) => void;
+}
+
+const boxColors = ['#1587cf', '#cf5615', '#88cf15', '#5c15cf'];
+
+const MultiChoiceBox: React.FC<MultiChoiceBoxProps> = ({
+  choices,
+  onClick,
+}) => {
+  return (
+    <MultiChoiceGrid>
+      {choices.map((choice, i) => (
+        <MainButton
+          key={`choice-${i}`}
+          onClick={() => onClick(choice)}
+          style={{ backgroundColor: boxColors[i] }}
+        >
+          {choice}
+        </MainButton>
+      ))}
+    </MultiChoiceGrid>
+  );
+};
+
+function shuffle<T>(a: T[]): T[] {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   onQuestionFinish,
   onFail,
@@ -74,9 +132,6 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
     TIME_PER_SLIDE - handicap
   );
   const [showImage, setShowImage] = useState<boolean>(false);
-  const filter = createFilter({
-    ignoreAccents: false,
-  });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -101,22 +156,31 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
     onQuestionFinish(0, data.Episode);
   };
 
-  const checkForCorrect = (value: ValueType<OptionTypeBase, false>) => {
-    if (value['value'] === data.Episode.Key) {
+  const checkForCorrect = (value: string) => {
+    if (value === data.Episode.Title) {
       onQuestionFinish(secondsLeft, data.Episode);
     } else {
-      onFail('Wrong! Try again...');
+      onFail('Wrong! Try again... -20');
+      setSecondsLeft(secondsLeft - 20);
     }
   };
 
-  const loadOptions = async (input: string) =>
-    episodes.filter(ep => filter(ep, input));
+  const choices = useMemo(
+    () =>
+      shuffle([
+        getRandomEpisode(data.Episode.Title),
+        getRandomEpisode(data.Episode.Title),
+        getRandomEpisode(data.Episode.Title),
+        data.Episode.Title,
+      ]),
+    [data.Episode.Id]
+  );
 
   return (
     <GameBoard>
       <SecondsCounter>{secondsLeft}</SecondsCounter>
       <LinesBox>
-        {data.Subtitles.map(sub => (
+        {data.Subtitles.map((sub) => (
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </LinesBox>
@@ -128,11 +192,8 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
         )}
         <MainButton onClick={onSkip}>Skip</MainButton>
       </ButtonBox>
-      <AsyncSelect
-        loadOptions={loadOptions}
-        onChange={checkForCorrect}
-        placeholder={'Enter an episode name...'}
-      />
+      <SecondsCounter>Which episode is it?</SecondsCounter>
+      <MultiChoiceBox choices={choices} onClick={checkForCorrect} />
       {showImage && (
         <HintImg
           src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
@@ -157,10 +218,10 @@ export const GameSlide: React.FC<GameSlideProps> = ({
 
   useEffect(() => {
     getRandom()
-      .then(data => {
+      .then((data) => {
         setData(data);
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   }, []);
 
   if (data) {
