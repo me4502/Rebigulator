@@ -39,8 +39,6 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
 }) => {
   const { data } = params!;
 
-  console.log(data);
-
   if (!data) {
     return {
       notFound: true,
@@ -52,13 +50,10 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
   try {
     parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
   } catch (ignored) {
-    console.log(ignored);
     return {
       notFound: true,
     };
   }
-
-  console.log(parsedData);
 
   if (!parsedData) {
     return {

@@ -42,7 +42,10 @@ const GameHandler: React.FC = () => {
     } else {
       setHandicap(-points);
     }
-    results.push({ e: episode.EpisodeNumber, s: points });
+
+    console.log(episode);
+
+    results.push({ e: episode.Key, s: points });
     setResults(results);
     const newQuestion = questionNumber + 1;
     if (newQuestion < QUESTION_COUNT) {
