@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import Link from 'next/link'
 
 const MainLinkStyle = css`
   color: #1587cf;

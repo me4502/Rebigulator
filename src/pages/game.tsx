@@ -10,7 +10,6 @@ import { QuestionResult } from '../util/types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-import pako from 'pako';
 
 toast.configure();
 
@@ -42,8 +41,6 @@ const GameHandler: React.FC = () => {
     } else {
       setHandicap(-points);
     }
-
-    console.log(episode);
 
     results.push({ e: episode.Key, s: points });
     setResults(results);
