@@ -33,7 +33,7 @@ const IndexPage: React.FC = () => (
     <Container>
       <BannerImage />
       <CentreDiv>
-        <h1>The Rebigulator is a quote-based Simpsons Trivia Game</h1>
+        <h1>The Rebigulator is a fast-paced quote-based Simpsons Trivia Game</h1>
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
