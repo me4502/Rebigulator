@@ -5,15 +5,8 @@
   "version": "1.0.0",
   "author": "Matthew Miller <@the_me4502>",
   "dependencies": {
-    "encoding": "^0.1.13",
-    "gatsby": "^3.0.3",
-    "gatsby-plugin-google-analytics": "^3.0.0",
-    "gatsby-plugin-manifest": "^3.0.0",
-    "gatsby-plugin-netlify": "^3.0.0",
-    "gatsby-plugin-react-helmet": "^4.0.0",
-    "gatsby-source-filesystem": "^3.0.0",
-    "netlify-lambda": "^2.0.3",
-    "prop-types": "^15.7.2",
+    "got": "^11.8.2",
+    "next": "^10.0.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
@@ -23,31 +16,23 @@
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
+    "@types/node": "^14.14.32",
     "@types/react": "^17.0.3",
     "@types/react-helmet": "^6.1.0",
     "@types/react-select": "^4.0.13",
     "@types/styled-components": "^5.1.7",
-    "concurrently": "^6.0.0",
-    "gatsby-plugin-react-helmet-canonical-urls": "^1.4.0",
-    "gatsby-plugin-robots-txt": "^1.5.5",
-    "gatsby-plugin-sitemap": "^3.0.0",
-    "gatsby-plugin-styled-components": "^4.0.0",
-    "http-proxy-middleware": "^1.0.6",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build && yarn build:lambda",
-    "build:lambda": "netlify-lambda build lambda",
-    "develop": "concurrently \"gatsby develop\" \"yarn develop:lambda\"",
-    "develop:lambda": "netlify-lambda serve lambda",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {

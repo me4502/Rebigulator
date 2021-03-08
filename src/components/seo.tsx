@@ -7,7 +7,6 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { useStaticQuery, graphql } from 'gatsby';
 
 export interface SEOImageProps {
   height?: number;
@@ -61,22 +60,7 @@ export const SEO: React.FC<SEOPropTypes> = ({
   type = 'website',
   image,
 }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-            siteUrl
-          }
-        }
-      }
-    `
-  );
-
-  const metaDescription = description || site.siteMetadata.description;
+  const metaDescription = description || 'A Frinkiac-Powered Simpsons trivia game.';
 
   return (
     <Helmet
@@ -84,7 +68,7 @@ export const SEO: React.FC<SEOPropTypes> = ({
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | Rebigulator`}
       meta={[
         {
           name: `description`,
@@ -108,7 +92,7 @@ export const SEO: React.FC<SEOPropTypes> = ({
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: '@the_me4502',
         },
         {
           name: `twitter:title`,

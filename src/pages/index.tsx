@@ -5,6 +5,7 @@ import SEO from '../components/seo';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { MainButtonLink } from '../components/MainLink';
+import Link from 'next/link';
 
 const BannerImage = styled.img`
   max-width: 600px;
@@ -27,7 +28,9 @@ const IndexPage: React.FC = () => (
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
-        <MainButtonLink to="/game/">Get Started Now!</MainButtonLink>
+        <Link href="/game/">
+          <MainButtonLink>Get started now!</MainButtonLink>
+        </Link>
       </CentreDiv>
     </Container>
   </Layout>
