@@ -5,7 +5,7 @@ import { MainLink } from './MainLink';
 
 const FooterWrapper = styled.footer`
   justify-content: center;
-  border-top: 1px solid #FCFCFC;
+  border-top: 1px solid var(--theme-tertiary);
   padding: 10px 25px 40px;
   margin: 150px 0 0;
 `;
