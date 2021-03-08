@@ -29,11 +29,17 @@ const CentreDiv = styled.div`
 
 const IndexPage: React.FC = () => (
   <Layout>
-    <SEO title="The Rebigulator | Simpsons Trivia Game" />
+    <SEO
+      title="The Rebigulator | Simpsons Trivia Game"
+      description="The Rebigulator is an online fast-paced quote-based Simpsons trivia quiz game. Play now for free!"
+    />
     <Container>
       <BannerImage />
       <CentreDiv>
-        <h1>The Rebigulator is a fast-paced quote-based Simpsons Trivia Game</h1>
+        <h1>
+          The Rebigulator is an online fast-paced quote-based Simpsons Trivia
+          Quiz Game
+        </h1>
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
