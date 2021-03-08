@@ -1,4 +1,4 @@
 export interface QuestionResult {
-    episodeTitle: string;
-    points: number;
+    e: number;
+    s: number;
 };
