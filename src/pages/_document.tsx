@@ -2,6 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript, Html } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import Helmet, { HelmetData } from 'react-helmet';
+import { LIGHT_THEME } from '../util/color';
 
 const GA_TRACKING_ID = 'UA-39440889-5';
 
@@ -116,9 +117,9 @@ class MyDocument extends Document<{ helmet: HelmetData }> {
             href="/favicon-16x16.png"
           />
           <link rel="manifest" href="/manifest.json" />
-          <meta name="msapplication-TileColor" content="#1587cf" />
+          <meta name="msapplication-TileColor" content={LIGHT_THEME.primary} />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-          <meta name="theme-color" content="#1587cf" />
+          <meta name="theme-color" content={LIGHT_THEME.primary} />
 
           <link
             href="https://fonts.googleapis.com/css?family=Lato&display=block"

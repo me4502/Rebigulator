@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import LoadingSpinner from './LoadingSpinner';
 import { Episode } from '../frinkiac/types';
 import { MainButton } from './MainLink';
+import { LIGHT_THEME } from '../util/color';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -25,11 +26,11 @@ const TIME_PER_SLIDE = 60;
 
 const LinesBox = styled.div`
   font-family: 'akbarplain';
-  border: 1px solid #ffce1a;
-  background: #e8eef2;
+  border: 1px solid var(--theme-secondary);
+  background: var(--theme-tertiary);
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 14pt;
   font-weight: 600;
 `;
@@ -58,7 +59,7 @@ const ButtonBox = styled.div`
 
 const SecondsCounter = styled.p`
   font-size: 18pt;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1.0rem 0;
   font-family: 'akbarplain';
 `;
 
@@ -93,7 +94,7 @@ interface MultiChoiceBoxProps {
   onClick: (value: string) => void;
 }
 
-const boxColors = ['#1587cf', '#cf5615', '#88cf15', '#5c15cf'];
+const boxColors = [LIGHT_THEME.primary, '#cf5615', '#88cf15', '#5c15cf'];
 
 const MultiChoiceBox: React.FC<MultiChoiceBoxProps> = ({
   choices,
@@ -196,7 +197,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
         )}
         <MainButton onClick={onSkip}>Skip</MainButton>
       </ButtonBox>
-      <SecondsCounter>Which episode is it?</SecondsCounter>
+      <SecondsCounter style={{ marginTop: '2rem' }}>Which episode is it?</SecondsCounter>
       <MultiChoiceBox choices={choices} onClick={checkForCorrect} />
       {showImage && (
         <HintImg

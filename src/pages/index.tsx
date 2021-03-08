@@ -6,12 +6,21 @@ import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { MainButtonLink } from '../components/MainLink';
 import Link from 'next/link';
+import BrandSvg from '../images/brand.svg';
 
-const BannerImage = styled.img`
+const BannerImage = styled(BrandSvg)`
   max-width: 600px;
   width: 80%;
   display: block;
   margin: 2rem auto;
+
+  path:not(.brand_svg__cls-1) {
+    fill: var(--theme-text);
+  }
+
+  path.brand_svg__cls-11 {
+    fill: var(--theme-primary);
+  }
 `;
 
 const CentreDiv = styled.div`
@@ -22,7 +31,7 @@ const IndexPage: React.FC = () => (
   <Layout>
     <SEO title="The Rebigulator | Simpsons Trivia Game" />
     <Container>
-      <BannerImage src="/brand.svg" alt="The Rebigulator" loading={'eager'} />
+      <BannerImage />
       <CentreDiv>
         <h1>The Rebigulator is a quote-based Simpsons Trivia Game</h1>
         <h2 style={{ marginBottom: '3rem' }}>
