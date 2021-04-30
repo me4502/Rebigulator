@@ -30,7 +30,7 @@ const Footer: React.FC = () => (
       </p>
       <p>
         Made by{' '}
-        <MainLink href="https://matthewmiller.dev/">Me4502</MainLink>
+        <MainLink href="https://madelinemiller.dev/">Me4502</MainLink>
       </p>
     </ContainerFlex>
   </FooterWrapper>
