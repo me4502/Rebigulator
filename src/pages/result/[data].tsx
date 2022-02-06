@@ -9,8 +9,6 @@ import {
   TwitterShareButton,
   TwitterIcon,
   WhatsappShareButton,
-  TelegramShareButton,
-  TelegramIcon,
   WhatsappIcon,
   RedditShareButton,
   RedditIcon,
@@ -23,12 +21,16 @@ import { MainButtonLink } from '../../components/MainLink';
 import { QuestionResult } from '../../util/types';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import LinkIcon from '../../images/link.svg';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const episodes = new Map(
-  (require('../../util/episodes.json') as {
-    value: string;
-    label: string;
-  }[]).map(({ value, label }) => [value, label])
+  (
+    require('../../util/episodes.json') as {
+      value: string;
+      label: string;
+    }[]
+  ).map(({ value, label }) => [value, label])
 );
 
 const CentreDiv = styled.div`
@@ -52,6 +54,66 @@ const ShareBox = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
+
+const LinkShareWrapper = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+
+  width: 32px;
+  height: 38px;
+
+  margin: auto 0;
+
+  div {
+    width: 31px;
+    height: 31px;
+    margin-top: 2px;
+
+    border-radius: 100%;
+    background-color: gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const LinkShareButton: React.FC<{
+  url: string;
+  title?: string;
+  text?: string;
+}> = ({ url, title, text, children, ...props }) => {
+  const useSystemShare = typeof navigator !== 'undefined' && !!navigator.share;
+
+  const systemClickHandler = () => {
+    navigator.share({
+      url,
+      title,
+      text,
+    });
+  };
+
+  if (useSystemShare) {
+    return (
+      <LinkShareWrapper onClick={systemClickHandler} {...props}>
+        <div>{children}</div>
+      </LinkShareWrapper>
+    );
+  } else {
+    return (
+      <CopyToClipboard text={url}>
+        <LinkShareWrapper {...props}>
+          <div>{children}</div>
+        </LinkShareWrapper>
+      </CopyToClipboard>
+    );
+  }
+};
 
 const scoreCutoffs = [
   [400, `Incredible! You're a Simpsons expert!`],
@@ -115,9 +177,6 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
             <TwitterShareButton url={shareUrl} title={shareTitle}>
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
-            <TelegramShareButton url={shareUrl} title={shareTitle}>
-              <TelegramIcon size={32} round={true} />
-            </TelegramShareButton>
             <WhatsappShareButton url={shareUrl} title={shareTitle}>
               <WhatsappIcon size={32} round={true} />
             </WhatsappShareButton>
@@ -131,6 +190,14 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
             >
               <TumblrIcon size={32} round={true} />
             </TumblrShareButton>
+            <LinkShareButton
+              aria-label="link"
+              url={shareUrl}
+              title={shareTitle}
+              text={shareDescription}
+            >
+              <LinkIcon width={16} height={16} alt={'Link share icon'} />
+            </LinkShareButton>
           </ShareBox>
         </CentreDiv>
       </Container>

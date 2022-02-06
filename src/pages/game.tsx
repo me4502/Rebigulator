@@ -27,6 +27,7 @@ const GameHandler: React.FC = () => {
   const [results, setResults] = useState<QuestionResult[]>([]);
   const [handicap, setHandicap] = useState<number>(0);
   const [questionNumber, setQuestionNumber] = useState<number>(0);
+  const [gameEnded, setGameEnded] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -48,6 +49,7 @@ const GameHandler: React.FC = () => {
     if (newQuestion < QUESTION_COUNT) {
       setQuestionNumber(newQuestion);
     } else {
+      setGameEnded(true);
       router.push({
         pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
       });
@@ -73,6 +75,7 @@ const GameHandler: React.FC = () => {
           onQuestionFinish={onQuestionFinish}
           handicap={handicap}
           onFail={onFail}
+          gameEnded={gameEnded}
         />
       </Container>
     ),

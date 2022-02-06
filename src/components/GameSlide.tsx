@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import LoadingSpinner from './LoadingSpinner';
 import { Episode } from '../frinkiac/types';
 import { MainButton } from './MainLink';
-import { LIGHT_THEME } from '../util/color';
+import { MultiChoiceBox } from './MultiChoiceBox';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -16,9 +16,10 @@ interface GameSlideProps {
   onQuestionFinish: (points: number, episode: Episode) => void;
   onFail: (message: string) => void;
   handicap: number;
+  gameEnded: boolean;
 }
 
-interface GameSlideLogicProps extends GameSlideProps {
+interface GameSlideLogicProps extends Omit<GameSlideProps, 'gameEnded'> {
   data: RandomResponse;
 }
 
@@ -59,26 +60,8 @@ const ButtonBox = styled.div`
 
 const SecondsCounter = styled.p`
   font-size: 18pt;
-  margin: 0.5rem 0 1.0rem 0;
+  margin: 0.5rem 0 1rem 0;
   font-family: 'akbarplain';
-`;
-
-const MultiChoiceGrid = styled.div`
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  grid-gap: 4px;
-
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 function getRandomEpisode(ignore: string): string {
@@ -88,32 +71,6 @@ function getRandomEpisode(ignore: string): string {
   } while (episode === ignore);
   return episode;
 }
-
-interface MultiChoiceBoxProps {
-  choices: string[];
-  onClick: (value: string) => void;
-}
-
-const boxColors = [LIGHT_THEME.primary, '#cf5615', '#88cf15', '#5c15cf'];
-
-const MultiChoiceBox: React.FC<MultiChoiceBoxProps> = ({
-  choices,
-  onClick,
-}) => {
-  return (
-    <MultiChoiceGrid>
-      {choices.map((choice, i) => (
-        <MainButton
-          key={`choice-${i}`}
-          onClick={() => onClick(choice)}
-          style={{ backgroundColor: boxColors[i] }}
-        >
-          {choice}
-        </MainButton>
-      ))}
-    </MultiChoiceGrid>
-  );
-};
 
 function shuffle<T>(a: T[]): T[] {
   for (let i = a.length - 1; i > 0; i--) {
@@ -197,7 +154,9 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
         )}
         <MainButton onClick={onSkip}>Skip</MainButton>
       </ButtonBox>
-      <SecondsCounter style={{ marginTop: '2rem' }}>Which episode is it?</SecondsCounter>
+      <SecondsCounter style={{ marginTop: '2rem' }}>
+        Which episode is it?
+      </SecondsCounter>
       <MultiChoiceBox choices={choices} onClick={checkForCorrect} />
       {showImage && (
         <HintImg
@@ -218,6 +177,7 @@ export const GameSlide: React.FC<GameSlideProps> = ({
   onQuestionFinish,
   handicap,
   onFail,
+  gameEnded = false
 }) => {
   const [data, setData] = useState<RandomResponse>(undefined);
 
@@ -226,10 +186,10 @@ export const GameSlide: React.FC<GameSlideProps> = ({
       .then((data) => {
         setData(data);
       })
-      .catch((e) => console.log(e));
+      .catch(console.error);
   }, []);
 
-  if (data) {
+  if (data && !gameEnded) {
     return (
       <GameSlideLogic
         onQuestionFinish={onQuestionFinish}
@@ -241,7 +201,7 @@ export const GameSlide: React.FC<GameSlideProps> = ({
   } else {
     return (
       <LoadingBox>
-        <p>Loading your questions...</p>
+        <p>Loading...</p>
         <LoadingSpinner />
       </LoadingBox>
     );

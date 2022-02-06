@@ -5,23 +5,25 @@
   "version": "1.0.0",
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
-    "@svgr/webpack": "^5.5.0",
-    "got": "^11.8.2",
-    "next": "^11.1.0",
+    "@svgr/webpack": "^6.2.1",
+    "got": "^12.0.1",
+    "next": "^12.0.10",
     "react": "^17.0.2",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-share": "^4.4.0",
     "react-toastify": "^7.0.4",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.32",
-    "@types/react": "^17.0.17",
-    "@types/react-helmet": "^6.1.2",
-    "@types/styled-components": "^5.1.12",
-    "prettier": "^2.3.2",
-    "typescript": "^4.3.5"
+    "@types/react": "^17.0.39",
+    "@types/react-copy-to-clipboard": "^5.0.2",
+    "@types/react-helmet": "^6.1.5",
+    "@types/styled-components": "^5.1.22",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
   },
   "keywords": [
     "gatsby"
