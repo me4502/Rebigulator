@@ -33,7 +33,7 @@ const GameHandler: React.FC = () => {
 
   const onQuestionFinish = useCallback((points: number, episode: Episode) => {
     if (points > 0) {
-      setScore(score + points);
+      setScore(s => s + points);
     }
     if (points >= 0) {
       if (handicap != 0) {

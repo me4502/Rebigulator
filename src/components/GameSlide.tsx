@@ -98,7 +98,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
         onQuestionFinish(0, data.Episode);
         return;
       }
-      setSecondsLeft(timeRemaining);
+      setSecondsLeft(s => s - 1);
     }, 1000);
     return () => {
       clearTimeout(timeout);
@@ -106,7 +106,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
   }, [secondsLeft, data.Episode, onQuestionFinish]);
 
   const onShowImage = () => {
-    setSecondsLeft(secondsLeft - 10);
+    setSecondsLeft(s => s - 10);
     setShowImage(true);
   };
 
@@ -123,7 +123,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
       onQuestionFinish(secondsLeft, data.Episode);
     } else {
       onFail('Wrong! Try again... -20');
-      setSecondsLeft(secondsLeft - 20);
+      setSecondsLeft(s => s - 20);
     }
   };
 
