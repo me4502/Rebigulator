@@ -103,7 +103,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, [secondsLeft]);
+  }, [secondsLeft, data.Episode, onQuestionFinish]);
 
   const onShowImage = () => {
     setSecondsLeft(secondsLeft - 10);
@@ -135,7 +135,7 @@ const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
         getRandomEpisode(data.Episode.Title),
         data.Episode.Title,
       ]),
-    [data.Episode.Id]
+    [data.Episode.Title]
   );
 
   return (

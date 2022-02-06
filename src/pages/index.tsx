@@ -43,7 +43,7 @@ const IndexPage: React.FC = () => (
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
-        <Link href="/game/">
+        <Link href="/game/" passHref>
           <MainButtonLink>Get started now!</MainButtonLink>
         </Link>
       </CentreDiv>

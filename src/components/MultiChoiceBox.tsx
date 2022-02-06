@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from "styled-components";
 import { LIGHT_THEME } from "../util/color";
 import { MainButton } from "./MainLink";

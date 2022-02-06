@@ -31,7 +31,7 @@ const ChallengePage: React.FC<ChallengePageProps> = ({ data }) => (
           Guess the episode title from a quote, with an image hint
         </h2>
         <h2>You've been challenged! Think you can beat a score of {data.score}?</h2>
-        <Link href="/game/">
+        <Link href="/game/" passHref>
           <MainButtonLink>Let's do it!</MainButtonLink>
         </Link>
       </CentreDiv>

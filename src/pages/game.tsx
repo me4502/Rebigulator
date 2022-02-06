@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -31,7 +31,7 @@ const GameHandler: React.FC = () => {
 
   const router = useRouter();
 
-  const onQuestionFinish = (points: number, episode: Episode) => {
+  const onQuestionFinish = useCallback((points: number, episode: Episode) => {
     if (points > 0) {
       setScore(score + points);
     }
@@ -54,7 +54,7 @@ const GameHandler: React.FC = () => {
         pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
       });
     }
-  };
+  }, [handicap, results, score, router, questionNumber]);
 
   const onFail = (message: string) => {
     toast(message, {
@@ -79,7 +79,7 @@ const GameHandler: React.FC = () => {
         />
       </Container>
     ),
-    [questionNumber]
+    [questionNumber, gameEnded, handicap, onQuestionFinish, score]
   );
 
   return <Slide />;

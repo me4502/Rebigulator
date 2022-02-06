@@ -160,7 +160,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
               </div>
             )}
           </ResultsDiv>
-          <Link href="/game/">
+          <Link href="/game/" passHref>
             <MainButtonLink>Want to try again?</MainButtonLink>
           </Link>
           <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
