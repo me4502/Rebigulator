@@ -122,7 +122,7 @@ class MyDocument extends Document<{ helmet: HelmetData }> {
           <meta name="theme-color" content={LIGHT_THEME.primary} />
 
           <link
-            href="https://fonts.googleapis.com/css?family=Lato&display=block"
+            href="https://fonts.googleapis.com/css?family=Lato&display=optional"
             rel="stylesheet"
           />
           <script
