@@ -7,11 +7,9 @@ import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { Episode } from '../frinkiac/types';
 import { QuestionResult } from '../util/types';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-
-toast.configure();
 
 const QUESTION_COUNT = 10;
 
@@ -31,30 +29,33 @@ const GameHandler: React.FC = () => {
 
   const router = useRouter();
 
-  const onQuestionFinish = useCallback((points: number, episode: Episode) => {
-    if (points > 0) {
-      setScore(s => s + points);
-    }
-    if (points >= 0) {
-      if (handicap != 0) {
-        setHandicap(0);
+  const onQuestionFinish = useCallback(
+    (points: number, episode: Episode) => {
+      if (points > 0) {
+        setScore((s) => s + points);
       }
-    } else {
-      setHandicap(-points);
-    }
+      if (points >= 0) {
+        if (handicap != 0) {
+          setHandicap(0);
+        }
+      } else {
+        setHandicap(-points);
+      }
 
-    results.push({ e: episode.Key, s: points });
-    setResults(results);
-    const newQuestion = questionNumber + 1;
-    if (newQuestion < QUESTION_COUNT) {
-      setQuestionNumber(newQuestion);
-    } else {
-      setGameEnded(true);
-      router.push({
-        pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
-      });
-    }
-  }, [handicap, results, score, router, questionNumber]);
+      results.push({ e: episode.Key, s: points });
+      setResults(results);
+      const newQuestion = questionNumber + 1;
+      if (newQuestion < QUESTION_COUNT) {
+        setQuestionNumber(newQuestion);
+      } else {
+        setGameEnded(true);
+        router.push({
+          pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
+        });
+      }
+    },
+    [handicap, results, score, router, questionNumber]
+  );
 
   const onFail = (message: string) => {
     toast(message, {
@@ -64,21 +65,22 @@ const GameHandler: React.FC = () => {
   };
 
   const Slide = useMemo(
-    () => () => (
-      <Container>
-        <ScoreBox>
-          <span>
-            Score: {score} &#x2E31; Round: {questionNumber + 1}
-          </span>
-        </ScoreBox>
-        <GameSlide
-          onQuestionFinish={onQuestionFinish}
-          handicap={handicap}
-          onFail={onFail}
-          gameEnded={gameEnded}
-        />
-      </Container>
-    ),
+    () => () =>
+      (
+        <Container>
+          <ScoreBox>
+            <span>
+              Score: {score} &#x2E31; Round: {questionNumber + 1}
+            </span>
+          </ScoreBox>
+          <GameSlide
+            onQuestionFinish={onQuestionFinish}
+            handicap={handicap}
+            onFail={onFail}
+            gameEnded={gameEnded}
+          />
+        </Container>
+      ),
     [questionNumber, gameEnded, handicap, onQuestionFinish, score]
   );
 
@@ -89,6 +91,7 @@ const GamePage: React.FC = () => {
   return (
     <Layout>
       <SEO title="Play | The Rebigulator" />
+      <ToastContainer />
       <GameHandler />
     </Layout>
   );
