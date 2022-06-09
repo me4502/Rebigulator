@@ -13,5 +13,10 @@ export async function getRandom(): Promise<RandomResponse> {
     })
   ).json()) as RandomResponse;
 
+  // Avoid returning frames that are from the first 75 seconds (intro sequence)
+  if (data.Frame.Timestamp < (75 * 24)) {
+    return getRandom();
+  }
+
   return data;
 }
