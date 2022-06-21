@@ -6,7 +6,7 @@
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
     "@svgr/webpack": "^6.2.1",
-    "got": "^12.0.4",
+    "got": "^12.1.0",
     "next": "^12.1.6",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.1.0",
