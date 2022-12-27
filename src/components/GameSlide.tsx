@@ -29,9 +29,9 @@ const LinesBox = styled.div`
   font-family: 'akbarplain';
   border: 1px solid var(--theme-tertiary);
   background: var(--theme-background);
-  padding: 0.5rem;
+  padding: 0.25rem;
   margin-bottom: 0.5rem;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 14pt;
   font-weight: 600;
 `;

@@ -5,7 +5,6 @@ import SEO from '../../components/seo';
 import { Container } from '../../components/Container';
 import styled from 'styled-components';
 import { MainButtonLink } from '../../components/MainLink';
-import Link from 'next/link';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
 const CentreDiv = styled.div`
@@ -35,9 +34,7 @@ const ChallengePage: FC<ChallengePageProps> = ({ data }) => (
         <h2>
           You've been challenged! Think you can beat a score of {data.score}?
         </h2>
-        <Link href="/game/" passHref>
-          <MainButtonLink>Let's do it!</MainButtonLink>
-        </Link>
+        <MainButtonLink href="/game/">Let's do it!</MainButtonLink>
       </CentreDiv>
     </Container>
   </Layout>

@@ -5,7 +5,6 @@ import SEO from '../components/seo';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
 import { MainButtonLink } from '../components/MainLink';
-import Link from 'next/link';
 import BrandSvg from '../images/brand.svg';
 
 const BannerImage = styled(BrandSvg)`
@@ -43,9 +42,7 @@ const IndexPage: FC = () => (
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
-        <Link href="/game/" passHref>
-          <MainButtonLink>Get started now!</MainButtonLink>
-        </Link>
+        <MainButtonLink href="/game/">Get started now!</MainButtonLink>
       </CentreDiv>
     </Container>
   </Layout>

@@ -6,11 +6,12 @@
  */
 
 import type { FC, PropsWithChildren } from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
 
 import Header from './Header';
 import Footer from './Footer';
 import { LIGHT_THEME, DARK_THEME } from '../util/color';
-import Head from 'next/head';
 
 const COLOR_THEME_STYLES = `
 html {
@@ -19,6 +20,10 @@ html {
   --theme-secondary: ${LIGHT_THEME.secondary};
   --theme-tertiary: ${LIGHT_THEME.tertiary};
   --theme-text: ${LIGHT_THEME.text};
+  --theme-box-blue: ${LIGHT_THEME.boxes.blue};
+  --theme-box-orange: ${LIGHT_THEME.boxes.orange};
+  --theme-box-green: ${LIGHT_THEME.boxes.green};
+  --theme-box-purple: ${LIGHT_THEME.boxes.purple};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,9 +33,20 @@ html {
     --theme-secondary: ${DARK_THEME.secondary};
     --theme-tertiary: ${DARK_THEME.tertiary};
     --theme-text: ${DARK_THEME.text};
+    --theme-box-blue: ${DARK_THEME.boxes.blue};
+    --theme-box-orange: ${DARK_THEME.boxes.orange};
+    --theme-box-green: ${DARK_THEME.boxes.green};
+    --theme-box-purple: ${DARK_THEME.boxes.purple};
   }
 }
 `.replace(/[\n\r ]/g, '');
+
+const SiteWrapper = styled.div`
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+`;
 
 const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
@@ -38,9 +54,11 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
       <Head>
         <style>{COLOR_THEME_STYLES}</style>
       </Head>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <SiteWrapper>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </SiteWrapper>
     </>
   );
 };

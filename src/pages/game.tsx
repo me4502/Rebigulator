@@ -15,7 +15,7 @@ const QUESTION_COUNT = 10;
 
 const ScoreBox = styled.div`
   font-family: 'akbarplain';
-  padding: 2rem 1rem 0 1rem;
+  padding: 0rem 1rem 0 1rem;
   text-align: center;
   font-size: 20pt;
 `;

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled, { css } from 'styled-components';
 
 const MainLinkStyle = css`
@@ -10,6 +11,10 @@ const MainLinkStyle = css`
   }
 `;
 
+export const MainNextLink = styled(Link)`
+  ${MainLinkStyle}
+`;
+
 export const MainLink = styled.a`
   ${MainLinkStyle}
 `;
@@ -17,7 +22,7 @@ export const MainLink = styled.a`
 const MainButtonStyle = css`
   border-radius: 2px;
   background-color: var(--theme-primary);
-  color: #fff;
+  color: var(--theme-text);
   transition: box-shadow 0.15s ease-in-out;
   padding: 0.6rem;
   cursor: pointer;
@@ -35,11 +40,11 @@ const MainButtonStyle = css`
   }
 `;
 
-export const MainButton = styled.div`
+export const MainButton = styled.button`
   cursor: pointer;
   ${MainButtonStyle}
 `;
 
-export const MainButtonLink = styled.button`
+export const MainButtonLink = styled(Link)`
   ${MainButtonStyle}
 `;

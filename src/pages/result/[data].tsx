@@ -19,7 +19,6 @@ import {
 } from 'react-share';
 import { MainButtonLink } from '../../components/MainLink';
 import { type QuestionResult } from '../../util/types';
-import Link from 'next/link';
 import { type GetStaticPaths, type GetStaticProps } from 'next';
 import LinkIcon from '../../images/link.svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -162,9 +161,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
               </div>
             )}
           </ResultsDiv>
-          <Link href="/game/" passHref>
-            <MainButtonLink>Want to try again?</MainButtonLink>
-          </Link>
+          <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
           <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
           <ShareBox>
             <FacebookShareButton url={shareUrl} quote={shareDescription}>
