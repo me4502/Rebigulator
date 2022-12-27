@@ -50,5 +50,6 @@
   },
   "bugs": {
     "url": "https://github.com/me4502/Rebigulator/issues"
-  }
+  },
+  "packageManager": "yarn@3.3.1"
 }
