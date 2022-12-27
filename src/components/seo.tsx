@@ -5,13 +5,14 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
+import type { FC } from 'react';
 
 export interface SEOImageProps {
   height?: number;
   url: string;
   width?: number;
+  alt?: string;
 }
 
 export interface SEOPropTypes {
@@ -19,7 +20,7 @@ export interface SEOPropTypes {
   lang?: string;
   image?: SEOImageProps;
   keywords?: string[];
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: any[];
   title: string;
   type?: string;
@@ -51,69 +52,48 @@ export function createImageMeta(
   }
 }
 
-export const SEO: React.FC<SEOPropTypes> = ({
+export const SEO: FC<SEOPropTypes> = ({
   description,
-  lang = 'en',
-  meta = [],
   title,
-  keywords = [],
   type = 'website',
   image = { url: `https://rebigulator.org/logo.png`, width: 512, height: 512 },
 }) => {
-  const metaDescription = description || 'A Frinkiac-Powered Simpsons trivia game.';
+  const metaDescription =
+    description || 'A Frinkiac-Powered Simpsons trivia game.';
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={`%s | Rebigulator`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: type,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: '@the_me4502',
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-      ]
-        .concat(
-          keywords.length > 0
-            ? {
-                name: `keywords`,
-                content: keywords.join(`, `),
-              }
-            : []
-        )
-        .concat(createImageMeta(image))
-        .concat(meta)}
-    />
+    <>
+      <Head>
+        <title>{`${title} | Rebigulator`}</title>
+        <meta name="description" content={metaDescription} key="description" />
+        <meta property="og:title" content={title} key="title" />
+        <meta
+          property="og:description"
+          content={metaDescription}
+          key="og:description"
+        />
+        <meta property="og:type" content={type} key="og:type" />
+        <meta name="twitter:card" content="summary" key="twitter:card" />
+        <meta
+          name="twitter:creator"
+          content="@the_me4502"
+          key="twitter:creator"
+        />
+        <meta name="twitter:title" content={title} key="twitter:title" />
+        <meta
+          name="twitter:description"
+          content={metaDescription}
+          key="twitter:description"
+        />
+        {createImageMeta(image).map((item) => (
+          <meta
+            property={item.property}
+            content={item.content}
+            key={item.property}
+          />
+        ))}
+      </Head>
+    </>
   );
 };
 

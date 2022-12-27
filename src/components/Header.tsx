@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
 import Link from 'next/link';
@@ -24,7 +24,7 @@ const HeaderLink = styled.a`
   box-sizing: border-box;
 `;
 
-const Header: React.FC = () => (
+const Header: FC = () => (
   <Nav>
     <Container>
       <div>

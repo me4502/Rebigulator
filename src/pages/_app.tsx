@@ -5,6 +5,6 @@ import '../components/normalize.css';
 
 import * as gtag from '../components/gtag';
 
-Router.events.on('routeChangeComplete', url => gtag.pageview(url));
+Router.events.on('routeChangeComplete', (url: string) => gtag.pageview(url));
 
 export default App;

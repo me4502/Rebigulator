@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import Layout from '../../components/layout';
 import SEO from '../../components/seo';
@@ -6,7 +6,7 @@ import { Container } from '../../components/Container';
 import styled from 'styled-components';
 import { MainButtonLink } from '../../components/MainLink';
 import Link from 'next/link';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 
 const CentreDiv = styled.div`
   text-align: center;
@@ -18,7 +18,7 @@ interface ChallengePageProps {
   };
 }
 
-const ChallengePage: React.FC<ChallengePageProps> = ({ data }) => (
+const ChallengePage: FC<ChallengePageProps> = ({ data }) => (
   <Layout>
     <SEO
       title={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game`}
@@ -26,11 +26,15 @@ const ChallengePage: React.FC<ChallengePageProps> = ({ data }) => (
     />
     <Container>
       <CentreDiv>
-        <h1>The Rebigulator is a fast-paced quote-based Simpsons Trivia Game</h1>
+        <h1>
+          The Rebigulator is a fast-paced quote-based Simpsons Trivia Game
+        </h1>
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a quote, with an image hint
         </h2>
-        <h2>You've been challenged! Think you can beat a score of {data.score}?</h2>
+        <h2>
+          You've been challenged! Think you can beat a score of {data.score}?
+        </h2>
         <Link href="/game/" passHref>
           <MainButtonLink>Let's do it!</MainButtonLink>
         </Link>
@@ -39,10 +43,10 @@ const ChallengePage: React.FC<ChallengePageProps> = ({ data }) => (
   </Layout>
 );
 
-export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
+export const getStaticProps: GetStaticProps<{}, { data: string }> = ({
   params,
 }) => {
-  const { data } = params!;
+  const { data } = params;
 
   if (!data) {
     return {
@@ -74,7 +78,7 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
     fallback: 'blocking',

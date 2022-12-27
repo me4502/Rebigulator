@@ -5,12 +5,12 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
 import { LIGHT_THEME, DARK_THEME } from '../util/color';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 
 const COLOR_THEME_STYLES = `
 html {
@@ -32,12 +32,12 @@ html {
 }
 `.replace(/[\n\r ]/g, '');
 
-const Layout: React.FC = ({ children }) => {
+const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <>
-      <Helmet>
+      <Head>
         <style>{COLOR_THEME_STYLES}</style>
-      </Helmet>
+      </Head>
       <Header />
       <main>{children}</main>
       <Footer />

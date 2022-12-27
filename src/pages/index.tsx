@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -27,7 +27,7 @@ const CentreDiv = styled.div`
   text-align: center;
 `;
 
-const IndexPage: React.FC = () => (
+const IndexPage: FC = () => (
   <Layout>
     <SEO
       title="The Rebigulator | Simpsons Trivia Game"

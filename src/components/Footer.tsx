@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
 import { Container } from './Container';
 import { MainLink } from './MainLink';
@@ -21,16 +21,14 @@ const ContainerFlex = styled(Container)`
   }
 `;
 
-const Footer: React.FC = () => (
+const Footer: FC = () => (
   <FooterWrapper>
     <ContainerFlex>
       <p>
-        Powered by{' '}
-        <MainLink href="https://frinkiac.com/">Frinkiac</MainLink>{' '}
+        Powered by <MainLink href="https://frinkiac.com/">Frinkiac</MainLink>{' '}
       </p>
       <p>
-        Made by{' '}
-        <MainLink href="https://madelinemiller.dev/">Me4502</MainLink>
+        Made by <MainLink href="https://madelinemiller.dev/">Me4502</MainLink>
       </p>
     </ContainerFlex>
   </FooterWrapper>
