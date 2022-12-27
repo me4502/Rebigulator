@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from "styled-components";
-import { LIGHT_THEME } from "../util/color";
-import { MainButton } from "./MainLink";
+import type { FC } from 'react';
+import styled from 'styled-components';
+import { LIGHT_THEME } from '../util/color';
+import { MainButton } from './MainLink';
 
 const MultiChoiceGrid = styled.div`
   display: grid;
@@ -28,7 +28,7 @@ interface MultiChoiceBoxProps {
 
 const boxColors = [LIGHT_THEME.primary, '#cf5615', '#88cf15', '#5c15cf'];
 
-export const MultiChoiceBox: React.FC<MultiChoiceBoxProps> = ({
+export const MultiChoiceBox: FC<MultiChoiceBoxProps> = ({
   choices,
   onClick,
 }) => {

@@ -1,11 +1,20 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
-  plugins: [],
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json'],
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  plugins: ['react', '@typescript-eslint'],
   extends: [
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended', // uses typescript-specific linting rules
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react/recommended', // uses react-specific linting rules
+    'plugin:react/jsx-runtime',
     'prettier', // enables eslint-plugin-prettier and eslint-config-prettier
   ],
   rules: {
@@ -26,6 +35,18 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'warn',
+    '@typescript-eslint/no-unsafe-return': 'warn',
+    '@typescript-eslint/no-unsafe-call': 'warn',
+    '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+    ],
+    '@typescript-eslint/consistent-type-exports': [
+      'error',
+      { fixMixedExportsWithInlineTypeSpecifier: true },
+    ],
   },
   settings: {
     react: {

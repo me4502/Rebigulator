@@ -1,12 +1,12 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, type FC } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { GameSlide } from '../components/GameSlide';
 import { Container } from '../components/Container';
 import styled from 'styled-components';
-import { Episode } from '../frinkiac/types';
-import { QuestionResult } from '../util/types';
+import { type Episode } from '../frinkiac/types';
+import { type QuestionResult } from '../util/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ const ScoreBox = styled.div`
   font-size: 20pt;
 `;
 
-const GameHandler: React.FC = () => {
+const GameHandler: FC = () => {
   const [score, setScore] = useState<number>(0);
   const [results, setResults] = useState<QuestionResult[]>([]);
   const [handicap, setHandicap] = useState<number>(0);

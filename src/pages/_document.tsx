@@ -1,13 +1,17 @@
-import React from 'react';
-import Document, { Head, Main, NextScript, Html } from 'next/document';
+import Document, {
+  Head,
+  Main,
+  NextScript,
+  Html,
+  type DocumentContext,
+} from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import Helmet, { HelmetData } from 'react-helmet';
 import { LIGHT_THEME } from '../util/color';
 
 const GA_TRACKING_ID = 'UA-39440889-5';
 
-class MyDocument extends Document<{ helmet: HelmetData }> {
-  static async getInitialProps(ctx) {
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -17,14 +21,16 @@ class MyDocument extends Document<{ helmet: HelmetData }> {
           enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />),
         });
+
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        styles: [
-          ...React.Children.toArray(initialProps.styles),
-          sheet.getStyleElement(),
-        ],
-        helmet: Helmet.renderStatic(),
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
       };
     } finally {
       sheet.seal();
@@ -32,14 +38,9 @@ class MyDocument extends Document<{ helmet: HelmetData }> {
   }
 
   render() {
-    const { helmet } = this.props;
-
     return (
-      <Html {...helmet.htmlAttributes.toComponent()}>
+      <Html lang="en">
         <Head>
-          {helmet.meta.toComponent()}
-          {helmet.title.toComponent()}
-          {helmet.link.toComponent()}
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async
@@ -136,7 +137,7 @@ class MyDocument extends Document<{ helmet: HelmetData }> {
             }}
           />
         </Head>
-        <body {...helmet.bodyAttributes.toComponent()}>
+        <body>
           <Main />
           <NextScript />
         </body>

@@ -1,10 +1,10 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { Container } from '../components/Container';
 
-const NotFoundPage: React.FC = () => (
+const NotFoundPage: FC = () => (
   <Layout>
     <SEO title="404: Not found | The Rebigulator" />
     <Container>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { getRandom, RandomResponse } from '../frinkiac/frinkiacAccess';
+import { useState, useEffect, useMemo, type FC } from 'react';
+import { getRandom, type RandomResponse } from '../frinkiac/frinkiacAccess';
 import styled from 'styled-components';
 import LoadingSpinner from './LoadingSpinner';
-import { Episode } from '../frinkiac/types';
+import { type Episode } from '../frinkiac/types';
 import { MainButton } from './MainLink';
 import { MultiChoiceBox } from './MultiChoiceBox';
 
@@ -65,7 +65,7 @@ const SecondsCounter = styled.p`
 `;
 
 function getRandomEpisode(ignore: string): string {
-  let episode = undefined;
+  let episode: string | undefined = undefined;
   do {
     episode = episodes[Math.floor(Math.random() * episodes.length)].label;
   } while (episode === ignore);
@@ -80,7 +80,7 @@ function shuffle<T>(a: T[]): T[] {
   return a;
 }
 
-const GameSlideLogic: React.FC<GameSlideLogicProps> = ({
+const GameSlideLogic: FC<GameSlideLogicProps> = ({
   onQuestionFinish,
   onFail,
   data,
@@ -173,7 +173,7 @@ const LoadingBox = styled.div`
   flex-direction: column;
 `;
 
-export const GameSlide: React.FC<GameSlideProps> = ({
+export const GameSlide: FC<GameSlideProps> = ({
   onQuestionFinish,
   handicap,
   onFail,

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import Layout from '../../components/layout';
 import SEO from '../../components/seo';
 import { Container } from '../../components/Container';
@@ -18,9 +18,9 @@ import {
   FacebookMessengerIcon,
 } from 'react-share';
 import { MainButtonLink } from '../../components/MainLink';
-import { QuestionResult } from '../../util/types';
+import { type QuestionResult } from '../../util/types';
 import Link from 'next/link';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { type GetStaticPaths, type GetStaticProps } from 'next';
 import LinkIcon from '../../images/link.svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
@@ -83,11 +83,13 @@ const LinkShareWrapper = styled.button`
   }
 `;
 
-const LinkShareButton: React.FC<{
-  url: string;
-  title?: string;
-  text?: string;
-}> = ({ url, title, text, children, ...props }) => {
+const LinkShareButton: FC<
+  PropsWithChildren<{
+    url: string;
+    title?: string;
+    text?: string;
+  }>
+> = ({ url, title, text, children, ...props }) => {
   const useSystemShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   const systemClickHandler = () => {
@@ -128,7 +130,7 @@ interface ResultPageProps {
   data: { results: QuestionResult[]; score: number };
 }
 
-const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
+const ResultPage: FC<ResultPageProps> = ({ data }) => {
   const score = data.score;
   const results = data.results;
 
@@ -205,10 +207,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ data }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
+export const getStaticProps: GetStaticProps<{}, { data: string }> = ({
   params,
 }) => {
-  const { data } = params!;
+  const { data } = params;
 
   if (!data) {
     return {
@@ -240,7 +242,7 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = async ({
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
     fallback: 'blocking',
