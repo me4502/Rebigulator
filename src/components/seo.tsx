@@ -17,11 +17,7 @@ export interface SEOImageProps {
 
 export interface SEOPropTypes {
   description?: string;
-  lang?: string;
   image?: SEOImageProps;
-  keywords?: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta?: any[];
   title: string;
   type?: string;
 }
@@ -62,38 +58,36 @@ export const SEO: FC<SEOPropTypes> = ({
     description || 'A Frinkiac-Powered Simpsons trivia game.';
 
   return (
-    <>
-      <Head>
-        <title>{`${title} | Rebigulator`}</title>
-        <meta name="description" content={metaDescription} key="description" />
-        <meta property="og:title" content={title} key="title" />
+    <Head>
+      <title>{`${title} | Rebigulator`}</title>
+      <meta name="description" content={metaDescription} key="description" />
+      <meta property="og:title" content={title} key="title" />
+      <meta
+        property="og:description"
+        content={metaDescription}
+        key="og:description"
+      />
+      <meta property="og:type" content={type} key="og:type" />
+      <meta name="twitter:card" content="summary" key="twitter:card" />
+      <meta
+        name="twitter:creator"
+        content="@the_me4502"
+        key="twitter:creator"
+      />
+      <meta name="twitter:title" content={title} key="twitter:title" />
+      <meta
+        name="twitter:description"
+        content={metaDescription}
+        key="twitter:description"
+      />
+      {createImageMeta(image).map((item) => (
         <meta
-          property="og:description"
-          content={metaDescription}
-          key="og:description"
+          property={item.property}
+          content={item.content}
+          key={item.property}
         />
-        <meta property="og:type" content={type} key="og:type" />
-        <meta name="twitter:card" content="summary" key="twitter:card" />
-        <meta
-          name="twitter:creator"
-          content="@the_me4502"
-          key="twitter:creator"
-        />
-        <meta name="twitter:title" content={title} key="twitter:title" />
-        <meta
-          name="twitter:description"
-          content={metaDescription}
-          key="twitter:description"
-        />
-        {createImageMeta(image).map((item) => (
-          <meta
-            property={item.property}
-            content={item.content}
-            key={item.property}
-          />
-        ))}
-      </Head>
-    </>
+      ))}
+    </Head>
   );
 };
 

@@ -140,6 +140,11 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
 
   return (
     <GameBoard>
+      <link
+        rel="preload"
+        as="image"
+        href={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
+      />
       <SecondsCounter>{secondsLeft}</SecondsCounter>
       <LinesBox>
         {data.Subtitles.map((sub) => (
