@@ -8,7 +8,7 @@ import Document, {
 import { ServerStyleSheet } from 'styled-components';
 import { LIGHT_THEME } from '../util/color';
 
-const GA_TRACKING_ID = 'UA-39440889-5';
+const GA_TRACKING_ID = 'G-LCQR4WB54D';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
