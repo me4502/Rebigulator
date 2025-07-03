@@ -28,10 +28,12 @@ export const MultiChoiceBox: FC<MultiChoiceBoxProps> = ({
           key={`choice-${i}`}
           className={multiChoiceButton}
           onClick={() => onClick(choice)}
-          style={{
-            '--box-color': boxColors[i][0],
-            '--box-color-hover': boxColors[i][1],
-          }}
+          style={
+            {
+              '--box-color': boxColors[i][0],
+              '--box-color-hover': boxColors[i][1],
+            } as unknown
+          }
         >
           {choice}
         </MainButton>
