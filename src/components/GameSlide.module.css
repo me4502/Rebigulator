@@ -1,12 +1,29 @@
+.gameBox {
+  position: relative;
+}
+
 .linesBox {
   font-family: 'akbarplain';
-  border: 1px solid var(--theme-tertiary);
-  background: var(--theme-background);
-  padding: 0.25rem;
-  margin-bottom: 0.5rem;
-  border-radius: 10px;
-  font-size: 14pt;
+  font-size: 16pt;
   font-weight: 600;
+  -webkit-text-stroke: 5px var(--theme-background);
+  text-stroke: 5px var(--theme-background);
+
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  left: 0;
+  right: 0;
+
+  paint-order: stroke fill;
+
+  & p {
+    margin: 0.5rem 0.25rem;
+  }
+
+  &:not(:global(.loaded)) {
+    display: none;
+  }
 }
 
 .gameBoard {

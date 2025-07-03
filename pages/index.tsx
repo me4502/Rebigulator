@@ -21,7 +21,7 @@ const IndexPage: FC = () => (
           Quiz Game
         </h1>
         <h2 style={{ marginBottom: '3rem' }}>
-          Guess the episode title from a quote, with an image hint
+          Guess the episode title from a single frame and a quote
         </h2>
         <MainButtonLink href="/game/">Get started now!</MainButtonLink>
       </div>

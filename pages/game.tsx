@@ -78,7 +78,7 @@ const GameHandler: FC = () => {
   return <Slide />;
 };
 
-const GamePage: React.FC = () => {
+const GamePage: FC = () => {
   return (
     <Layout>
       <SEO title="Play | The Rebigulator" />

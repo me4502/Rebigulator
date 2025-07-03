@@ -1,4 +1,11 @@
-import { useState, useEffect, useMemo, type FC } from 'react';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  type FC,
+  useRef,
+  type RefObject,
+} from 'react';
 import { getRandom, type RandomResponse } from '../frinkiac/frinkiacAccess';
 import LoadingSpinner from './LoadingSpinner';
 import { type Episode } from '../frinkiac/types';
@@ -11,6 +18,7 @@ import {
   buttonBox,
   hintImg,
   loadingBox,
+  gameBox,
 } from './GameSlide.module.css';
 
 const episodes = require('../util/episodes.json') as {
@@ -48,6 +56,33 @@ function shuffle<T>(a: T[]): T[] {
   return a;
 }
 
+interface GameBoxProps {
+  linesBoxRef: RefObject<HTMLDivElement>;
+  data: RandomResponse;
+}
+
+const GameBox: FC<GameBoxProps> = ({ linesBoxRef, data }) => {
+  return (
+    <div className={gameBox}>
+      <div className={linesBox} ref={linesBoxRef}>
+        {data.Subtitles.map((sub) => (
+          <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
+        ))}
+      </div>
+      <img
+        className={hintImg}
+        src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
+        alt="Episode hint"
+        onLoad={() => {
+          if (linesBoxRef.current) {
+            linesBoxRef.current.classList.add('loaded');
+          }
+        }}
+      />
+    </div>
+  );
+};
+
 const GameSlideLogic: FC<GameSlideLogicProps> = ({
   onQuestionFinish,
   onFail,
@@ -57,6 +92,7 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   const [secondsLeft, setSecondsLeft] = useState<number>(
     TIME_PER_SLIDE - handicap
   );
+  const linesBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -103,16 +139,7 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   return (
     <div className={gameBoard}>
       <p className={secondsCounter}>{secondsLeft}</p>
-      <div className={linesBox}>
-        {data.Subtitles.map((sub) => (
-          <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
-        ))}
-      </div>
-      <img
-        className={hintImg}
-        src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
-        alt="Episode hint"
-      />
+      <GameBox data={data} linesBoxRef={linesBoxRef} />
       <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
       </p>
