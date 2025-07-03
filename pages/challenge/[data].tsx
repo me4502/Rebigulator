@@ -1,15 +1,11 @@
 import type { FC } from 'react';
 
-import Layout from '../../components/layout';
-import SEO from '../../components/seo';
-import { Container } from '../../components/Container';
-import styled from 'styled-components';
-import { MainButtonLink } from '../../components/MainLink';
+import Layout from '../../src/components/layout';
+import SEO from '../../src/components/seo';
+import { Container } from '../../src/components/Container.module.css';
+import { MainButtonLink } from '../../src/components/MainLink';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-
-const CentreDiv = styled.div`
-  text-align: center;
-`;
+import { centreDiv } from './[data].module.css';
 
 interface ChallengePageProps {
   data: {
@@ -23,8 +19,8 @@ const ChallengePage: FC<ChallengePageProps> = ({ data }) => (
       title={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game`}
       description={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game powered by Frinkiac`}
     />
-    <Container>
-      <CentreDiv>
+    <div className={Container}>
+      <div className={centreDiv}>
         <h1>
           The Rebigulator is a fast-paced quote-based Simpsons Trivia Game
         </h1>
@@ -35,8 +31,8 @@ const ChallengePage: FC<ChallengePageProps> = ({ data }) => (
           You've been challenged! Think you can beat a score of {data.score}?
         </h2>
         <MainButtonLink href="/game/">Let's do it!</MainButtonLink>
-      </CentreDiv>
-    </Container>
+      </div>
+    </div>
   </Layout>
 );
 

@@ -1,24 +1,12 @@
 import type { FC } from 'react';
-import styled from 'styled-components';
-
-import { Container } from './Container';
+import { Container } from './Container.module.css';
 import { MainLink, MainNextLink } from './MainLink';
-
-const FooterWrapper = styled.footer`
-  border-top: 1px solid var(--theme-tertiary);
-  padding: 10px 10px;
-`;
-
-const ContainerFlex = styled(Container)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  text-align: center;
-`;
+import classNames from 'classnames';
+import { containerFlex, footerWrapper } from './Footer.module.css';
 
 const Footer: FC = () => (
-  <FooterWrapper>
-    <ContainerFlex>
+  <footer className={footerWrapper}>
+    <div className={classNames(Container, containerFlex)}>
       <p>
         <MainNextLink href="/about/">About</MainNextLink>
       </p>
@@ -26,8 +14,8 @@ const Footer: FC = () => (
         Made with ❤️ by{' '}
         <MainLink href="https://madelinemiller.dev/">Maddy</MainLink>
       </p>
-    </ContainerFlex>
-  </FooterWrapper>
+    </div>
+  </footer>
 );
 
 export default Footer;

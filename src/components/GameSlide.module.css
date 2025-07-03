@@ -1,0 +1,44 @@
+.linesBox {
+  font-family: 'akbarplain';
+  border: 1px solid var(--theme-tertiary);
+  background: var(--theme-background);
+  padding: 0.25rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  font-size: 14pt;
+  font-weight: 600;
+}
+
+.gameBoard {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.hintImg {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  & * {
+    margin: 0 0.5rem;
+  }
+}
+
+.secondsCounter {
+  font-size: 18pt;
+  margin: 0.5rem 0 1rem 0;
+  font-family: 'akbarplain';
+}
+
+.loadingBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

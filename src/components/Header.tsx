@@ -1,34 +1,18 @@
 import type { FC } from 'react';
-import styled from 'styled-components';
-import { Container } from './Container';
+import { Container } from './Container.module.css';
 import Link from 'next/link';
-
-const Nav = styled.header`
-  width: 100%;
-  background: var(--theme-primary);
-`;
-
-const HeaderLink = styled(Link)`
-  color: var(--theme-secondary);
-  font-size: 30px;
-  line-height: 23px;
-  text-decoration: none;
-  padding: 13.5px 15px;
-  height: 50px;
-  float: left;
-  font-family: 'akbarplain';
-  box-sizing: border-box;
-  text-align: center;
-`;
+import { nav, headerLink } from './Header.module.css';
 
 const Header: FC = () => (
-  <Nav>
-    <Container>
+  <header className={nav}>
+    <div className={Container}>
       <nav style={{ display: 'flex', justifyContent: 'center' }}>
-        <HeaderLink href="/">Rebigulator</HeaderLink>
+        <Link href="/" className={headerLink}>
+          Rebigulator
+        </Link>
       </nav>
-    </Container>
-  </Nav>
+    </div>
+  </header>
 );
 
 export default Header;

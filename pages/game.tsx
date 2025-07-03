@@ -1,24 +1,17 @@
 import { useState, useMemo, useCallback, type FC } from 'react';
 
-import Layout from '../components/layout';
-import SEO from '../components/seo';
-import { GameSlide } from '../components/GameSlide';
-import { Container } from '../components/Container';
-import styled from 'styled-components';
-import { type Episode } from '../frinkiac/types';
-import { type QuestionResult } from '../util/types';
+import Layout from '../src/components/layout';
+import SEO from '../src/components/seo';
+import { GameSlide } from '../src/components/GameSlide';
+import { Container } from '../src/components/Container.module.css';
+import { type Episode } from '../src/frinkiac/types';
+import { type QuestionResult } from '../src/util/types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { scoreBox } from './game.module.css';
 
 const QUESTION_COUNT = 10;
-
-const ScoreBox = styled.div`
-  font-family: 'akbarplain';
-  padding: 0rem 1rem 0 1rem;
-  text-align: center;
-  font-size: 20pt;
-`;
 
 const GameHandler: FC = () => {
   const [score, setScore] = useState<number>(0);
@@ -65,22 +58,21 @@ const GameHandler: FC = () => {
   };
 
   const Slide = useMemo(
-    () => () =>
-      (
-        <Container>
-          <ScoreBox>
-            <span>
-              Score: {score} &#x2E31; Round: {questionNumber + 1}
-            </span>
-          </ScoreBox>
-          <GameSlide
-            onQuestionFinish={onQuestionFinish}
-            handicap={handicap}
-            onFail={onFail}
-            gameEnded={gameEnded}
-          />
-        </Container>
-      ),
+    () => () => (
+      <div className={Container}>
+        <div className={scoreBox}>
+          <span>
+            Score: {score} &#x2E31; Round: {questionNumber + 1}
+          </span>
+        </div>
+        <GameSlide
+          onQuestionFinish={onQuestionFinish}
+          handicap={handicap}
+          onFail={onFail}
+          gameEnded={gameEnded}
+        />
+      </div>
+    ),
     [questionNumber, gameEnded, handicap, onQuestionFinish, score]
   );
 

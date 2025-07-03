@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 
-import Layout from '../components/layout';
-import SEO from '../components/seo';
-import { Container } from '../components/Container';
-import { MainLink } from '../components/MainLink';
+import Layout from '../src/components/layout';
+import SEO from '../src/components/seo';
+import { Container } from '../src/components/Container.module.css';
+import { MainLink } from '../src/components/MainLink';
 
 const AboutPage: FC = () => (
   <Layout>
     <SEO title="About | The Rebigulator" />
-    <Container>
+    <div className={Container}>
       <h1>About the Rebigulator</h1>
       <p>
         The Rebigulator is a Simpsons trivia game I decided to make, after a few
@@ -30,7 +30,7 @@ const AboutPage: FC = () => (
         </MainLink>
         .
       </p>
-    </Container>
+    </div>
   </Layout>
 );
 

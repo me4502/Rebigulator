@@ -1,10 +1,17 @@
 import { useState, useEffect, useMemo, type FC } from 'react';
 import { getRandom, type RandomResponse } from '../frinkiac/frinkiacAccess';
-import styled from 'styled-components';
 import LoadingSpinner from './LoadingSpinner';
 import { type Episode } from '../frinkiac/types';
 import { MainButton } from './MainLink';
 import { MultiChoiceBox } from './MultiChoiceBox';
+import {
+  gameBoard,
+  secondsCounter,
+  linesBox,
+  buttonBox,
+  hintImg,
+  loadingBox,
+} from './GameSlide.module.css';
 
 const episodes = require('../util/episodes.json') as {
   value: string;
@@ -24,45 +31,6 @@ interface GameSlideLogicProps extends Omit<GameSlideProps, 'gameEnded'> {
 }
 
 const TIME_PER_SLIDE = 60;
-
-const LinesBox = styled.div`
-  font-family: 'akbarplain';
-  border: 1px solid var(--theme-tertiary);
-  background: var(--theme-background);
-  padding: 0.25rem;
-  margin-bottom: 0.5rem;
-  border-radius: 10px;
-  font-size: 14pt;
-  font-weight: 600;
-`;
-
-const GameBoard = styled.div`
-  text-align: center;
-  max-width: 400px;
-  margin: 0 auto;
-`;
-
-const HintImg = styled.img`
-  max-width: 100%;
-  margin-top: 1rem;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  * {
-    margin: 0 0.5rem;
-  }
-`;
-
-const SecondsCounter = styled.p`
-  font-size: 18pt;
-  margin: 0.5rem 0 1rem 0;
-  font-family: 'akbarplain';
-`;
 
 function getRandomEpisode(ignore: string): string {
   let episode: string | undefined = undefined;
@@ -139,44 +107,40 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   );
 
   return (
-    <GameBoard>
+    <div className={gameBoard}>
       <link
         rel="preload"
         as="image"
         href={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
       />
-      <SecondsCounter>{secondsLeft}</SecondsCounter>
-      <LinesBox>
+      <p className={secondsCounter}>{secondsLeft}</p>
+      <div className={linesBox}>
         {data.Subtitles.map((sub) => (
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
-      </LinesBox>
-      <ButtonBox>
+      </div>
+      <div className={buttonBox}>
         {secondsLeft > 10 && !showImage && (
           <MainButton onClick={onShowImage}>
             Show Image Hint (10 second penalty)
           </MainButton>
         )}
         <MainButton onClick={onSkip}>Skip</MainButton>
-      </ButtonBox>
-      <SecondsCounter style={{ marginTop: '2rem' }}>
+      </div>
+      <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
-      </SecondsCounter>
+      </p>
       <MultiChoiceBox choices={choices} onClick={checkForCorrect} />
       {showImage && (
-        <HintImg
+        <img
+          className={hintImg}
           src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
+          alt="Episode hint"
         />
       )}
-    </GameBoard>
+    </div>
   );
 };
-
-const LoadingBox = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
 
 export const GameSlide: FC<GameSlideProps> = ({
   onQuestionFinish,
@@ -205,10 +169,10 @@ export const GameSlide: FC<GameSlideProps> = ({
     );
   } else {
     return (
-      <LoadingBox>
+      <div className={loadingBox}>
         <p>Loading...</p>
         <LoadingSpinner />
-      </LoadingBox>
+      </div>
     );
   }
 };

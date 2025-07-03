@@ -1,8 +1,7 @@
 import type { FC, PropsWithChildren } from 'react';
-import Layout from '../../components/layout';
-import SEO from '../../components/seo';
-import { Container } from '../../components/Container';
-import styled from 'styled-components';
+import Layout from '../../src/components/layout';
+import SEO from '../../src/components/seo';
+import { Container } from '../../src/components/Container.module.css';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -17,70 +16,26 @@ import {
   FacebookMessengerShareButton,
   FacebookMessengerIcon,
 } from 'react-share';
-import { MainButtonLink } from '../../components/MainLink';
-import { type QuestionResult } from '../../util/types';
+import { MainButtonLink } from '../../src/components/MainLink';
+import { type QuestionResult } from '../../src/util/types';
 import { type GetStaticPaths, type GetStaticProps } from 'next';
-import LinkIcon from '../../images/link.svg';
+import LinkIcon from '../../src/images/link.svg';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import {
+  centreDiv,
+  resultsDiv,
+  shareBox,
+  linkShareWrapper,
+} from './[data].module.css';
 
 const episodes = new Map(
   (
-    require('../../util/episodes.json') as {
+    require('../../src/util/episodes.json') as {
       value: string;
       label: string;
     }[]
   ).map(({ value, label }) => [value, label])
 );
-
-const CentreDiv = styled.div`
-  text-align: center;
-`;
-
-const ResultsDiv = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const ShareBox = styled.div`
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  max-width: 300px;
-  margin-top: 1rem;
-
-  div {
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-  }
-`;
-
-const LinkShareWrapper = styled.button`
-  background-color: transparent;
-  border: none;
-  padding: 0px;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  user-select: none;
-
-  width: 32px;
-  height: 38px;
-
-  margin: auto 0;
-
-  div {
-    width: 31px;
-    height: 31px;
-    margin-top: 2px;
-
-    border-radius: 100%;
-    background-color: gray;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
 
 const LinkShareButton: FC<
   PropsWithChildren<{
@@ -101,16 +56,20 @@ const LinkShareButton: FC<
 
   if (useSystemShare) {
     return (
-      <LinkShareWrapper onClick={systemClickHandler} {...props}>
+      <button
+        className={linkShareWrapper}
+        onClick={systemClickHandler}
+        {...props}
+      >
         <div>{children}</div>
-      </LinkShareWrapper>
+      </button>
     );
   } else {
     return (
       <CopyToClipboard text={url}>
-        <LinkShareWrapper {...props}>
+        <button className={linkShareWrapper} {...props}>
           <div>{children}</div>
-        </LinkShareWrapper>
+        </button>
       </CopyToClipboard>
     );
   }
@@ -144,11 +103,11 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
   return (
     <Layout>
       <SEO title="Your Score | The Rebigulator" />
-      <Container>
-        <CentreDiv>
+      <div className={Container}>
+        <div className={centreDiv}>
           <h1>{scoreMessage}</h1>
           <h2>You scored {score}</h2>
-          <ResultsDiv>
+          <div className={resultsDiv}>
             {results.length > 0 && (
               <div>
                 {results.map((res, i) => (
@@ -160,10 +119,10 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
                 ))}
               </div>
             )}
-          </ResultsDiv>
+          </div>
           <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
           <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
-          <ShareBox>
+          <div className={shareBox}>
             <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
@@ -197,9 +156,9 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
             >
               <LinkIcon width={16} height={16} alt={'Link share icon'} />
             </LinkShareButton>
-          </ShareBox>
-        </CentreDiv>
-      </Container>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };

@@ -6,12 +6,11 @@
  */
 
 import type { FC, PropsWithChildren } from 'react';
-import styled from 'styled-components';
 import Head from 'next/head';
-
 import Header from './Header';
 import Footer from './Footer';
 import { LIGHT_THEME, DARK_THEME } from '../util/color';
+import { siteWrapper } from './layout.module.css';
 
 const COLOR_THEME_STYLES = `
 html {
@@ -41,24 +40,17 @@ html {
 }
 `.replace(/[\n\r ]/g, '');
 
-const SiteWrapper = styled.div`
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 1rem;
-`;
-
 const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <>
       <Head>
         <style>{COLOR_THEME_STYLES}</style>
       </Head>
-      <SiteWrapper>
+      <div className={siteWrapper}>
         <Header />
         <main>{children}</main>
         <Footer />
-      </SiteWrapper>
+      </div>
     </>
   );
 };

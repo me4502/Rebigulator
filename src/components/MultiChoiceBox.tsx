@@ -1,24 +1,6 @@
 import type { FC } from 'react';
-import styled from 'styled-components';
 import { MainButton } from './MainLink';
-
-const MultiChoiceGrid = styled.div`
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  grid-gap: 4px;
-
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
+import { multiChoiceGrid } from './MultiChoiceBox.module.css';
 
 interface MultiChoiceBoxProps {
   choices: string[];
@@ -37,7 +19,7 @@ export const MultiChoiceBox: FC<MultiChoiceBoxProps> = ({
   onClick,
 }) => {
   return (
-    <MultiChoiceGrid>
+    <div className={multiChoiceGrid}>
       {choices.map((choice, i) => (
         <MainButton
           key={`choice-${i}`}
@@ -47,6 +29,6 @@ export const MultiChoiceBox: FC<MultiChoiceBoxProps> = ({
           {choice}
         </MainButton>
       ))}
-    </MultiChoiceGrid>
+    </div>
   );
 };

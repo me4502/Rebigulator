@@ -1,0 +1,11 @@
+.footerWrapper {
+  border-top: 1px solid var(--theme-tertiary);
+  padding: 10px 10px;
+}
+
+.containerFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+}

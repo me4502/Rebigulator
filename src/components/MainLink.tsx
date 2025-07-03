@@ -1,50 +1,23 @@
 import Link from 'next/link';
-import styled, { css } from 'styled-components';
+import { mainLink, mainButton } from './MainLink.module.css';
+import type { FC, ComponentProps } from 'react';
+import classNames from 'classnames';
 
-const MainLinkStyle = css`
-  color: var(--theme-primary);
-  text-decoration: none;
-  font-weight: bold;
+export const MainNextLink: FC<ComponentProps<typeof Link>> = ({
+  className,
+  ...props
+}) => <Link className={classNames(mainLink, className)} {...props} />;
 
-  :hover {
-    text-shadow: 0px 0px 1px var(--theme-primary);
-  }
-`;
+export const MainLink: FC<ComponentProps<'a'>> = ({ className, ...props }) => (
+  <a className={classNames(mainLink, className)} {...props} />
+);
 
-export const MainNextLink = styled(Link)`
-  ${MainLinkStyle}
-`;
+export const MainButton: FC<ComponentProps<'button'>> = ({
+  className,
+  ...props
+}) => <button className={classNames(mainButton, className)} {...props} />;
 
-export const MainLink = styled.a`
-  ${MainLinkStyle}
-`;
-
-const MainButtonStyle = css`
-  border-radius: 2px;
-  background-color: var(--theme-primary);
-  color: var(--theme-text);
-  transition: box-shadow 0.15s ease-in-out;
-  padding: 0.6rem;
-  cursor: pointer;
-  border: none;
-  word-break: keep-all;
-  box-shadow: none;
-  text-decoration: none;
-  font-weight: 600;
-
-  :hover,
-  :active,
-  :focus,
-  &.active {
-    box-shadow: 0 0 5px 2px var(--theme-tertiary) inset;
-  }
-`;
-
-export const MainButton = styled.button`
-  cursor: pointer;
-  ${MainButtonStyle}
-`;
-
-export const MainButtonLink = styled(Link)`
-  ${MainButtonStyle}
-`;
+export const MainButtonLink: FC<ComponentProps<typeof Link>> = ({
+  className,
+  ...props
+}) => <Link className={classNames(mainButton, className)} {...props} />;
