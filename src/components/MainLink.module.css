@@ -25,6 +25,6 @@
   &:active,
   &:focus,
   &.active {
-    box-shadow: 0 0 5px 2px var(--theme-tertiary) inset;
+    background-color: var(--theme-box-blue-hover);
   }
 }

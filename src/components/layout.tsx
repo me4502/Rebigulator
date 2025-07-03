@@ -23,6 +23,10 @@ html {
   --theme-box-orange: ${LIGHT_THEME.boxes.orange};
   --theme-box-green: ${LIGHT_THEME.boxes.green};
   --theme-box-purple: ${LIGHT_THEME.boxes.purple};
+  --theme-box-blue-hover: ${LIGHT_THEME.boxes.blueHover};
+  --theme-box-orange-hover: ${LIGHT_THEME.boxes.orangeHover};
+  --theme-box-green-hover: ${LIGHT_THEME.boxes.greenHover};
+  --theme-box-purple-hover: ${LIGHT_THEME.boxes.purpleHover};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +40,10 @@ html {
     --theme-box-orange: ${DARK_THEME.boxes.orange};
     --theme-box-green: ${DARK_THEME.boxes.green};
     --theme-box-purple: ${DARK_THEME.boxes.purple};
+    --theme-box-blue-hover: ${DARK_THEME.boxes.blueHover};
+    --theme-box-orange-hover: ${DARK_THEME.boxes.orangeHover};
+    --theme-box-green-hover: ${DARK_THEME.boxes.greenHover};
+    --theme-box-purple-hover: ${DARK_THEME.boxes.purpleHover};
   }
 }
 `.replace(/[\n\r ]/g, '');

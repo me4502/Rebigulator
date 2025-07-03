@@ -6,9 +6,13 @@ export interface Theme {
   text: string;
   boxes: {
     blue: string;
+    blueHover: string;
     orange: string;
+    orangeHover: string;
     green: string;
+    greenHover: string;
     purple: string;
+    purpleHover: string;
   };
 }
 
@@ -20,9 +24,13 @@ export const LIGHT_THEME: Theme = {
   text: '#000',
   boxes: {
     blue: '#70D1FE',
+    blueHover: '#4db8f2',
     orange: '#ED6820',
+    orangeHover: '#d65a1c',
     green: '#91e010',
+    greenHover: '#7ac20d',
     purple: '#995ef7',
+    purpleHover: '#8a4cd9',
   },
 };
 
@@ -35,8 +43,12 @@ export const DARK_THEME: Theme = {
   text: '#ddd',
   boxes: {
     blue: '#1587cf',
+    blueHover: '#0f6fa8',
     orange: '#b84b11',
+    orangeHover: '#a43f0e',
     green: '#61940d',
+    greenHover: '#4f7c0a',
     purple: '#5c15cf',
+    purpleHover: '#4a12a8',
   },
 };

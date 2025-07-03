@@ -12,3 +12,11 @@
     align-items: center;
   }
 }
+
+.multiChoiceButton {
+  background-color: var(--box-color);
+
+  &:hover {
+    background-color: var(--box-color-hover);
+  }
+}
