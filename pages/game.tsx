@@ -7,7 +7,6 @@ import { Container } from '../src/components/Container.module.css';
 import { type Episode } from '../src/frinkiac/types';
 import { type QuestionResult } from '../src/util/types';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import { scoreBox } from './game.module.css';
 
@@ -83,7 +82,7 @@ const GamePage: React.FC = () => {
   return (
     <Layout>
       <SEO title="Play | The Rebigulator" />
-      <ToastContainer />
+      <ToastContainer draggable={true} closeOnClick={true} />
       <GameHandler />
     </Layout>
   );
