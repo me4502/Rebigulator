@@ -57,7 +57,6 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   const [secondsLeft, setSecondsLeft] = useState<number>(
     TIME_PER_SLIDE - handicap
   );
-  const [showImage, setShowImage] = useState<boolean>(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -72,11 +71,6 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
       clearTimeout(timeout);
     };
   }, [secondsLeft, data.Episode, onQuestionFinish]);
-
-  const onShowImage = () => {
-    setSecondsLeft((s) => s - 10);
-    setShowImage(true);
-  };
 
   const onSkip = () => {
     onQuestionFinish(0, data.Episode);
@@ -108,36 +102,24 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
 
   return (
     <div className={gameBoard}>
-      <link
-        rel="preload"
-        as="image"
-        href={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
-      />
       <p className={secondsCounter}>{secondsLeft}</p>
       <div className={linesBox}>
         {data.Subtitles.map((sub) => (
           <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
         ))}
       </div>
-      <div className={buttonBox}>
-        {secondsLeft > 10 && !showImage && (
-          <MainButton onClick={onShowImage}>
-            Show Image Hint (10 second penalty)
-          </MainButton>
-        )}
-        <MainButton onClick={onSkip}>Skip</MainButton>
-      </div>
+      <img
+        className={hintImg}
+        src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
+        alt="Episode hint"
+      />
       <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
       </p>
       <MultiChoiceBox choices={choices} onClick={checkForCorrect} />
-      {showImage && (
-        <img
-          className={hintImg}
-          src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
-          alt="Episode hint"
-        />
-      )}
+      <div className={buttonBox}>
+        <MainButton onClick={onSkip}>Skip</MainButton>
+      </div>
     </div>
   );
 };
