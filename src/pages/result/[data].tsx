@@ -204,7 +204,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<{}, { data: string }> = ({
+export const getStaticProps: GetStaticProps<unknown, { data: string }> = ({
   params,
 }) => {
   const { data } = params;
@@ -219,7 +219,7 @@ export const getStaticProps: GetStaticProps<{}, { data: string }> = ({
 
   try {
     parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
-  } catch (ignored) {
+  } catch (_ignored) {
     return {
       notFound: true,
     };
