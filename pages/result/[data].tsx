@@ -1,32 +1,13 @@
-import type { FC, PropsWithChildren } from 'react';
+import { useMemo, type FC } from 'react';
 import Layout from '../../src/components/layout';
 import SEO from '../../src/components/seo';
 import { Container } from '../../src/components/Container.module.css';
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  RedditShareButton,
-  RedditIcon,
-  TumblrIcon,
-  TumblrShareButton,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
-} from 'react-share';
 import { MainButtonLink } from '../../src/components/MainLink';
 import { type QuestionResult } from '../../src/util/types';
 import { type GetStaticPaths, type GetStaticProps } from 'next';
-import LinkIcon from '../../src/images/link.svg';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import {
-  centreDiv,
-  resultsDiv,
-  shareBox,
-  linkShareWrapper,
-} from './[data].module.css';
+import { centreDiv, resultsDiv } from './[data].module.css';
+import { cleanupEpisodeTitle } from '../../src/util/string';
+import { ScoreShare } from '../../src/components/ScoreShare';
 
 const episodes = new Map(
   (
@@ -36,44 +17,6 @@ const episodes = new Map(
     }[]
   ).map(({ value, label }) => [value, label])
 );
-
-const LinkShareButton: FC<
-  PropsWithChildren<{
-    url: string;
-    title?: string;
-    text?: string;
-  }>
-> = ({ url, title, text, children, ...props }) => {
-  const useSystemShare = typeof navigator !== 'undefined' && !!navigator.share;
-
-  const systemClickHandler = () => {
-    navigator.share({
-      url,
-      title,
-      text,
-    });
-  };
-
-  if (useSystemShare) {
-    return (
-      <button
-        className={linkShareWrapper}
-        onClick={systemClickHandler}
-        {...props}
-      >
-        <div>{children}</div>
-      </button>
-    );
-  } else {
-    return (
-      <CopyToClipboard text={url}>
-        <button className={linkShareWrapper} {...props}>
-          <div>{children}</div>
-        </button>
-      </CopyToClipboard>
-    );
-  }
-};
 
 const scoreCutoffs = [
   [400, `Incredible! You're a Simpsons expert!`],
@@ -92,7 +35,10 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
   const score = data.score;
   const results = data.results;
 
-  const scoreMessage = scoreCutoffs.find((cutoff) => cutoff[0] <= score)[1];
+  const scoreMessage = useMemo(
+    () => scoreCutoffs.find((cutoff) => cutoff[0] <= score)[1],
+    [score]
+  );
   const shareUrl = `https://rebigulator.org/challenge/${
     typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
   }`;
@@ -113,7 +59,9 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
                 {results.map((res, i) => (
                   <div key={`result-${i}`}>
                     <p>
-                      {i + 1}) {episodes.get(res.e)} - {res.s} Points
+                      {i + 1}
+                      {')'} {cleanupEpisodeTitle(episodes.get(res.e))} - {res.s}{' '}
+                      Points
                     </p>
                   </div>
                 ))}
@@ -121,42 +69,11 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
             )}
           </div>
           <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
-          <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
-          <div className={shareBox}>
-            <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={32} round={true} />
-            </FacebookShareButton>
-            <FacebookMessengerShareButton
-              url={shareUrl}
-              appId={`609865043173658`}
-            >
-              <FacebookMessengerIcon size={32} round={true} />
-            </FacebookMessengerShareButton>
-            <TwitterShareButton url={shareUrl} title={shareTitle}>
-              <TwitterIcon size={32} round={true} />
-            </TwitterShareButton>
-            <WhatsappShareButton url={shareUrl} title={shareTitle}>
-              <WhatsappIcon size={32} round={true} />
-            </WhatsappShareButton>
-            <RedditShareButton url={shareUrl} title={shareTitle}>
-              <RedditIcon size={32} round={true} />
-            </RedditShareButton>
-            <TumblrShareButton
-              url={shareUrl}
-              caption={shareDescription}
-              title={shareTitle}
-            >
-              <TumblrIcon size={32} round={true} />
-            </TumblrShareButton>
-            <LinkShareButton
-              aria-label="link"
-              url={shareUrl}
-              title={shareTitle}
-              text={shareDescription}
-            >
-              <LinkIcon width={16} height={16} alt={'Link share icon'} />
-            </LinkShareButton>
-          </div>
+          <ScoreShare
+            shareUrl={shareUrl}
+            shareTitle={shareTitle}
+            shareDescription={shareDescription}
+          />
         </div>
       </div>
     </Layout>

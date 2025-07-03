@@ -4,6 +4,7 @@ import {
   multiChoiceGrid,
   multiChoiceButton,
 } from './MultiChoiceBox.module.css';
+import { cleanupEpisodeTitle } from '../util/string';
 
 interface MultiChoiceBoxProps {
   choices: string[];
@@ -35,7 +36,7 @@ export const MultiChoiceBox: FC<MultiChoiceBoxProps> = ({
             } as unknown
           }
         >
-          {choice}
+          {cleanupEpisodeTitle(choice)}
         </MainButton>
       ))}
     </div>
