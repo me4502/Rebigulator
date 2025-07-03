@@ -3,14 +3,9 @@ import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
@@ -31,7 +26,7 @@ export default [
   ...typescriptEslint.configs['flat/recommended-type-checked'],
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  ...compat.extends('next/core-web-vitals', 'prettier'),
+  ...compat.extends('next/core-web-vitals', 'prettier', 'next'),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {

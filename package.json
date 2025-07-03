@@ -7,7 +7,7 @@
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
-    "next": "^13.5.11",
+    "next": "^15.3.4",
     "react": "^19.1.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^19.1.0",
