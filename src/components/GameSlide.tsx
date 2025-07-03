@@ -1,11 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useMemo,
-  type FC,
-  useRef,
-  type RefObject,
-} from 'react';
+import { useState, useEffect, useMemo, type FC, useRef } from 'react';
 import { getRandom, type RandomResponse } from '../frinkiac/frinkiacAccess';
 import LoadingSpinner from './LoadingSpinner';
 import { type Episode } from '../frinkiac/types';
@@ -57,11 +50,12 @@ function shuffle<T>(a: T[]): T[] {
 }
 
 interface GameBoxProps {
-  linesBoxRef: RefObject<HTMLDivElement>;
   data: RandomResponse;
 }
 
-const GameBox: FC<GameBoxProps> = ({ linesBoxRef, data }) => {
+const GameBox: FC<GameBoxProps> = ({ data }) => {
+  const linesBoxRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className={gameBox}>
       <div className={linesBox} ref={linesBoxRef}>
@@ -92,7 +86,6 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   const [secondsLeft, setSecondsLeft] = useState<number>(
     TIME_PER_SLIDE - handicap
   );
-  const linesBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -139,7 +132,7 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   return (
     <div className={gameBoard}>
       <p className={secondsCounter}>{secondsLeft}</p>
-      <GameBox data={data} linesBoxRef={linesBoxRef} />
+      <GameBox data={data} />
       <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
       </p>
