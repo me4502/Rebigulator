@@ -1,20 +1,19 @@
-import { useState, useEffect, useMemo, type FC, useRef } from 'react';
-import { getRandom, type RandomResponse } from '../frinkiac/frinkiacAccess';
-import LoadingSpinner from './LoadingSpinner';
-import { type Episode } from '../frinkiac/types';
-import { MainButton } from './MainLink';
-import { MultiChoiceBox } from './MultiChoiceBox';
+import { useState, useEffect, useMemo, type FC } from 'react';
+import { getRandom, type RandomResponse } from '../../frinkiac/frinkiacAccess';
+import LoadingSpinner from '../LoadingSpinner';
+import type { Episode } from '../../frinkiac/types';
+import { MainButton } from '../MainLink';
+import { MultiChoiceBox } from '../MultiChoiceBox';
 import {
   gameBoard,
   secondsCounter,
-  linesBox,
   buttonBox,
-  hintImg,
   loadingBox,
-  gameBox,
 } from './GameSlide.module.css';
+import { shuffle } from '../../util/array';
+import { GameBox } from './GameBox';
 
-const episodes = require('../util/episodes.json') as {
+const episodes = require('../../util/episodes.json') as {
   value: string;
   label: string;
   data: undefined;
@@ -40,42 +39,6 @@ function getRandomEpisode(ignore: string): string {
   } while (episode === ignore);
   return episode;
 }
-
-function shuffle<T>(a: T[]): T[] {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-interface GameBoxProps {
-  data: RandomResponse;
-}
-
-const GameBox: FC<GameBoxProps> = ({ data }) => {
-  const linesBoxRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <div className={gameBox}>
-      <div className={linesBox} ref={linesBoxRef}>
-        {data.Subtitles.map((sub) => (
-          <p key={`${data.Episode.Id}-${sub.Id}`}>{sub.Content}</p>
-        ))}
-      </div>
-      <img
-        className={hintImg}
-        src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
-        alt="Episode hint"
-        onLoad={() => {
-          if (linesBoxRef.current) {
-            linesBoxRef.current.classList.add('loaded');
-          }
-        }}
-      />
-    </div>
-  );
-};
 
 const GameSlideLogic: FC<GameSlideLogicProps> = ({
   onQuestionFinish,

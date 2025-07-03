@@ -48,11 +48,17 @@ export function createImageMeta(
   }
 }
 
+const DEFAULT_IMAGE = {
+  url: `https://rebigulator.org/logo.png`,
+  width: 512,
+  height: 512,
+};
+
 export const SEO: FC<SEOPropTypes> = ({
   description,
   title,
   type = 'website',
-  image = { url: `https://rebigulator.org/logo.png`, width: 512, height: 512 },
+  image = DEFAULT_IMAGE,
 }) => {
   const metaDescription =
     description || 'A Frinkiac-Powered Simpsons trivia game.';

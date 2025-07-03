@@ -1,0 +1,32 @@
+.hintImg {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+
+.gameBox {
+  position: relative;
+}
+
+.linesBox {
+  font-family: 'akbarplain';
+  font-size: 16pt;
+  font-weight: 600;
+  -webkit-text-stroke: 5px var(--theme-background);
+  text-stroke: 5px var(--theme-background);
+
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  left: 0;
+  right: 0;
+
+  paint-order: stroke fill;
+
+  & p {
+    margin: 0.5rem 0.25rem;
+  }
+
+  &:not(:global(.loaded)) {
+    display: none;
+  }
+}

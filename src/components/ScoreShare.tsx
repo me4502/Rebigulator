@@ -29,11 +29,13 @@ const LinkShareButton: FC<
   const useSystemShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   const systemClickHandler = () => {
-    navigator.share({
-      url,
-      title,
-      text,
-    });
+    navigator
+      .share({
+        url,
+        title,
+        text,
+      })
+      .catch((e) => console.error('Share failed:', e));
   };
 
   if (useSystemShare) {
