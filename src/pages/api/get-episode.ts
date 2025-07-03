@@ -1,4 +1,3 @@
-import got from 'got';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const API_ENDPOINT = 'https://frinkiac.com/api/random';
@@ -7,11 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const data = await got<object>(API_ENDPOINT, {
+  const response = await fetch(API_ENDPOINT, {
     headers: { Accept: 'application/json' },
-    responseType: 'json',
   });
-  const json = data.body;
+  const json = await response.json();
   if (json) {
     res.status(200).json(json);
   } else {
