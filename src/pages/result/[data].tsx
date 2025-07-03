@@ -164,7 +164,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
           <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
           <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
           <ShareBox>
-            <FacebookShareButton url={shareUrl} quote={shareDescription}>
+            <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
             <FacebookMessengerShareButton
