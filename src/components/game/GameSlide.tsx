@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, type FC } from 'react';
+import { useState, useEffect, useMemo, type FC, useCallback } from 'react';
 import { getRandom, type RandomResponse } from '../../frinkiac/frinkiacAccess';
 import LoadingSpinner from '../LoadingSpinner';
 import type { Episode } from '../../frinkiac/types';
@@ -22,7 +22,6 @@ const episodes = require('../../util/episodes.json') as {
 interface GameSlideProps {
   onQuestionFinish: (points: number, episode: Episode) => void;
   onFail: (message: string) => void;
-  handicap: number;
   gameEnded: boolean;
 }
 
@@ -44,42 +43,49 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   onQuestionFinish,
   onFail,
   data,
-  handicap,
 }) => {
-  const [secondsLeft, setSecondsLeft] = useState<number>(
-    TIME_PER_SLIDE - handicap
-  );
+  const [secondsLeft, setSecondsLeft] = useState<number>(TIME_PER_SLIDE);
+  const [started, setStarted] = useState<boolean>(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const timeRemaining = secondsLeft - 1;
-      if (timeRemaining < 0) {
-        onQuestionFinish(0, data.Episode);
+    if (started) {
+      const timeout = setTimeout(() => {
+        const timeRemaining = secondsLeft - 1;
+        if (timeRemaining < 0) {
+          onQuestionFinish(0, data.Episode);
+          return;
+        }
+        setSecondsLeft((s) => s - 1);
+      }, 1000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [started, secondsLeft, data.Episode, onQuestionFinish]);
+
+  const onSkip = useCallback(() => {
+    onQuestionFinish(0, data.Episode);
+  }, [data.Episode, onQuestionFinish]);
+
+  const onStart = useCallback(() => {
+    setStarted(true);
+  }, [setStarted]);
+
+  const checkForCorrect = useCallback(
+    (value: string) => {
+      if (secondsLeft <= 0) {
+        // Don't accept negative values.
         return;
       }
-      setSecondsLeft((s) => s - 1);
-    }, 1000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [secondsLeft, data.Episode, onQuestionFinish]);
-
-  const onSkip = () => {
-    onQuestionFinish(0, data.Episode);
-  };
-
-  const checkForCorrect = (value: string) => {
-    if (secondsLeft <= 0) {
-      // Don't accept negative values.
-      return;
-    }
-    if (value === data.Episode.Title) {
-      onQuestionFinish(secondsLeft, data.Episode);
-    } else {
-      onFail('Wrong! Try again... -20');
-      setSecondsLeft((s) => s - 20);
-    }
-  };
+      if (value === data.Episode.Title) {
+        onQuestionFinish(secondsLeft, data.Episode);
+      } else {
+        onFail('Wrong! Try again... -20');
+        setSecondsLeft((s) => s - 20);
+      }
+    },
+    [secondsLeft, data.Episode, onQuestionFinish, onFail]
+  );
 
   const choices = useMemo(
     () =>
@@ -95,7 +101,7 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
   return (
     <div className={gameBoard}>
       <p className={secondsCounter}>{secondsLeft}</p>
-      <GameBox data={data} />
+      <GameBox data={data} onStart={onStart} />
       <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
       </p>
@@ -109,11 +115,10 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
 
 export const GameSlide: FC<GameSlideProps> = ({
   onQuestionFinish,
-  handicap,
   onFail,
   gameEnded = false,
 }) => {
-  const [data, setData] = useState<RandomResponse>(undefined);
+  const [data, setData] = useState<RandomResponse>();
 
   useEffect(() => {
     getRandom()
@@ -129,7 +134,6 @@ export const GameSlide: FC<GameSlideProps> = ({
         onQuestionFinish={onQuestionFinish}
         onFail={onFail}
         data={data}
-        handicap={handicap}
       />
     );
   } else {

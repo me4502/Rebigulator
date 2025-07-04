@@ -7,7 +7,7 @@
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
-    "next": "^15.3.4",
+    "next": "^15.3.5",
     "react": "^19.1.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^19.1.0",
@@ -24,15 +24,15 @@
     "@typescript-eslint/parser": "^8.35.1",
     "classnames": "^2.5.1",
     "eslint": "9.30.1",
-    "eslint-config-next": "15.3.4",
+    "eslint-config-next": "15.3.5",
     "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-unicorn": "^59.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "postcss-preset-env": "^10.2.4",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
   },
-  "keywords": ["gatsby"],
   "license": "MIT",
   "scripts": {
     "dev": "next dev",

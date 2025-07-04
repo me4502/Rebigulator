@@ -1,13 +1,21 @@
-import { type FC, useRef } from 'react';
+import { type FC, useCallback, useRef } from 'react';
 import type { RandomResponse } from '../../frinkiac/frinkiacAccess';
 import { hintImg, gameBox, linesBox } from './GameBox.module.css';
 
 interface GameBoxProps {
   data: RandomResponse;
+  onStart?: () => void;
 }
 
-export const GameBox: FC<GameBoxProps> = ({ data }) => {
+export const GameBox: FC<GameBoxProps> = ({ data, onStart }) => {
   const linesBoxRef = useRef<HTMLDivElement>(null);
+
+  const onLoad = useCallback(() => {
+    if (linesBoxRef.current) {
+      linesBoxRef.current.classList.add('loaded');
+    }
+    onStart?.();
+  }, [onStart]);
 
   return (
     <div className={gameBox}>
@@ -20,11 +28,7 @@ export const GameBox: FC<GameBoxProps> = ({ data }) => {
         className={hintImg}
         src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
         alt="Episode hint"
-        onLoad={() => {
-          if (linesBoxRef.current) {
-            linesBoxRef.current.classList.add('loaded');
-          }
-        }}
+        onLoad={onLoad}
       />
     </div>
   );

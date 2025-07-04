@@ -47,11 +47,11 @@ export const getStaticProps: GetStaticProps<unknown, { data: string }> = ({
     };
   }
 
-  let parsedData = undefined;
+  let parsedData;
 
   try {
     parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
-  } catch (_e) {
+  } catch {
     return {
       notFound: true,
     };

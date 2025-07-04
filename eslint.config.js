@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
+import unicorn from 'eslint-plugin-unicorn';
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -24,6 +25,7 @@ export default [
   },
   js.configs.recommended,
   ...typescriptEslint.configs['flat/recommended-type-checked'],
+  unicorn.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
   ...compat.extends('next/core-web-vitals', 'next'),
@@ -34,6 +36,8 @@ export default [
       '@typescript-eslint': typescriptEslint,
     },
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       parser: typescriptParser,
       parserOptions: {
         projectService: true,
@@ -47,6 +51,7 @@ export default [
         version: 'detect',
       },
       'import/resolver': {
+        typescript: true,
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
@@ -84,6 +89,24 @@ export default [
       '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-require-imports': 'off',
+
+      // Unicorn rules
+      'unicorn/filename-case': 'off',
+      'unicorn/prevent-abbreviations': 'off',
+      'unicorn/prefer-add-event-listener': 'off',
+      'unicorn/prefer-ternary': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/prefer-node-protocol': 'off',
+      'unicorn/catch-error-name': 'off',
+      'unicorn/prefer-module': 'off',
+      'unicorn/no-empty-file': 'off',
+      'unicorn/no-await-expression-member': 'off',
+      'unicorn/no-useless-undefined': 'warn',
+      'unicorn/prefer-string-replace-all': 'error',
+      'unicorn/no-abusive-eslint-disable': 'off',
+      'unicorn/no-array-for-each': 'off',
+      'unicorn/prefer-global-this': 'off',
+      'unicorn/prefer-import-meta-properties': 'error',
     },
   },
 ];

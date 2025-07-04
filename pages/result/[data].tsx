@@ -40,7 +40,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
     [score]
   );
   const shareUrl = `https://rebigulator.org/challenge/${
-    typeof btoa !== 'undefined' ? btoa(JSON.stringify({ score })) : ''
+    typeof btoa === 'undefined' ? '' : btoa(JSON.stringify({ score }))
   }`;
 
   const shareTitle = `Bet you can't beat ${score} | The Rebigulator`;
@@ -91,11 +91,11 @@ export const getStaticProps: GetStaticProps<unknown, { data: string }> = ({
     };
   }
 
-  let parsedData = undefined;
+  let parsedData;
 
   try {
     parsedData = JSON.parse(Buffer.from(data, 'base64').toString());
-  } catch (_ignored) {
+  } catch {
     return {
       notFound: true,
     };

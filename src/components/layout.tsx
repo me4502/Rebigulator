@@ -46,7 +46,7 @@ html {
     --theme-box-purple-hover: ${DARK_THEME.boxes.purpleHover};
   }
 }
-`.replace(/[\n\r ]/g, '');
+`.replaceAll(/[\n\r ]/g, '');
 
 const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (

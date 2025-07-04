@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, type FC } from 'react';
+import { useState, useMemo, useCallback, type FC, useEffect } from 'react';
 
 import Layout from '../src/components/layout';
 import SEO from '../src/components/seo';
@@ -15,7 +15,6 @@ const QUESTION_COUNT = 10;
 const GameHandler: FC = () => {
   const [score, setScore] = useState<number>(0);
   const [results, setResults] = useState<QuestionResult[]>([]);
-  const [handicap, setHandicap] = useState<number>(0);
   const [questionNumber, setQuestionNumber] = useState<number>(0);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
 
@@ -26,39 +25,40 @@ const GameHandler: FC = () => {
       if (points > 0) {
         setScore((s) => s + points);
       }
-      if (points >= 0) {
-        if (handicap != 0) {
-          setHandicap(0);
-        }
-      } else {
-        setHandicap(-points);
-      }
 
-      results.push({ e: episode.Key, s: points });
-      setResults(results);
+      setResults((oldResults) => [
+        ...oldResults,
+        { e: episode.Key, s: points },
+      ]);
+
       const newQuestion = questionNumber + 1;
       if (newQuestion < QUESTION_COUNT) {
         setQuestionNumber(newQuestion);
       } else {
         setGameEnded(true);
-        router
-          .push({
-            pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
-          })
-          .catch((err) => {
-            console.error('Error navigating to results:', err);
-          });
       }
     },
-    [handicap, results, score, router, questionNumber]
+    [questionNumber]
   );
 
-  const onFail = (message: string) => {
+  useEffect(() => {
+    if (gameEnded) {
+      router
+        .push({
+          pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
+        })
+        .catch((err) => {
+          console.error('Error navigating to results:', err);
+        });
+    }
+  }, [gameEnded, router, results, score]);
+
+  const onFail = useCallback((message: string) => {
     toast(message, {
       autoClose: 2500,
       type: 'error',
     });
-  };
+  }, []);
 
   const Slide = useMemo(
     // eslint-disable-next-line react/no-unstable-nested-components, react/display-name
@@ -71,13 +71,12 @@ const GameHandler: FC = () => {
         </div>
         <GameSlide
           onQuestionFinish={onQuestionFinish}
-          handicap={handicap}
           onFail={onFail}
           gameEnded={gameEnded}
         />
       </div>
     ),
-    [questionNumber, gameEnded, handicap, onQuestionFinish, score]
+    [questionNumber, gameEnded, onQuestionFinish, score, onFail]
   );
 
   return <Slide />;
