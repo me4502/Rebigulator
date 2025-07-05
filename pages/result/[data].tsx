@@ -43,12 +43,11 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
     typeof btoa === 'undefined' ? '' : btoa(JSON.stringify({ score }))
   }`;
 
-  const shareTitle = `Bet you can't beat ${score} | The Rebigulator`;
-  const shareDescription = `Try to beat my score of ${score} on the Rebigulator!`;
+  const shareTitle = `Try to beat my score of ${score} on the Rebigulator!`;
 
   return (
     <Layout>
-      <SEO title="Your Score | The Rebigulator" />
+      <SEO title="Your Score" />
       <div className={Container}>
         <div className={centreDiv}>
           <h1>{scoreMessage}</h1>
@@ -69,11 +68,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
             )}
           </div>
           <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
-          <ScoreShare
-            shareUrl={shareUrl}
-            shareTitle={shareTitle}
-            shareDescription={shareDescription}
-          />
+          <ScoreShare shareUrl={shareUrl} shareTitle={shareTitle} />
         </div>
       </div>
     </Layout>

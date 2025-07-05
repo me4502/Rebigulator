@@ -9,6 +9,7 @@ export default async function handler(
   const response = await fetch(API_ENDPOINT, {
     headers: { Accept: 'application/json' },
   });
+
   const json = await response.json();
   if (json) {
     res.status(200).json(json);

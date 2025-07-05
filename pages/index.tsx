@@ -23,7 +23,10 @@ const IndexPage: FC = () => (
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a single frame and a quote
         </h2>
-        <MainButtonLink href="/game/">Get started now!</MainButtonLink>
+        <MainButtonLink href="/game/">Get started now!</MainButtonLink>{' '}
+        <MainButtonLink href="/daily/game/">
+          Or try the new daily mode!
+        </MainButtonLink>
       </div>
     </div>
   </Layout>

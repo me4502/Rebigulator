@@ -62,14 +62,9 @@ const LinkShareButton: FC<
 interface ScoreShareProps {
   shareUrl: string;
   shareTitle: string;
-  shareDescription: string;
 }
 
-export const ScoreShare: FC<ScoreShareProps> = ({
-  shareUrl,
-  shareTitle,
-  shareDescription,
-}) => {
+export const ScoreShare: FC<ScoreShareProps> = ({ shareUrl, shareTitle }) => {
   return (
     <>
       <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
@@ -94,17 +89,12 @@ export const ScoreShare: FC<ScoreShareProps> = ({
         </RedditShareButton>
         <TumblrShareButton
           url={shareUrl}
-          caption={shareDescription}
+          caption={shareTitle}
           title={shareTitle}
         >
           <TumblrIcon size={32} round={true} />
         </TumblrShareButton>
-        <LinkShareButton
-          aria-label="link"
-          url={shareUrl}
-          title={shareTitle}
-          text={shareDescription}
-        >
+        <LinkShareButton aria-label="link" url={shareUrl} title={shareTitle}>
           <LinkIcon width={16} height={16} alt={'Link share icon'} />
         </LinkShareButton>
       </div>

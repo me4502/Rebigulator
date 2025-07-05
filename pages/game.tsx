@@ -85,7 +85,7 @@ const GameHandler: FC = () => {
 const GamePage: FC = () => {
   return (
     <Layout>
-      <SEO title="Play | The Rebigulator" />
+      <SEO title="Play" />
       <ToastContainer draggable={true} closeOnClick={true} />
       <GameHandler />
     </Layout>

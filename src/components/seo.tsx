@@ -65,7 +65,7 @@ export const SEO: FC<SEOPropTypes> = ({
 
   return (
     <Head>
-      <title>{`${title} | Rebigulator`}</title>
+      <title>{`${title} | The Rebigulator`}</title>
       <meta name="description" content={metaDescription} key="description" />
       <meta property="og:title" content={title} key="title" />
       <meta

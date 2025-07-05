@@ -7,7 +7,7 @@ import { MainLink } from '../src/components/MainLink';
 
 const AboutPage: FC = () => (
   <Layout>
-    <SEO title="About | The Rebigulator" />
+    <SEO title="About" />
     <div className={Container}>
       <h1>About the Rebigulator</h1>
       <p>
@@ -29,6 +29,11 @@ const AboutPage: FC = () => (
           available here
         </MainLink>
         .
+      </p>
+      <p>
+        I do not own The Simpsons, or any related media. This website is
+        unofficial and is not endorsed by, or related to, the creators of The
+        Simpsons.
       </p>
     </div>
   </Layout>

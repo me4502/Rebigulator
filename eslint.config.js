@@ -107,6 +107,8 @@ export default [
       'unicorn/no-array-for-each': 'off',
       'unicorn/prefer-global-this': 'off',
       'unicorn/prefer-import-meta-properties': 'error',
+      'unicorn/numeric-separators-style': 'off',
+      'unicorn/number-literal-case': 'off',
     },
   },
 ];
