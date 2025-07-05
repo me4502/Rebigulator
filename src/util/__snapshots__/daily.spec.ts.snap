@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getDailyEpisode > should return the correct episode for the given date 2023-03-01 1`] = `
+{
+  "label": "The Boys of Bummer",
+  "value": "S18E18",
+}
+`;
+
+exports[`getDailyEpisode > should return the correct episode for the given date 2024-10-01 1`] = `
+{
+  "label": "The City of New York vs. Homer Simpson",
+  "value": "S09E01",
+}
+`;
+
+exports[`getDailyEpisode > should return the correct episode for the given date 2025-07-03 1`] = `
+{
+  "label": "Homer the Heretic",
+  "value": "S04E03",
+}
+`;
+
+exports[`getDailyTimestampHashes > should return the correct timestamp hashes for the given date 2023-03-01 1`] = `
+[
+  0.5293715308721577,
+  0.702072634757979,
+  0.7895707892695374,
+  0.8930267786823741,
+  0.332600548009528,
+  0.6933471038223586,
+]
+`;
+
+exports[`getDailyTimestampHashes > should return the correct timestamp hashes for the given date 2024-10-01 1`] = `
+[
+  0.6646155204308721,
+  0.7453723751812643,
+  0.6031946778770524,
+  0.7609660317564769,
+  0.1532445629484124,
+  0.48569006996361774,
+]
+`;
+
+exports[`getDailyTimestampHashes > should return the correct timestamp hashes for the given date 2025-07-03 1`] = `
+[
+  0.37401850506989714,
+  0.7887633095469241,
+  0.7878796306410524,
+  0.774008486600129,
+  0.4678007272229997,
+  0.5573874601529416,
+]
+`;

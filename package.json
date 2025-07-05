@@ -31,7 +31,8 @@
     "lint-staged": "^16.1.2",
     "postcss-preset-env": "^10.2.4",
     "prettier": "^3.6.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   },
   "license": "MIT",
   "scripts": {
@@ -39,7 +40,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "test": "yarn vitest --run",
     "lint": "yarn eslint 'src/**/*.{js,jsx,ts,tsx}' 'pages/**/*.{js,jsx,ts,tsx}' --fix",
     "precommit": "lint-staged",
     "postinstall": "husky",
