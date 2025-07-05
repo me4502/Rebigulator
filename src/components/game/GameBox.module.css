@@ -13,6 +13,7 @@
   font-weight: 600;
   -webkit-text-stroke: 5px var(--theme-background);
   text-stroke: 5px var(--theme-background);
+  text-transform: uppercase;
 
   position: absolute;
   bottom: 0;

@@ -100,7 +100,7 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
 
   return (
     <div className={gameBoard}>
-      <p className={secondsCounter}>{secondsLeft}</p>
+      <p className={secondsCounter}>{Math.max(0, secondsLeft)}</p>
       <GameBox data={data} onStart={onStart} />
       <p className={secondsCounter} style={{ marginTop: '2rem' }}>
         Which episode is it?
