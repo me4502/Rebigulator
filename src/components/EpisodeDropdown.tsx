@@ -7,7 +7,10 @@ import {
   dropdownItemHighlighted,
   noResults,
 } from './EpisodeDropdown.module.css';
+import classNames from 'classnames';
 
+// TODO Maybe implement react-query or something so we don't just have this
+// weird import in half the files.
 const episodes = require('../util/episodes.json') as Array<{
   value: string;
   label: string;
@@ -25,7 +28,7 @@ export const EpisodeDropdown: FC<EpisodeDropdownProps> = ({
   onSelect,
   placeholder = 'Type to search episodes...',
   value = '',
-  className = '',
+  className,
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +38,10 @@ export const EpisodeDropdown: FC<EpisodeDropdownProps> = ({
 
   // Filter episodes based on input value
   const filteredEpisodes = useMemo(() => {
-    if (!inputValue.trim()) return episodes.slice(0, 10); // Show first 10 if no input
+    if (!inputValue.trim()) {
+      // TODO maybe randomize this?
+      return episodes.slice(0, 10); // Show first 10 if no input
+    }
 
     const searchTerm = inputValue.toLowerCase();
     return episodes
@@ -140,8 +146,9 @@ export const EpisodeDropdown: FC<EpisodeDropdownProps> = ({
   }, [highlightedIndex]);
 
   return (
-    <div className={`${episodeDropdown} ${className}`}>
+    <div className={classNames(episodeDropdown, className)}>
       <input
+        name={'episode-search'}
         ref={inputRef}
         type="text"
         value={inputValue}
