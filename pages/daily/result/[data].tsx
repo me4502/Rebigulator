@@ -7,7 +7,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import { centreDiv, resultsDiv } from './[data].module.css';
 import { cleanupEpisodeTitle } from '../../../src/util/string';
 import { ScoreShare } from '../../../src/components/ScoreShare';
-import type { DailyResults } from '../../../src/util/daily';
+import { getDateString, type DailyResults } from '../../../src/util/daily';
 
 const episodes = new Map(
   (
@@ -62,12 +62,13 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
   const results = data.r;
   const episode = data.e;
   const won = data.w;
+  const date = (data.d ?? getDateString()).replaceAll('-', '/'); // Format date for display
 
   const shareUrl = `https://rebigulator.org/daily/game`;
 
   const shareTitle = won
-    ? `I won today's Rebigulator daily mode on the ${numeralWorlds.get(attempts + 1)} try! Try it for yourself! `
-    : `I lost today's Rebigulator daily mode :(. See if you can do better!`;
+    ? `I won the Rebigulator daily challenge for ${date} on the ${numeralWorlds.get(attempts + 1)} try! Try it for yourself! `
+    : `I lost the Rebigulator daily challenge for ${date} :(. See if you can do better!`;
 
   return (
     <Layout>

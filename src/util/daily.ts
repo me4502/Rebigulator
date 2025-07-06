@@ -79,13 +79,15 @@ export interface DailyResults {
   r: (string | null)[]; // Results
   e: string; // Episode Key
   w: boolean; // Won
+  d?: string; // Date
 }
 
 export function generateDailyResults(
   attempts: number,
   results: (string | null)[],
   episodeKey: string,
-  won: boolean
+  won: boolean,
+  date?: string
 ) {
-  return `${btoa(JSON.stringify({ a: attempts, r: results, e: episodeKey, w: won }))}`;
+  return `${btoa(JSON.stringify({ a: attempts, r: results, e: episodeKey, w: won, d: date }))}`;
 }

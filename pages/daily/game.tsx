@@ -14,6 +14,7 @@ import {
   generateDailyResults,
   getDailyEpisode,
   getDailyTimestampHashes,
+  getDateString,
   ROUND_COUNT,
 } from '../../src/util/daily';
 import LoadingSpinner from '../../src/components/LoadingSpinner';
@@ -45,7 +46,8 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
             attempts,
             results,
             episodeData.Episode.Key,
-            won
+            won,
+            getDateString()
           )}`,
         })
         .catch((err) => {
