@@ -80,7 +80,9 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
     () => () => (
       <div className={Container}>
         <div className={scoreBox}>
-          <span>Attempts: {attempts}</span>
+          <span>
+            Attempts: {attempts} / {ROUND_COUNT}
+          </span>
         </div>
         <DailyGameSlide
           onFail={onFail}
