@@ -94,6 +94,19 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
           episodeData={episodeData}
           round={attempts}
         />
+        <p
+          style={{
+            textAlign: 'center',
+            textWrap: 'balance',
+            fontFamily: 'akbarplain',
+            textTransform: 'uppercase',
+          }}
+        >
+          Guess the episode of The Simpsons shown in the image. You have{' '}
+          {ROUND_COUNT} attempts, and each attempt will show you a new image
+          from the same episode. You can skip if you don't know the answer, but
+          skipping will count as an attempt.
+        </p>
       </div>
     ),
     [attempts, gameEnded, onSuccess, onFail, dailyTimestampHashes, episodeData]

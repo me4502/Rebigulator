@@ -74,6 +74,19 @@ const GameHandler: FC = () => {
           onFail={onFail}
           gameEnded={gameEnded}
         />
+        <p
+          style={{
+            textAlign: 'center',
+            textWrap: 'balance',
+            fontFamily: 'akbarplain',
+            textTransform: 'uppercase',
+          }}
+        >
+          Guess the episode of The Simpsons shown in the image! You have 60
+          seconds to answer each question, and you can skip a question if you
+          don't know the answer. The game ends after 10 questions, and your
+          score is based on how many you get right.
+        </p>
       </div>
     ),
     [questionNumber, gameEnded, onQuestionFinish, score, onFail]

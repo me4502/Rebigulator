@@ -29,6 +29,8 @@ export const GameBox: FC<GameBoxProps> = ({ data, onStart }) => {
         src={`https://frinkiac.com/img/${data.Episode.Key}/${data.Frame.Timestamp}.jpg`}
         alt="Episode hint"
         onLoad={onLoad}
+        loading={'eager'}
+        height={300}
       />
     </div>
   );
