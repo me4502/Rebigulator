@@ -19,6 +19,7 @@ export interface SEOPropTypes {
   description?: string;
   image?: SEOImageProps;
   title: string;
+  titleExtra?: string;
   type?: string;
 }
 
@@ -57,6 +58,7 @@ const DEFAULT_IMAGE = {
 export const SEO: FC<SEOPropTypes> = ({
   description,
   title,
+  titleExtra = ' | The Rebigulator',
   type = 'website',
   image = DEFAULT_IMAGE,
 }) => {
@@ -65,7 +67,7 @@ export const SEO: FC<SEOPropTypes> = ({
 
   return (
     <Head>
-      <title>{`${title} | The Rebigulator`}</title>
+      <title>{`${title}${titleExtra}`}</title>
       <meta name="description" content={metaDescription} key="description" />
       <meta property="og:title" content={title} key="title" />
       <meta

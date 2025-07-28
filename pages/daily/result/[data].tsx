@@ -72,7 +72,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="Your results" />
+      <SEO title="Your daily challenge results" />
       <div className={Container}>
         <div className={centreDiv}>
           {won ? (

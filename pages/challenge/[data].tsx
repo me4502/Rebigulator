@@ -16,8 +16,8 @@ interface ChallengePageProps {
 const ChallengePage: FC<ChallengePageProps> = ({ data }) => (
   <Layout>
     <SEO
-      title={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game`}
-      description={`You've been challenged! Think you can beat a score of ${data.score}? | The Rebigulator; Simpsons Trivia Game powered by Frinkiac`}
+      title={`You've been challenged! Think you can beat a score of ${data.score}?`}
+      description={`You've been challenged! Think you can beat a score of ${data.score}?`}
     />
     <div className={Container}>
       <div className={centreDiv}>

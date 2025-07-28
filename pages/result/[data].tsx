@@ -47,7 +47,7 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="Your Score" />
+      <SEO title="Your results" />
       <div className={Container}>
         <div className={centreDiv}>
           <h1>{scoreMessage}</h1>

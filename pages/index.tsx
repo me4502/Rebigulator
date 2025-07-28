@@ -11,6 +11,7 @@ const IndexPage: FC = () => (
   <Layout>
     <SEO
       title="The Rebigulator | Simpsons Trivia Game"
+      titleExtra=""
       description="The Rebigulator is an online fast-paced quote-based Simpsons trivia quiz game. Play now for free!"
     />
     <div className={Container}>
