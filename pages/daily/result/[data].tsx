@@ -11,7 +11,7 @@ import { getDateString, type DailyResults } from '../../../src/util/daily';
 
 const episodes = new Map(
   (
-    require('../../../src/util/episodes.json') as {
+    require('../../../src/util/frinkiacEpisodes.json') as {
       value: string;
       label: string;
     }[]

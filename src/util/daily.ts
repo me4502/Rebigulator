@@ -1,6 +1,6 @@
 export const ROUND_COUNT = 6;
 
-const episodes = require('../../src/util/episodes.json') as {
+const episodes = require('../../src/util/frinkiacEpisodes.json') as {
   value: string;
   label: string;
   data: undefined;
