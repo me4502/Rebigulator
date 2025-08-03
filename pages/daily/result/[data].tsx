@@ -8,7 +8,8 @@ import { centreDiv, resultsDiv } from './[data].module.css';
 import { cleanupEpisodeTitle } from '../../../src/util/string';
 import { ScoreShare } from '../../../src/components/ScoreShare';
 import { getDateString, type DailyResults } from '../../../src/util/daily';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { LoadingBox } from '../../../src/components/LoadingSpinner';
+import { useFrinkiacEpisodeTitle } from '../../../src/frinkiac/episodes';
 
 interface ResultPageProps {
   data: DailyResults;
@@ -24,16 +25,7 @@ const numeralWorlds = new Map([
 ]);
 
 const EpisodeTitle: FC<{ episode: string }> = ({ episode }) => {
-  const { data: title } = useSuspenseQuery({
-    queryKey: ['frinkiacEpisodeTitleMap'],
-    queryFn: async () => {
-      const episodes = await import('../../../src/util/frinkiacEpisodes.json', {
-        with: { type: 'json' },
-      }).then((mod) => mod.default);
-      return new Map(episodes.map(({ value, label }) => [value, label]));
-    },
-    select: (data) => data.get(episode),
-  });
+  const title = useFrinkiacEpisodeTitle(episode);
 
   return <>{cleanupEpisodeTitle(title)}</>;
 };
@@ -41,7 +33,7 @@ const EpisodeTitle: FC<{ episode: string }> = ({ episode }) => {
 const ResultsDisplay: FC<{ results: (string | null)[] }> = ({ results }) => {
   return (
     <div className={resultsDiv}>
-      <Suspense fallback={<p>Loading results...</p>}>
+      <Suspense fallback={<LoadingBox text="Loading results..." />}>
         {results.length > 0 && (
           <div>
             {results.map((res, i) => (

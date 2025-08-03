@@ -1,4 +1,11 @@
-import { useState, useMemo, useCallback, type FC, useEffect } from 'react';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  type FC,
+  useEffect,
+  Suspense,
+} from 'react';
 
 import Layout from '../src/components/layout';
 import SEO from '../src/components/seo';
@@ -9,6 +16,7 @@ import type { QuestionResult } from '../src/util/types';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { scoreBox } from './game.module.css';
+import { LoadingBox } from '../src/components/LoadingSpinner';
 
 const QUESTION_COUNT = 10;
 
@@ -26,10 +34,7 @@ const GameHandler: FC = () => {
         setScore((s) => s + points);
       }
 
-      setResults((oldResults) => [
-        ...oldResults,
-        { e: episode.Key, s: points },
-      ]);
+      setResults((oldResults) => [...oldResults, [episode.Key, points]]);
 
       const newQuestion = questionNumber + 1;
       if (newQuestion < QUESTION_COUNT) {
@@ -45,7 +50,7 @@ const GameHandler: FC = () => {
     if (gameEnded) {
       router
         .push({
-          pathname: `/result/${btoa(JSON.stringify({ score, results }))}`,
+          pathname: `/result/${btoa(JSON.stringify({ s: score, r: results }))}`,
         })
         .catch((err) => {
           console.error('Error navigating to results:', err);
@@ -69,11 +74,13 @@ const GameHandler: FC = () => {
             Score: {score} &#x2E31; Round: {questionNumber + 1}
           </span>
         </div>
-        <GameSlide
-          onQuestionFinish={onQuestionFinish}
-          onFail={onFail}
-          gameEnded={gameEnded}
-        />
+        <Suspense fallback={<LoadingBox />}>
+          <GameSlide
+            onQuestionFinish={onQuestionFinish}
+            onFail={onFail}
+            gameEnded={gameEnded}
+          />
+        </Suspense>
         <p
           style={{
             textAlign: 'center',

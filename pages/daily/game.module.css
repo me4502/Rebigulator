@@ -4,9 +4,3 @@
   text-align: center;
   font-size: 20pt;
 }
-
-.loadingBox {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}

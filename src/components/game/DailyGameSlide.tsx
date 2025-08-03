@@ -1,12 +1,12 @@
-import { type FC, useCallback, useState, useEffect, Suspense } from 'react';
+import { type FC, useCallback, Suspense, useMemo } from 'react';
 import {
   type EpisodeInfoResponse,
-  getScreencap,
   type ScreencapResponse,
+  useScreencap,
 } from '../../frinkiac/frinkiacAccess';
-import LoadingSpinner from '../LoadingSpinner';
+import { LoadingSpinner } from '../LoadingSpinner';
 import { MainButton } from '../MainLink';
-import { gameBoard, buttonBox, loadingBox } from './GameSlide.module.css';
+import { gameBoard, buttonBox } from './GameSlide.module.css';
 import { GameBox } from './GameBox';
 import { EpisodeDropdown } from '../EpisodeDropdown';
 
@@ -77,9 +77,7 @@ export const DailyGameSlide: FC<DailyGameSlideProps> = ({
   episodeData,
   round,
 }) => {
-  const [screencapData, setScreencapData] = useState<ScreencapResponse>();
-
-  useEffect(() => {
+  const closestTimestamp = useMemo(() => {
     const subtitleToUse = dailyTimestampHashes[round];
     const availableTimestamps = episodeData.Subtitles.map(
       (sub) => sub.RepresentativeTimestamp
@@ -89,29 +87,19 @@ export const DailyGameSlide: FC<DailyGameSlideProps> = ({
       subtitleToUse * availableTimestamps.length
     );
 
-    const closestTimestamp = availableTimestamps[subtitleIndex];
-
-    getScreencap(episodeData.Episode.Key, closestTimestamp)
-      .then((data) => {
-        setScreencapData(data);
-      })
-      .catch(console.error);
+    return availableTimestamps[subtitleIndex];
   }, [dailyTimestampHashes, round, episodeData]);
+  const screencapData = useScreencap(episodeData.Episode.Key, closestTimestamp);
 
-  if (screencapData && !gameEnded) {
+  if (gameEnded) {
+    return null;
+  } else {
     return (
       <DailyGameSlideLogic
         onSuccess={onSuccess}
         onFail={onFail}
         data={screencapData}
       />
-    );
-  } else {
-    return (
-      <div className={loadingBox}>
-        <p>Loading...</p>
-        <LoadingSpinner />
-      </div>
     );
   }
 };

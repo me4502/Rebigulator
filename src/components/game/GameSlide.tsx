@@ -1,19 +1,14 @@
 import { useState, useEffect, useMemo, type FC, useCallback } from 'react';
 import { getRandom, type RandomResponse } from '../../frinkiac/frinkiacAccess';
-import LoadingSpinner from '../LoadingSpinner';
+import { LoadingBox } from '../LoadingSpinner';
 import type { Episode } from '../../frinkiac/types';
 import { MainButton } from '../MainLink';
 import { MultiChoiceBox } from '../MultiChoiceBox';
-import {
-  gameBoard,
-  secondsCounter,
-  buttonBox,
-  loadingBox,
-} from './GameSlide.module.css';
+import { gameBoard, secondsCounter, buttonBox } from './GameSlide.module.css';
 import { shuffle } from '../../util/array';
 import { GameBox } from './GameBox';
 
-const episodes = require('../../util/episodes.json') as {
+const episodes = require('../../util/frinkiacEpisodes.json') as {
   value: string;
   label: string;
 }[];
@@ -136,11 +131,6 @@ export const GameSlide: FC<GameSlideProps> = ({
       />
     );
   } else {
-    return (
-      <div className={loadingBox}>
-        <p>Loading...</p>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingBox />;
   }
 };

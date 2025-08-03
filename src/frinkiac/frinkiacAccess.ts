@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { Episode, Frame, Subtitle } from './types';
 
 // The following are multiplied by 24, due to Frinkiac using frame-based timestamps
@@ -50,18 +51,25 @@ export interface ScreencapResponse {
   Subtitles: Subtitle[];
 }
 
-export async function getScreencap(
+export function useScreencap(
   episode: string,
   timestamp: number
-): Promise<ScreencapResponse> {
-  const data = (await (
-    await fetch(
-      `/api/get-screencap?episode=${encodeURIComponent(episode)}&timestamp=${timestamp}`,
-      {
-        method: 'GET',
-      }
-    )
-  ).json()) as ScreencapResponse;
+): ScreencapResponse {
+  const { data } = useSuspenseQuery<ScreencapResponse>({
+    queryKey: ['screencap', episode, timestamp],
+    queryFn: async () => {
+      const data = (await (
+        await fetch(
+          `/api/get-screencap?episode=${encodeURIComponent(episode)}&timestamp=${timestamp}`,
+          {
+            method: 'GET',
+          }
+        )
+      ).json()) as ScreencapResponse;
+
+      return data;
+    },
+  });
 
   return data;
 }
@@ -71,17 +79,22 @@ export interface EpisodeInfoResponse {
   Subtitles: Subtitle[];
 }
 
-export async function getEpisodeInfo(
-  episode: string
-): Promise<EpisodeInfoResponse> {
-  const data = (await (
-    await fetch(
-      `/api/get-episode-info?episode=${encodeURIComponent(episode)}`,
-      {
-        method: 'GET',
-      }
-    )
-  ).json()) as EpisodeInfoResponse;
+export function useEpisodeInfo(episode: string): EpisodeInfoResponse {
+  const { data } = useSuspenseQuery<EpisodeInfoResponse>({
+    queryKey: ['episodeInfo', episode],
+    queryFn: async () => {
+      const data = (await (
+        await fetch(
+          `/api/get-episode-info?episode=${encodeURIComponent(episode)}`,
+          {
+            method: 'GET',
+          }
+        )
+      ).json()) as EpisodeInfoResponse;
+
+      return data;
+    },
+  });
 
   return data;
 }

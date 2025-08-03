@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { spinner } from './LoadingSpinner.module.css';
+import { spinner, loadingBox } from './LoadingSpinner.module.css';
 
 export const LoadingSpinner: FC = () => (
   <div className={spinner}>
@@ -18,4 +18,13 @@ export const LoadingSpinner: FC = () => (
   </div>
 );
 
-export default LoadingSpinner;
+interface LoadingBoxProps {
+  text?: string;
+}
+
+export const LoadingBox: FC<LoadingBoxProps> = ({ text = 'Loading...' }) => (
+  <div className={loadingBox}>
+    <p>{text}</p>
+    <LoadingSpinner />
+  </div>
+);

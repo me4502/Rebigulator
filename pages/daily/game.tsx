@@ -11,11 +11,11 @@ import Layout from '../../src/components/layout';
 import SEO from '../../src/components/seo';
 import {
   type EpisodeInfoResponse,
-  getEpisodeInfo,
+  useEpisodeInfo,
 } from '../../src/frinkiac/frinkiacAccess';
 import { DailyGameSlide } from '../../src/components/game/DailyGameSlide';
 import { useRouter } from 'next/router';
-import { scoreBox, loadingBox } from './game.module.css';
+import { scoreBox } from './game.module.css';
 import { Container } from '../../src/components/Container.module.css';
 import {
   generateDailyResults,
@@ -24,8 +24,7 @@ import {
   ROUND_COUNT,
   useDailyEpisode,
 } from '../../src/util/daily';
-import LoadingSpinner from '../../src/components/LoadingSpinner';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { LoadingBox } from '../../src/components/LoadingSpinner';
 
 interface GameHandlerProps {
   episodeData: EpisodeInfoResponse;
@@ -94,14 +93,16 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
             Attempts: {attempts} / {ROUND_COUNT}
           </span>
         </div>
-        <DailyGameSlide
-          onFail={onFail}
-          onSuccess={onSuccess}
-          gameEnded={gameEnded}
-          dailyTimestampHashes={dailyTimestampHashes}
-          episodeData={episodeData}
-          round={attempts}
-        />
+        <Suspense fallback={<LoadingBox />}>
+          <DailyGameSlide
+            onFail={onFail}
+            onSuccess={onSuccess}
+            gameEnded={gameEnded}
+            dailyTimestampHashes={dailyTimestampHashes}
+            episodeData={episodeData}
+            round={attempts}
+          />
+        </Suspense>
         <p
           style={{
             textAlign: 'center',
@@ -125,27 +126,17 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
 
 const GameInstance = () => {
   const dailyEpisode = useDailyEpisode();
-  const { data: episodeData } = useSuspenseQuery<EpisodeInfoResponse>({
-    queryKey: ['dailyEpisodeData', dailyEpisode.value],
-    queryFn: () => getEpisodeInfo(dailyEpisode.value),
-  });
+  const episodeData = useEpisodeInfo(dailyEpisode.value);
 
   return <GameHandler episodeData={episodeData} />;
 };
-
-const LoadingIndicator: FC = () => (
-  <div className={loadingBox}>
-    <p>Loading daily challenge...</p>
-    <LoadingSpinner />
-  </div>
-);
 
 const GamePage: FC = () => {
   return (
     <Layout>
       <SEO title="Play the daily challenge" />
       <ToastContainer draggable={true} closeOnClick={true} />
-      <Suspense fallback={<LoadingIndicator />}>
+      <Suspense fallback={<LoadingBox text="Loading daily challenge..." />}>
         <GameInstance />
       </Suspense>
     </Layout>
