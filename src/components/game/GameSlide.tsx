@@ -7,11 +7,7 @@ import { MultiChoiceBox } from '../MultiChoiceBox';
 import { gameBoard, secondsCounter, buttonBox } from './GameSlide.module.css';
 import { shuffle } from '../../util/array';
 import { GameBox } from './GameBox';
-
-const episodes = require('../../util/frinkiacEpisodes.json') as {
-  value: string;
-  label: string;
-}[];
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 interface GameSlideProps {
   onQuestionFinish: (points: number, episode: Episode) => void;
@@ -25,12 +21,27 @@ interface GameSlideLogicProps extends Omit<GameSlideProps, 'gameEnded'> {
 
 const TIME_PER_SLIDE = 60;
 
-function getRandomEpisode(ignore: string): string {
-  let episode: string | undefined = undefined;
-  do {
-    episode = episodes[Math.floor(Math.random() * episodes.length)].label;
-  } while (episode === ignore);
-  return episode;
+function useRandomEpisodes(ignore: string): string[] {
+  const { data } = useSuspenseQuery({
+    queryKey: ['randomEpisodes', ignore],
+    queryFn: async () => {
+      const data = await import('../../util/frinkiacEpisodes.json', {
+        with: { type: 'json' },
+      }).then((mod) => mod.default);
+
+      const episodes: string[] = [];
+      for (let i = 0; i < 3; i++) {
+        let episode: string | undefined;
+        do {
+          episode = data[Math.floor(Math.random() * data.length)].label;
+        } while (episode === ignore);
+        episodes.push(episode);
+      }
+      return episodes;
+    },
+  });
+
+  return data;
 }
 
 const GameSlideLogic: FC<GameSlideLogicProps> = ({
@@ -81,15 +92,11 @@ const GameSlideLogic: FC<GameSlideLogicProps> = ({
     [secondsLeft, data.Episode, onQuestionFinish, onFail]
   );
 
+  const randomEpisodes = useRandomEpisodes(data.Episode.Title);
+
   const choices = useMemo(
-    () =>
-      shuffle([
-        getRandomEpisode(data.Episode.Title),
-        getRandomEpisode(data.Episode.Title),
-        getRandomEpisode(data.Episode.Title),
-        data.Episode.Title,
-      ]),
-    [data.Episode.Title]
+    () => shuffle([...randomEpisodes, data.Episode.Title]),
+    [data.Episode.Title, randomEpisodes]
   );
 
   return (
