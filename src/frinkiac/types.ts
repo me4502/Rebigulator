@@ -25,3 +25,8 @@ export interface Subtitle {
   Content: string;
   Language: string;
 }
+
+export interface FrinkiacEpisodesJsonType {
+  label: string;
+  value: string;
+}

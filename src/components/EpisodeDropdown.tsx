@@ -8,7 +8,7 @@ import {
   noResults,
 } from './EpisodeDropdown.module.css';
 import classNames from 'classnames';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useFrinkiacEpisodes } from '../frinkiac/episodes';
 
 interface EpisodeDropdownProps {
   onSelect: (value: string) => void;
@@ -29,28 +29,20 @@ export const EpisodeDropdown: FC<EpisodeDropdownProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const { data: filteredEpisodes } = useSuspenseQuery({
-    queryKey: ['frinkiacEpisodes'],
-    queryFn: async () => {
-      return await import('../util/frinkiacEpisodes.json', {
-        with: { type: 'json' },
-      }).then((mod) => mod.default);
-    },
-    select: (data) => {
-      if (!inputValue.trim()) {
-        // TODO maybe randomize this?
-        return data.slice(0, 10); // Show first 10 if no input
-      }
+  const filteredEpisodes = useFrinkiacEpisodes((data) => {
+    if (!inputValue.trim()) {
+      // TODO maybe randomize this?
+      return data.slice(0, 10); // Show first 10 if no input
+    }
 
-      const searchTerm = inputValue.toLowerCase();
-      return data
-        .filter(
-          (episode) =>
-            episode.label.toLowerCase().includes(searchTerm) ||
-            episode.value.toLowerCase().includes(searchTerm)
-        )
-        .slice(0, 20); // Limit to 20 results for performance
-    },
+    const searchTerm = inputValue.toLowerCase();
+    return data
+      .filter(
+        (episode) =>
+          episode.label.toLowerCase().includes(searchTerm) ||
+          episode.value.toLowerCase().includes(searchTerm)
+      )
+      .slice(0, 20); // Limit to 20 results for performance
   });
 
   // Handle input change

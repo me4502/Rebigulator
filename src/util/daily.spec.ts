@@ -5,8 +5,12 @@ describe('getDailyEpisode', () => {
   it.each([['2023-03-01'], ['2024-10-01'], ['2025-07-03']])(
     'should return the correct episode for the given date %s',
     async (dateString) => {
+      const episodes = await import('./frinkiacEpisodes.json', {
+        with: { type: 'json' },
+      }).then((mod) => mod.default);
+
       const date = new Date(dateString).toISOString().split('T')[0];
-      const episode = await getDailyEpisode(date);
+      const episode = getDailyEpisode(date, episodes);
       expect(episode).toMatchSnapshot();
     }
   );

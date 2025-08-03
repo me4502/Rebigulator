@@ -1,4 +1,5 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useFrinkiacEpisodes } from '../frinkiac/episodes';
+import type { FrinkiacEpisodesJsonType } from '../frinkiac/types';
 
 export const ROUND_COUNT = 6;
 
@@ -14,9 +15,10 @@ export const getDateString = (): string => {
   return today.toISOString().split('T')[0]; // YYYY-MM-DD format
 };
 
-export async function getDailyEpisode(
-  dateString: string
-): Promise<{ value: string; label: string }> {
+export function getDailyEpisode(
+  dateString: string,
+  episodes: FrinkiacEpisodesJsonType[]
+): FrinkiacEpisodesJsonType {
   // Simple hash function to convert date string to number
   let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
@@ -25,25 +27,17 @@ export async function getDailyEpisode(
     hash = hash & hash; // Convert to 32-bit integer
   }
 
-  const episodes = await import('../../src/util/frinkiacEpisodes.json', {
-    with: { type: 'json' },
-  }).then((mod) => mod.default);
-
   // Use absolute value and modulo to get episode index
   const episodeIndex = Math.abs(hash) % episodes.length;
   return episodes[episodeIndex];
 }
 
-export function useDailyEpisode(date?: string): {
-  value: string;
-  label: string;
-} {
+export function useDailyEpisode(date?: string): FrinkiacEpisodesJsonType {
   const dateString = date || getDateString();
 
-  return useSuspenseQuery({
-    queryKey: ['dailyEpisode', dateString],
-    queryFn: () => getDailyEpisode(dateString),
-  }).data;
+  return useFrinkiacEpisodes((data) => {
+    return getDailyEpisode(dateString, data);
+  });
 }
 
 export function getDailyTimestampHashes(date?: string): number[] {

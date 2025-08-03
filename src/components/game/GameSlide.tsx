@@ -16,7 +16,6 @@ import { GameBox } from './GameBox';
 const episodes = require('../../util/episodes.json') as {
   value: string;
   label: string;
-  data: undefined;
 }[];
 
 interface GameSlideProps {
