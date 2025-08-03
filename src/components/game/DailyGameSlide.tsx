@@ -1,4 +1,4 @@
-import { type FC, useCallback, useState, useEffect } from 'react';
+import { type FC, useCallback, useState, useEffect, Suspense } from 'react';
 import {
   type EpisodeInfoResponse,
   getScreencap,
@@ -50,7 +50,9 @@ const DailyGameSlideLogic: FC<DailyGameSlideLogicProps> = ({
       >
         Which episode is it?
       </p>
-      <EpisodeDropdown onSelect={checkForCorrect} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <EpisodeDropdown onSelect={checkForCorrect} />
+      </Suspense>
       <div className={buttonBox}>
         <MainButton onClick={onSkip}>Skip</MainButton>
       </div>

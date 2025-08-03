@@ -1,10 +1,6 @@
-export const ROUND_COUNT = 6;
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-const episodes = require('../../src/util/frinkiacEpisodes.json') as {
-  value: string;
-  label: string;
-  data: undefined;
-}[];
+export const ROUND_COUNT = 6;
 
 /**
  * Gets the current day's date, to use as a seed for daily challenges.
@@ -18,9 +14,9 @@ export const getDateString = (): string => {
   return today.toISOString().split('T')[0]; // YYYY-MM-DD format
 };
 
-export function getDailyEpisode(date?: string) {
-  const dateString = date || getDateString();
-
+export async function getDailyEpisode(
+  dateString: string
+): Promise<{ value: string; label: string }> {
   // Simple hash function to convert date string to number
   let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
@@ -29,9 +25,25 @@ export function getDailyEpisode(date?: string) {
     hash = hash & hash; // Convert to 32-bit integer
   }
 
+  const episodes = await import('../../src/util/frinkiacEpisodes.json', {
+    with: { type: 'json' },
+  }).then((mod) => mod.default);
+
   // Use absolute value and modulo to get episode index
   const episodeIndex = Math.abs(hash) % episodes.length;
   return episodes[episodeIndex];
+}
+
+export function useDailyEpisode(date?: string): {
+  value: string;
+  label: string;
+} {
+  const dateString = date || getDateString();
+
+  return useSuspenseQuery({
+    queryKey: ['dailyEpisode', dateString],
+    queryFn: () => getDailyEpisode(dateString),
+  }).data;
 }
 
 export function getDailyTimestampHashes(date?: string): number[] {
@@ -88,6 +100,6 @@ export function generateDailyResults(
   episodeKey: string,
   won: boolean,
   date?: string
-) {
+): string {
   return `${btoa(JSON.stringify({ a: attempts, r: results, e: episodeKey, w: won, d: date }))}`;
 }

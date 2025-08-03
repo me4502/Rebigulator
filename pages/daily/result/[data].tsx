@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { Suspense, type FC } from 'react';
 import Layout from '../../../src/components/layout';
 import SEO from '../../../src/components/seo';
 import { Container } from '../../../src/components/Container.module.css';
@@ -8,15 +8,7 @@ import { centreDiv, resultsDiv } from './[data].module.css';
 import { cleanupEpisodeTitle } from '../../../src/util/string';
 import { ScoreShare } from '../../../src/components/ScoreShare';
 import { getDateString, type DailyResults } from '../../../src/util/daily';
-
-const episodes = new Map(
-  (
-    require('../../../src/util/frinkiacEpisodes.json') as {
-      value: string;
-      label: string;
-    }[]
-  ).map(({ value, label }) => [value, label])
-);
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 interface ResultPageProps {
   data: DailyResults;
@@ -31,28 +23,45 @@ const numeralWorlds = new Map([
   [6, 'sixth'],
 ]);
 
+const EpisodeTitle: FC<{ episode: string }> = ({ episode }) => {
+  const { data: title } = useSuspenseQuery({
+    queryKey: ['frinkiacEpisodeTitleMap'],
+    queryFn: async () => {
+      const episodes = await import('../../../src/util/frinkiacEpisodes.json', {
+        with: { type: 'json' },
+      }).then((mod) => mod.default);
+      return new Map(episodes.map(({ value, label }) => [value, label]));
+    },
+    select: (data) => data.get(episode),
+  });
+
+  return <>{cleanupEpisodeTitle(title)}</>;
+};
+
 const ResultsDisplay: FC<{ results: (string | null)[] }> = ({ results }) => {
   return (
     <div className={resultsDiv}>
-      {results.length > 0 && (
-        <div>
-          {results.map((res, i) => (
-            <div key={`result-${i}`}>
-              {res === null ? (
-                <p>
-                  {i + 1}
-                  {')'} Skip
-                </p>
-              ) : (
-                <p>
-                  {i + 1}
-                  {')'} {cleanupEpisodeTitle(episodes.get(res))} ({res})
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      <Suspense fallback={<p>Loading results...</p>}>
+        {results.length > 0 && (
+          <div>
+            {results.map((res, i) => (
+              <div key={`result-${i}`}>
+                {res === null ? (
+                  <p>
+                    {i + 1}
+                    {')'} Skip
+                  </p>
+                ) : (
+                  <p>
+                    {i + 1}
+                    {')'} <EpisodeTitle episode={res} />
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 };
@@ -81,8 +90,10 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
             <h1>You've lost, why not try again tomorrow!</h1>
           )}
           <h2>
-            The episode was: {cleanupEpisodeTitle(episodes.get(episode))} (
-            {episode})
+            The episode was:{' '}
+            <Suspense fallback={<>Loading...</>}>
+              <EpisodeTitle episode={episode} />
+            </Suspense>
           </h2>
           <p>Your guesses were:</p>
           <ResultsDisplay results={results} />

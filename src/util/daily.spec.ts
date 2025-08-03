@@ -4,9 +4,9 @@ import { getDailyEpisode, getDailyTimestampHashes } from './daily';
 describe('getDailyEpisode', () => {
   it.each([['2023-03-01'], ['2024-10-01'], ['2025-07-03']])(
     'should return the correct episode for the given date %s',
-    (dateString) => {
+    async (dateString) => {
       const date = new Date(dateString).toISOString().split('T')[0];
-      const episode = getDailyEpisode(date);
+      const episode = await getDailyEpisode(date);
       expect(episode).toMatchSnapshot();
     }
   );

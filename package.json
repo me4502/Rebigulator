@@ -7,6 +7,7 @@
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query": "^5.84.1",
     "next": "^15.4.5",
     "react": "^19.1.1",
     "react-copy-to-clipboard": "^5.1.0",

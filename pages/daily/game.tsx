@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useState, type FC } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type FC,
+} from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import Layout from '../../src/components/layout';
 import SEO from '../../src/components/seo';
@@ -12,12 +19,13 @@ import { scoreBox, loadingBox } from './game.module.css';
 import { Container } from '../../src/components/Container.module.css';
 import {
   generateDailyResults,
-  getDailyEpisode,
   getDailyTimestampHashes,
   getDateString,
   ROUND_COUNT,
+  useDailyEpisode,
 } from '../../src/util/daily';
 import LoadingSpinner from '../../src/components/LoadingSpinner';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 interface GameHandlerProps {
   episodeData: EpisodeInfoResponse;
@@ -116,35 +124,30 @@ const GameHandler: FC<GameHandlerProps> = ({ episodeData }) => {
 };
 
 const GameInstance = () => {
-  const dailyEpisode = useMemo(() => getDailyEpisode(), []);
-  const [episodeData, setEpisodeData] = useState<EpisodeInfoResponse>();
-
-  useEffect(() => {
-    getEpisodeInfo(dailyEpisode.value)
-      .then((data) => {
-        setEpisodeData(data);
-      })
-      .catch(console.error);
-  }, [dailyEpisode.value]);
-
-  if (!episodeData) {
-    return (
-      <div className={loadingBox}>
-        <p>Loading...</p>
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  const dailyEpisode = useDailyEpisode();
+  const { data: episodeData } = useSuspenseQuery<EpisodeInfoResponse>({
+    queryKey: ['dailyEpisodeData', dailyEpisode.value],
+    queryFn: () => getEpisodeInfo(dailyEpisode.value),
+  });
 
   return <GameHandler episodeData={episodeData} />;
 };
+
+const LoadingIndicator: FC = () => (
+  <div className={loadingBox}>
+    <p>Loading daily challenge...</p>
+    <LoadingSpinner />
+  </div>
+);
 
 const GamePage: FC = () => {
   return (
     <Layout>
       <SEO title="Play the daily challenge" />
       <ToastContainer draggable={true} closeOnClick={true} />
-      <GameInstance />
+      <Suspense fallback={<LoadingIndicator />}>
+        <GameInstance />
+      </Suspense>
     </Layout>
   );
 };

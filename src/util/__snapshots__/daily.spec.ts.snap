@@ -2,22 +2,22 @@
 
 exports[`getDailyEpisode > should return the correct episode for the given date 2023-03-01 1`] = `
 {
-  "label": "The Boys of Bummer",
-  "value": "S18E18",
+  "label": "Three Gays of the Condo",
+  "value": "S14E17",
 }
 `;
 
 exports[`getDailyEpisode > should return the correct episode for the given date 2024-10-01 1`] = `
 {
-  "label": "The City of New York vs. Homer Simpson",
-  "value": "S09E01",
+  "label": "Trash of the Titans",
+  "value": "S09E22",
 }
 `;
 
 exports[`getDailyEpisode > should return the correct episode for the given date 2025-07-03 1`] = `
 {
-  "label": "Homer the Heretic",
-  "value": "S04E03",
+  "label": "Bart Sells His Soul",
+  "value": "S07E04",
 }
 `;
 

@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect, type FC } from 'react';
+import { useState, useRef, useEffect, type FC } from 'react';
 import {
   episodeDropdown,
   dropdownInput,
@@ -8,14 +8,7 @@ import {
   noResults,
 } from './EpisodeDropdown.module.css';
 import classNames from 'classnames';
-
-// TODO Maybe implement react-query or something so we don't just have this
-// weird import in half the files.
-const episodes = require('../util/episodes.json') as Array<{
-  value: string;
-  label: string;
-  data: undefined;
-}>;
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 interface EpisodeDropdownProps {
   onSelect: (value: string) => void;
@@ -36,22 +29,29 @@ export const EpisodeDropdown: FC<EpisodeDropdownProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Filter episodes based on input value
-  const filteredEpisodes = useMemo(() => {
-    if (!inputValue.trim()) {
-      // TODO maybe randomize this?
-      return episodes.slice(0, 10); // Show first 10 if no input
-    }
+  const { data: filteredEpisodes } = useSuspenseQuery({
+    queryKey: ['frinkiacEpisodes'],
+    queryFn: async () => {
+      return await import('../util/frinkiacEpisodes.json', {
+        with: { type: 'json' },
+      }).then((mod) => mod.default);
+    },
+    select: (data) => {
+      if (!inputValue.trim()) {
+        // TODO maybe randomize this?
+        return data.slice(0, 10); // Show first 10 if no input
+      }
 
-    const searchTerm = inputValue.toLowerCase();
-    return episodes
-      .filter(
-        (episode) =>
-          episode.label.toLowerCase().includes(searchTerm) ||
-          episode.value.toLowerCase().includes(searchTerm)
-      )
-      .slice(0, 20); // Limit to 20 results for performance
-  }, [inputValue]);
+      const searchTerm = inputValue.toLowerCase();
+      return data
+        .filter(
+          (episode) =>
+            episode.label.toLowerCase().includes(searchTerm) ||
+            episode.value.toLowerCase().includes(searchTerm)
+        )
+        .slice(0, 20); // Limit to 20 results for performance
+    },
+  });
 
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
