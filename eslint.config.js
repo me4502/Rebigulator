@@ -1,15 +1,11 @@
-import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import { fixupPluginRules } from '@eslint/compat';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 import unicorn from 'eslint-plugin-unicorn';
-
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import reactHooks from 'eslint-plugin-react-hooks';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default [
   {
@@ -28,12 +24,13 @@ export default [
   unicorn.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  ...compat.extends('next/core-web-vitals', 'next'),
+  reactHooks.configs.flat['recommended-latest'],
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       react,
       '@typescript-eslint': typescriptEslint,
+      '@next/next': fixupPluginRules(nextPlugin),
     },
     languageOptions: {
       ecmaVersion: 'latest',
@@ -58,11 +55,15 @@ export default [
       },
     },
     rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+
       // React
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
       'react/no-unstable-nested-components': 'error',
       'react/no-object-type-as-default-prop': 'error',
+      'react-hooks/static-components': 'warn',
 
       // TypeScript
       '@typescript-eslint/explicit-function-return-type': 'off',

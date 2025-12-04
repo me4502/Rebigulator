@@ -7,33 +7,36 @@
   "author": "Madeline Miller <@the_me4502>",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@tanstack/react-query": "^5.87.1",
-    "next": "^15.5.2",
-    "react": "^19.1.1",
+    "@tanstack/react-query": "^5.90.12",
+    "next": "^16.0.7",
+    "react": "^19.2.1",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "^19.1.1",
+    "react-dom": "^19.2.1",
     "react-share": "^5.2.2",
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.35.0",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
+    "@eslint/compat": "^2.0.0",
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
     "@types/react-copy-to-clipboard": "^5.0.7",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
-    "@typescript-eslint/parser": "^8.42.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "babel-plugin-react-compiler": "^1.0.0",
     "classnames": "^2.5.1",
-    "eslint": "9.35.0",
-    "eslint-config-next": "15.5.2",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.0.7",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-unicorn": "^61.0.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-unicorn": "^62.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.6",
-    "postcss-preset-env": "^10.3.1",
-    "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "lint-staged": "^16.2.7",
+    "postcss-preset-env": "^10.4.0",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   },
   "license": "MIT",
   "scripts": {
@@ -54,5 +57,5 @@
   "bugs": {
     "url": "https://github.com/me4502/Rebigulator/issues"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.12.0"
 }
