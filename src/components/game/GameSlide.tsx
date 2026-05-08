@@ -25,7 +25,7 @@ function useRandomEpisodes(ignore: string): string[] {
   const { data } = useSuspenseQuery({
     queryKey: ['randomEpisodes', ignore],
     queryFn: async () => {
-      const data = await import('../../util/frinkiacEpisodes.json', {
+      const data = await import('../../util/episodes.json', {
         with: { type: 'json' },
       }).then((mod) => mod.default);
 

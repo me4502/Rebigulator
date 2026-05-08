@@ -5,7 +5,7 @@ describe('getDailyEpisode', () => {
   it.each([['2023-03-01'], ['2024-10-01'], ['2025-07-03']])(
     'should return the correct episode for the given date %s',
     async (dateString) => {
-      const episodes = await import('./frinkiacEpisodes.json', {
+      const episodes = await import('./episodes.json', {
         with: { type: 'json' },
       }).then((mod) => mod.default);
 
@@ -17,7 +17,7 @@ describe('getDailyEpisode', () => {
 });
 
 describe('getDailyTimestampHashes', () => {
-  it.each([['2023-03-01'], ['2024-10-01'], ['2025-07-03']])(
+  it.each([['2023-03-01'], ['2024-10-01'], ['2025-07-03'], ['2026-05-10']])(
     'should return the correct timestamp hashes for the given date %s',
     (dateString) => {
       const date = new Date(dateString).toISOString().split('T')[0];

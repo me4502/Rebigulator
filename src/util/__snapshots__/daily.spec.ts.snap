@@ -53,3 +53,14 @@ exports[`getDailyTimestampHashes > should return the correct timestamp hashes fo
   0.5573874601529416,
 ]
 `;
+
+exports[`getDailyTimestampHashes > should return the correct timestamp hashes for the given date 2026-05-10 1`] = `
+[
+  0.030797951396274836,
+  0.01923727477417264,
+  0.11510696893443981,
+  0.0774393319332598,
+  0.9838431936185442,
+  0.44692063551557265,
+]
+`;

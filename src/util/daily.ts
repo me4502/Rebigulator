@@ -2,6 +2,7 @@ import { useFrinkiacEpisodes } from '../frinkiac/episodes';
 import type { FrinkiacEpisodesJsonType } from '../frinkiac/types';
 
 export const ROUND_COUNT = 6;
+const S17_LIMIT_CUTOFF = new Date(2026, 5, 8);
 
 /**
  * Gets the current day's date, to use as a seed for daily challenges.
@@ -19,6 +20,18 @@ export function getDailyEpisode(
   dateString: string,
   episodes: FrinkiacEpisodesJsonType[]
 ): FrinkiacEpisodesJsonType {
+  if (new Date(dateString) <= S17_LIMIT_CUTOFF) {
+    // For dates before this cutoff, we need to strip all episodes after S17 from the list.
+    // This is for compatibility with old URLs.
+    episodes = episodes.filter((ep) => {
+      if (ep.value === 'Movie') {
+        // Keep the movie.
+        return true;
+      }
+      const season = Number.parseInt(ep.value.split('E')[0].slice(1), 10);
+      return season <= 17;
+    });
+  }
   // Simple hash function to convert date string to number
   let hash = 0;
   for (let i = 0; i < dateString.length; i++) {

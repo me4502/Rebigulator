@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const API_ENDPOINT = 'https://frinkiac.com/api/random';
+const API_ENDPOINT = 'https://frinkiac.com/api/random?smin=0&smax=30';
 
 export default async function handler(
   req: NextApiRequest,

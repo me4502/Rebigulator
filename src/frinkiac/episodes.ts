@@ -11,7 +11,7 @@ export function useFrinkiacEpisodes<T = FrinkiacEpisodesJsonType[]>(
   >({
     queryKey: ['frinkiacEpisodes'],
     queryFn: async () => {
-      return await import('../util/frinkiacEpisodes.json', {
+      return await import('../util/episodes.json', {
         with: { type: 'json' },
       }).then((mod) => mod.default);
     },
@@ -25,7 +25,7 @@ export function useFrinkiacEpisodeTitle(episode: string): string {
   const { data: title } = useSuspenseQuery({
     queryKey: ['frinkiacEpisodeTitleMap'],
     queryFn: async () => {
-      const episodes = await import('../util/frinkiacEpisodes.json', {
+      const episodes = await import('../util/episodes.json', {
         with: { type: 'json' },
       }).then((mod) => mod.default);
       return new Map(episodes.map(({ value, label }) => [value, label]));

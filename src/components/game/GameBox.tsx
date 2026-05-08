@@ -30,7 +30,6 @@ export const GameBox: FC<GameBoxProps> = ({ data, onStart }) => {
         alt="Episode hint"
         onLoad={onLoad}
         loading={'eager'}
-        height={300}
       />
     </div>
   );
