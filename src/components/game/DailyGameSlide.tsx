@@ -6,15 +6,14 @@ import {
 } from '../../frinkiac/frinkiacAccess';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { MainButton } from '../MainLink';
-import { gameBoard, buttonBox } from './GameSlide.module.css';
+import { gameBoard, buttonBox, episodeDropdown } from './GameSlide.module.css';
 import { GameBox } from './GameBox';
 import { EpisodeDropdown } from '../EpisodeDropdown';
 
-interface DailyGameSlideLogicProps
-  extends Omit<
-    DailyGameSlideProps,
-    'gameEnded' | 'dailyTimestampHashes' | 'round' | 'episodeData'
-  > {
+interface DailyGameSlideLogicProps extends Omit<
+  DailyGameSlideProps,
+  'gameEnded' | 'dailyTimestampHashes' | 'round' | 'episodeData'
+> {
   data: ScreencapResponse;
 }
 
@@ -51,7 +50,10 @@ const DailyGameSlideLogic: FC<DailyGameSlideLogicProps> = ({
         Which episode is it?
       </p>
       <Suspense fallback={<LoadingSpinner />}>
-        <EpisodeDropdown onSelect={checkForCorrect} />
+        <EpisodeDropdown
+          className={episodeDropdown}
+          onSelect={checkForCorrect}
+        />
       </Suspense>
       <div className={buttonBox}>
         <MainButton onClick={onSkip}>Skip</MainButton>

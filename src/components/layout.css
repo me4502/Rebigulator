@@ -1,10 +1,15 @@
 @font-face {
   font-family: 'akbarplain';
-  src: url('/fonts/akbar-webfont.woff2') format('woff2'),
+  src:
+    url('/fonts/akbar-webfont.woff2') format('woff2'),
     url('/fonts/akbar-webfont.woff') format('woff'),
     url('/fonts/akbar-webfont.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+html {
+  overflow-y: scroll;
 }
 
 body {

@@ -15,6 +15,7 @@ import {
 } from '../../src/frinkiac/frinkiacAccess';
 import { DailyGameSlide } from '../../src/components/game/DailyGameSlide';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { scoreBox } from './game.module.css';
 import { Container } from '../../src/components/Container.module.css';
 import {
@@ -131,13 +132,17 @@ const GameInstance = () => {
   return <GameHandler episodeData={episodeData} />;
 };
 
+const ClientGameInstance = dynamic(() => Promise.resolve(GameInstance), {
+  ssr: false,
+});
+
 const GamePage: FC = () => {
   return (
     <Layout>
       <SEO title="Play the daily challenge" />
       <ToastContainer draggable={true} closeOnClick={true} />
       <Suspense fallback={<LoadingBox text="Loading daily challenge..." />}>
-        <GameInstance />
+        <ClientGameInstance />
       </Suspense>
     </Layout>
   );
