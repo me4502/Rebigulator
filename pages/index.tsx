@@ -5,7 +5,14 @@ import SEO from '../src/components/seo';
 import { Container } from '../src/components/Container.module.css';
 import { MainButtonLink } from '../src/components/MainLink';
 import BrandSvg from '../src/images/brand.svg';
-import { bannerImage, centreDiv } from './index.module.css';
+import {
+  bannerImage,
+  buttonRow,
+  buttonRows,
+  centreDiv,
+  modeHeading,
+  modeOption,
+} from './index.module.css';
 
 const IndexPage: FC = () => (
   <Layout>
@@ -24,10 +31,27 @@ const IndexPage: FC = () => (
         <h2 style={{ marginBottom: '3rem' }}>
           Guess the episode title from a single frame and a quote
         </h2>
-        <MainButtonLink href="/game/">Get started now!</MainButtonLink>{' '}
-        <MainButtonLink href="/daily/game/">
-          Or try the new daily mode!
-        </MainButtonLink>
+        <div className={buttonRows}>
+          <div className={modeOption}>
+            <h3 className={modeHeading}>Daily mode</h3>
+            <div className={buttonRow}>
+              <MainButtonLink href="/daily/game/">
+                Try the challenge!
+              </MainButtonLink>
+            </div>
+          </div>
+          <div className={modeOption}>
+            <h3 className={modeHeading}>Random mode</h3>
+            <div className={buttonRow}>
+              <MainButtonLink href="/game/?mode=classic">
+                Classic episodes (S1 - S11)
+              </MainButtonLink>
+              <MainButtonLink href="/game/">
+                All episodes (S1 - S30 + Movie)
+              </MainButtonLink>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </Layout>

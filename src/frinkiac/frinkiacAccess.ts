@@ -27,19 +27,25 @@ export interface RandomResponse {
   Subtitles: Subtitle[];
 }
 
-export async function getRandom(): Promise<RandomResponse> {
+export type RandomMode = 'classic' | 'all';
+
+export async function getRandom(
+  mode: RandomMode = 'all'
+): Promise<RandomResponse> {
   const data = (await (
-    await fetch('/api/get-episode', {
+    await fetch(`/api/get-episode?mode=${mode}`, {
       method: 'GET',
     })
   ).json()) as RandomResponse;
 
   // Avoid returning frames that are in the intro or credits.
   if (
-    data.Frame.Timestamp < TIMESTAMP_MINIMUM ||
-    data.Frame.Timestamp > TIMESTAMP_MAXIMUM
+    (data.Frame.Timestamp < TIMESTAMP_MINIMUM ||
+      data.Frame.Timestamp > TIMESTAMP_MAXIMUM) &&
+    // Don't time-check the movie.
+    data.Episode.Season !== 0
   ) {
-    return getRandom();
+    return getRandom(mode);
   }
 
   return data;

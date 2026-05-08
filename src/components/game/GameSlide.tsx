@@ -1,5 +1,9 @@
 import { useState, useEffect, useMemo, type FC, useCallback } from 'react';
-import { getRandom, type RandomResponse } from '../../frinkiac/frinkiacAccess';
+import {
+  getRandom,
+  type RandomMode,
+  type RandomResponse,
+} from '../../frinkiac/frinkiacAccess';
 import { LoadingBox } from '../LoadingSpinner';
 import type { Episode } from '../../frinkiac/types';
 import { MainButton } from '../MainLink';
@@ -13,9 +17,13 @@ interface GameSlideProps {
   onQuestionFinish: (points: number, episode: Episode) => void;
   onFail: (message: string) => void;
   gameEnded: boolean;
+  mode?: RandomMode;
 }
 
-interface GameSlideLogicProps extends Omit<GameSlideProps, 'gameEnded'> {
+interface GameSlideLogicProps extends Omit<
+  GameSlideProps,
+  'gameEnded' | 'mode'
+> {
   data: RandomResponse;
 }
 
@@ -118,16 +126,17 @@ export const GameSlide: FC<GameSlideProps> = ({
   onQuestionFinish,
   onFail,
   gameEnded = false,
+  mode = 'all',
 }) => {
   const [data, setData] = useState<RandomResponse>();
 
   useEffect(() => {
-    getRandom()
+    getRandom(mode)
       .then((data) => {
         setData(data);
       })
       .catch(console.error);
-  }, []);
+  }, [mode]);
 
   if (data && !gameEnded) {
     return (

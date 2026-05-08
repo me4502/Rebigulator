@@ -16,3 +16,27 @@
 .centreDiv {
   text-align: center;
 }
+
+.buttonRows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.modeOption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.modeHeading {
+  margin: 0.5rem 0;
+}

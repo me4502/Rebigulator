@@ -27,6 +27,9 @@ const GameHandler: FC = () => {
   const [gameEnded, setGameEnded] = useState<boolean>(false);
 
   const router = useRouter();
+  const mode = useMemo(() => {
+    return router.query['mode'] === 'classic' ? 'classic' : 'all';
+  }, [router.query]);
 
   const onQuestionFinish = useCallback(
     (points: number, episode: Episode) => {
@@ -79,6 +82,7 @@ const GameHandler: FC = () => {
             onQuestionFinish={onQuestionFinish}
             onFail={onFail}
             gameEnded={gameEnded}
+            mode={mode}
           />
         </Suspense>
         <p
@@ -96,7 +100,7 @@ const GameHandler: FC = () => {
         </p>
       </div>
     ),
-    [questionNumber, gameEnded, onQuestionFinish, score, onFail]
+    [questionNumber, gameEnded, onQuestionFinish, score, onFail, mode]
   );
 
   return <Slide />;

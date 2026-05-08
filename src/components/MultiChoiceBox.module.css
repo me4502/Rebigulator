@@ -13,10 +13,12 @@
   }
 }
 
-.multiChoiceButton {
+button.multiChoiceButton {
   background-color: var(--box-color);
 
-  &:hover {
+  &:hover,
+  &:active,
+  &:focus {
     background-color: var(--box-color-hover);
   }
 }
