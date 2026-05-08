@@ -47,7 +47,7 @@ const IndexPage: FC = () => (
                 Classic episodes (S1 - S11)
               </MainButtonLink>
               <MainButtonLink href="/game/">
-                All episodes (S1 - S30 + Movie)
+                All episodes (S1 - S34 + Movie)
               </MainButtonLink>
             </div>
           </div>

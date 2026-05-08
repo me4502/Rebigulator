@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const API_ENDPOINT = 'https://frinkiac.com/api/random';
-const ALL_EPISODES = '?smin=0&smax=30';
+const ALL_EPISODES = '?smin=0&smax=34';
 const CLASSIC_EPISODES = '?smin=1&smax=11';
 
 export default async function handler(
