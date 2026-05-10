@@ -54,12 +54,13 @@ const GameHandler: FC = () => {
       router
         .push({
           pathname: `/result/${btoa(JSON.stringify({ s: score, r: results }))}`,
+          query: { mode },
         })
         .catch((err) => {
           console.error('Error navigating to results:', err);
         });
     }
-  }, [gameEnded, router, results, score]);
+  }, [gameEnded, router, results, score, mode]);
 
   const onFail = useCallback((message: string) => {
     toast(message, {

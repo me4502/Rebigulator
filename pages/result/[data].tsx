@@ -10,6 +10,7 @@ import { cleanupEpisodeTitle } from '../../src/util/string';
 import { ScoreShare } from '../../src/components/ScoreShare';
 import { useFrinkiacEpisodeTitle } from '../../src/frinkiac/episodes';
 import { LoadingBox } from '../../src/components/LoadingSpinner';
+import { useRouter } from 'next/router';
 
 const scoreCutoffs = [
   [400, `Incredible! You're a Simpsons expert!`],
@@ -38,8 +39,12 @@ interface ResultPageProps {
 
 const ResultPage: FC<ResultPageProps> = ({ data }) => {
   const score = data.s ?? data.score;
-  const results =
-    data.r ?? (data.results.map((res) => [res.e, res.s]) as QuestionResult[]);
+  const results = data.r ?? data.results.map((res) => [res.e, res.s]);
+
+  const router = useRouter();
+  const mode = useMemo(() => {
+    return router.query['mode'] === 'classic' ? 'classic' : 'all';
+  }, [router.query]);
 
   const scoreMessage = useMemo(
     () => scoreCutoffs.find((cutoff) => cutoff[0] <= score)[1],
@@ -75,7 +80,9 @@ const ResultPage: FC<ResultPageProps> = ({ data }) => {
               )}
             </Suspense>
           </div>
-          <MainButtonLink href="/game/">Want to try again?</MainButtonLink>
+          <MainButtonLink href={`/game/?mode=${mode}`}>
+            Want to try again?
+          </MainButtonLink>
           <ScoreShare shareUrl={shareUrl} shareTitle={shareTitle} />
         </div>
       </div>
