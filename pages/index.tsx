@@ -51,6 +51,14 @@ const IndexPage: FC = () => (
               </MainButtonLink>
             </div>
           </div>
+          <div className={modeOption}>
+            <h3 className={modeHeading}>Other places to play</h3>
+            <div className={buttonRow}>
+              <MainButtonLink href="https://trmnl.com/recipes/393389?ref=madelinemiller">
+                Get the TRMNL plugin
+              </MainButtonLink>
+            </div>
+          </div>
         </div>
       </div>
     </div>
