@@ -7,6 +7,7 @@
 
 import Head from 'next/head';
 import type { FC } from 'react';
+import type { Thing } from 'schema-dts';
 
 export interface SEOImageProps {
   height?: number;
@@ -21,6 +22,7 @@ export interface SEOPropTypes {
   title: string;
   titleExtra?: string;
   type?: string;
+  structuredData?: Thing[];
 }
 
 export function createImageMeta(
@@ -61,6 +63,7 @@ export const SEO: FC<SEOPropTypes> = ({
   titleExtra = ' | The Rebigulator',
   type = 'website',
   image = DEFAULT_IMAGE,
+  structuredData,
 }) => {
   const metaDescription =
     description || 'A Frinkiac-Powered Simpsons trivia game.';
@@ -95,6 +98,15 @@ export const SEO: FC<SEOPropTypes> = ({
           key={item.property}
         />
       ))}
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          key="structured-data"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      )}
     </Head>
   );
 };
