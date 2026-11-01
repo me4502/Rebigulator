@@ -2,19 +2,19 @@ import type { FC, PropsWithChildren } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {
   FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  XIcon,
+  FacebookLegacyIcon,
+  XShareButton,
+  XLegacyIcon,
   BlueskyShareButton,
-  BlueskyIcon,
+  BlueskyLegacyIcon,
   ThreadsShareButton,
-  ThreadsIcon,
+  ThreadsLegacyIcon,
   WhatsappShareButton,
-  WhatsappIcon,
+  WhatsappLegacyIcon,
   RedditShareButton,
-  RedditIcon,
+  RedditLegacyIcon,
   TumblrShareButton,
-  TumblrIcon,
+  TumblrLegacyIcon,
 } from 'react-share';
 import { linkShareWrapper, shareBox } from './ScoreShare.module.css';
 import LinkIcon from '../images/link.svg';
@@ -70,29 +70,29 @@ export const ScoreShare: FC<ScoreShareProps> = ({ shareUrl, shareTitle }) => {
       <h3 style={{ marginTop: '2rem' }}>Share your score!</h3>
       <div className={shareBox}>
         <FacebookShareButton url={shareUrl}>
-          <FacebookIcon size={32} round={true} />
+          <FacebookLegacyIcon size={32} round={true} />
         </FacebookShareButton>
-        <TwitterShareButton url={shareUrl} title={shareTitle}>
-          <XIcon size={32} round={true} />
-        </TwitterShareButton>
-        <BlueskyShareButton url={shareUrl} title={shareTitle}>
-          <BlueskyIcon size={32} round={true} />
+        <XShareButton url={shareUrl} text={shareTitle}>
+          <XLegacyIcon size={32} round={true} />
+        </XShareButton>
+        <BlueskyShareButton url={shareUrl} text={shareTitle}>
+          <BlueskyLegacyIcon size={32} round={true} />
         </BlueskyShareButton>
-        <ThreadsShareButton url={shareUrl} title={shareTitle}>
-          <ThreadsIcon size={32} round={true} />
+        <ThreadsShareButton url={shareUrl} text={shareTitle}>
+          <ThreadsLegacyIcon size={32} round={true} />
         </ThreadsShareButton>
-        <WhatsappShareButton url={shareUrl} title={shareTitle}>
-          <WhatsappIcon size={32} round={true} />
+        <WhatsappShareButton url={shareUrl} message={shareTitle}>
+          <WhatsappLegacyIcon size={32} round={true} />
         </WhatsappShareButton>
-        <RedditShareButton url={shareUrl} title={shareTitle}>
-          <RedditIcon size={32} round={true} />
+        <RedditShareButton url={shareUrl} shareTitle={shareTitle}>
+          <RedditLegacyIcon size={32} round={true} />
         </RedditShareButton>
         <TumblrShareButton
           url={shareUrl}
+          postTitle={shareTitle}
           caption={shareTitle}
-          title={shareTitle}
         >
-          <TumblrIcon size={32} round={true} />
+          <TumblrLegacyIcon size={32} round={true} />
         </TumblrShareButton>
         <LinkShareButton aria-label="link" url={shareUrl} title={shareTitle}>
           <LinkIcon width={16} height={16} alt={'Link share icon'} />
