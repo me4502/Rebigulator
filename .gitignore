@@ -11,3 +11,10 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Generated from public/logo.png by yarn generate:icons
+/public/android-icon-*.png
+/public/apple-icon*.png
+/public/favicon-*.png
+/public/favicon.ico
+/public/ms-icon-*.png

@@ -14,7 +14,6 @@ class MyDocument extends Document {
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
           />
 
-          <link rel="shortcut icon" href="/static/icons/icon-48x48.png" />
           <link
             rel="apple-touch-icon"
             sizes="57x57"

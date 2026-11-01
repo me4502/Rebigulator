@@ -4896,6 +4896,7 @@ __metadata:
     react-share: "npm:^6.1.0"
     react-toastify: "npm:^11.2.0"
     schema-dts: "npm:^2.1.0"
+    sharp: "npm:^0.35.5"
     typescript: "npm:^7.0.2"
     vite: "npm:^8.3.5"
     vitest: "npm:^5.0.5"
