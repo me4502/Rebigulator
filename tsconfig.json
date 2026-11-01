@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,12 +15,6 @@
     "jsx": "react-jsx",
     "incremental": true
   },
-  "include": [
-    "index.d.ts",
-    "next-env.d.ts",
-    "src/**/*",
-    "eslint.config.js",
-    "pages"
-  ],
+  "include": ["index.d.ts", "next-env.d.ts", "src/**/*", "pages"],
   "exclude": ["node_modules"]
 }

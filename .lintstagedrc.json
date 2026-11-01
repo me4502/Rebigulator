@@ -1,4 +1,4 @@
 {
-  "*.{ts,tsx}": ["eslint --fix", "oxfmt --write"],
+  "*.{ts,tsx}": ["oxlint --type-aware --fix", "oxfmt --write"],
   "*.{html,css,json,md}": ["oxfmt --write"]
 }

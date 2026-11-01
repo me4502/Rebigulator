@@ -70,7 +70,7 @@ const GameHandler: FC = () => {
   }, []);
 
   const Slide = useMemo(
-    // eslint-disable-next-line react/no-unstable-nested-components, react/display-name
+    // oxlint-disable-next-line react/no-unstable-nested-components, react/display-name
     () => () => (
       <div className={Container}>
         <div className={scoreBox}>

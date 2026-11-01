@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "unicorn", "oxc", "nextjs"],
+  "categories": {
+    "correctness": "error"
+  },
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "nextjs/no-img-element": "warn",
+    "react/no-object-type-as-default-prop": "error",
+    "react/no-unescaped-entities": "off",
+    "react/no-unstable-nested-components": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/static-components": "warn",
+    "typescript/consistent-type-exports": [
+      "error",
+      {
+        "fixMixedExportsWithInlineTypeSpecifier": true
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
+    "typescript/explicit-function-return-type": "off",
+    "typescript/explicit-module-boundary-types": "off",
+    "typescript/no-empty-function": "warn",
+    "typescript/no-import-type-side-effects": "error",
+    "typescript/no-non-null-assertion": "warn",
+    "typescript/no-require-imports": "off",
+    "typescript/no-unsafe-argument": "off",
+    "typescript/no-unsafe-assignment": "off",
+    "typescript/no-unsafe-call": "off",
+    "typescript/no-unsafe-member-access": "off",
+    "typescript/no-useless-default-assignment": "off",
+    "typescript/no-var-requires": "warn",
+    "typescript/restrict-template-expressions": "off",
+    "unicorn/catch-error-name": "off",
+    "unicorn/filename-case": "off",
+    "unicorn/no-abusive-eslint-disable": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/no-await-expression-member": "off",
+    "unicorn/no-empty-file": "off",
+    "unicorn/no-null": "off",
+    "unicorn/number-literal-case": "off",
+    "unicorn/numeric-separators-style": "off",
+    "unicorn/prefer-add-event-listener": "off",
+    "unicorn/prefer-global-this": "off",
+    "unicorn/prefer-import-meta-properties": "error",
+    "unicorn/prefer-module": "off",
+    "unicorn/prefer-node-protocol": "off",
+    "unicorn/prefer-string-replace-all": "error",
+    "unicorn/prefer-ternary": "off",
+    "unicorn/no-useless-undefined": "warn"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true
+  }
+}
